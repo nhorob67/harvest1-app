@@ -1,0 +1,59 @@
+<div id="collapseOne" class="accordion-body collapse in">
+              <div class="inner">
+                <div class="accordion-inner">
+                  <div class="che">
+                    <%= form_for Recommend.new ,:url=>recommed_create_home_index_path do |f| %>
+                        
+                    <% if current_user.has_role? :consultant %>
+                   
+                     <%if !@consultant_users.blank?%>
+                      <%= check_box_tag "selectall"%>&nbsp;&nbsp;All
+                     
+                        <%@consultant_users.each do |user| %>
+                         &nbsp;&nbsp;<%= check_box_tag "recommended_id[]",user.id, false, {:class => 
+                  "selectedId"} %>&nbsp;&nbsp;<%= user.first_name%>
+                        <%end%>
+                      <%end%>
+                    <% end %>
+                     <%if current_user.has_role? :admin%>
+                      <div>
+                        </br><%= f.label :title_of_news_piece %>
+                        <%= f.text_field :title_of_news_piece %>
+                      </div>
+                    <%end%>
+                    <div class="clearfix"></div>
+                    <!--clearfix-->
+                    
+                    <%= f.text_area :content ,:class=>"taextr" %>
+                    
+                    <!--<button name="btn" class="btn pull-left">Upload File</button>
+                    <button name="btn" class="btn pull-right">Submit</button>-->
+                    <div class="fileupload fileupload-new" data-provides="fileupload" style="float: left;">
+                      <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span> <%= f.file_field :document %></span>
+                      <span class="fileupload-preview"></span>
+                      <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+                    </div>
+                   <%if current_user.has_role? :consultant%>
+                      <%= f.submit "Submit" ,:class=>"btn pull-right btn-primary"%>
+                    <%else%>
+                      <%= f.submit "Submit" ,:class=>"btn pull-right btn-primary"%>
+                    <%end%>
+                  <% end %>
+                 
+            <%if !current_user.has_role? :admin%>
+                    <%= form_for recommend_search_home_index_path,:remote=>true do |f|%>
+                    <div class="clearfix"></div>
+                    <div class="text-select" style="margin: auto; width: 60%;">
+                          <p>Which farmer's data do you want to display?</p>
+                          <%= f.select :farmer_id, @user.map{|c| [c.first_name, c.id]}, { include_blank: "lists of farmers" },:class=>"select" %>
+                    </div>
+                        <!--text-select--><br>
+                  </div>
+                   <%end%>
+                    <%end%>  
+                  <!--che-->
+                </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>

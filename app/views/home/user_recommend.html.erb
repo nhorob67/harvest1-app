@@ -1,0 +1,22 @@
+<h3>User Recommend</h3>
+<%if !@recommend.nil? %>
+<table class="table table-bordered">
+    <tr>
+   
+      <th>Content</th>
+      <th>Document</th>
+    </tr>
+
+    <% @recommend.each do |recommend| %>
+
+      <tr>
+        
+        <td><%= raw recommend.content %></td>
+        <td><%= image_tag(recommend.document.url(:small)) %>   
+        <%= recommend.document_file_name %></td>
+      </tr>
+    <% end %>
+</table>
+<%else%>
+No Recommend present
+<%end%>

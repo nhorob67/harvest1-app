@@ -1,0 +1,7 @@
+$('#farmer_info').html("<%= escape_javascript(render :partial =>'home/farmer_crop') %>");
+$('#user_info').html("<%= escape_javascript(render :partial =>'home/recommend') %>");
+$('#crop_info').html("<%= escape_javascript(render :partial =>'home/crop_detail',:locals=>{:@user_id=>params[:select_user_id]}) %>");
+$('#news').html("<%= escape_javascript(render :partial =>'home/news') %>");
+
+$('#sale').html("<%= escape_javascript(render :partial =>'home/sales_information',:locals=>{:@user_id=>params[:select_user_id],:@year=>@year}) %>");
+

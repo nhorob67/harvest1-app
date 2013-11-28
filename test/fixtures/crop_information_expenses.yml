@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  expense: MyString
+  user_id: 1
+  year: 1
+
+two:
+  expense: MyString
+  user_id: 1
+  year: 1

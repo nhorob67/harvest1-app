@@ -1,0 +1,38 @@
+<%= form_for User.new ,:url=>consultant_create_home_index_path,:class=>"log-form" do |f| %>
+	 <%= f.text_field :first_name ,:placeholder=>"Name" ,:class=>"field" %>
+	<%= f.email_field :email ,:placeholder=>"Email" ,:class=>"field"%>
+	<%= f.password_field :password,:placeholder=>"Password" ,:class=>"field" %>
+
+    <% if current_user.has_role? :admin%>
+    <%= f.submit "Add Consultant" ,:class=>"btn btn2" ,:style=>"float: left; margin-left: 261px; margin-top: -35px;"%>
+    <%end%>
+    <% if current_user.has_role? :consultant%>
+    <%= f.text_field :cell_number ,:placeholder=>"cell phone" ,:class=>"field",:id=>"TextBox1" %>
+    <div id="msg"></div>
+     <%= f.submit "Add Farmer" ,:class=>"btn btn2" ,:style=>"float: left; margin-left: 261px; margin-top: -35px;",:id=>"Button1" %>
+     <%end%>
+<%end%>
+
+
+<script >
+
+
+
+    $('#new_user').submit(function(){
+    var x = document.getElementById('TextBox1').value;
+     if (isNaN(x) || x.indexOf(" ") != -1) {
+        $('#msg').html('<span class="LV_validation_message LV_invalid">Enter numeric value</span>');
+         
+         return false;
+     }
+     if (x.length != 13) {
+        $('#msg').html('<span class="LV_validation_message LV_invalid">Cell number must be like +91xxxxxxxxxx</span>');
+         return false;
+     }
+     if (x.charAt(0) != "+" && x.charAt(1) != "9"&&x.charAt(2) != "1") {
+         $('#msg').html('<span class="LV_validation_message LV_invalid">Cell number must be like +91xxxxxxxxxx</span>');
+         return false;
+     }
+
+    });
+</script>

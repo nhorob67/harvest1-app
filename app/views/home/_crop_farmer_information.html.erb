@@ -1,0 +1,85 @@
+
+<div class="inner">
+  <div class="accordion-inner">
+    <ul class="one">
+      <li id="archive_farmer_individual" id="crop">
+        <p class="farmerArchive"><a href="#">Archive</a></p>
+      </li>
+       <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+     
+          <% if (@archive_year.include? year.year)%>       
+            <li style="display:none" id="archive_year_farmer_crop" ><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year,:user_id=>current_user.id}, :remote => true %></li>
+          <% end %>
+        <% end %>
+     
+      <% end %>   
+       
+    </ul>
+    <ul class="two">
+       <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+          <%if !(@archive_year.include? year.year)%>
+
+            <li><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id}, :remote => true %></li>       
+            
+          <% end %>
+        <% end %>
+      
+      <% end %>    
+
+    </ul>
+  <div class="clearfix"></div>
+  <!--clearfix-->
+  <br>
+
+  <%= link_to "Add New Crop",create_crop_information_home_index_path,:class=>"btn btn",:style=>"float: right;" %>
+  <br>
+   <br>
+    <br>
+  <div id="crop_detail_farmer">
+    <%=render "crop_farmer_update_information"%> 
+  
+  </div>
+
+</div>
+  <!--accordion-inner-->
+</div>
+
+<div class="hidden">
+  <div id="expense">   
+    <%= form_tag(crop_expense_home_index_path ,:remote=>true,:method=>:get,:class=>"post") do%>
+    
+      <h3>  Add Expenses Category</h3>
+      <%=text_field_tag "crop_expense[expense]" %>
+      <%=hidden_field_tag "crop_expense[year]",params[:data]%>
+      <br/>
+      <%= submit_tag "Save" ,:class=>"btn btn-primary"%>
+    <%end%>  
+ </div>
+
+</div>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#archive_farmer_individual").click(function(){   
+      $("#archive_year_farmer_crop").toggle();
+      $('.accordion-inner').find('.list-select').removeClass('list-select');
+       $('.farmerArchive').addClass('list-select');
+    });
+ $(".fancybox").fancybox()  
+
+   
+   // $('.best_in_place').bind("ajax:success", function(){ alert('Name updated for '+$(this).data('crop')); });
+   // $('.best').bind("ajax:success", function(){ alert(1) });
+    $('.best_in_place').best_in_place()
+   
+});
+
+ 
+
+
+
+</script>

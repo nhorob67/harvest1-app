@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  open_order: false
+  long_short: MyString
+  contract: 1
+  put_call: MyString
+  strike_price: 1.5
+  premium: 1.5
+  gain_loss: 1.5
+
+two:
+  open_order: false
+  long_short: MyString
+  contract: 1
+  put_call: MyString
+  strike_price: 1.5
+  premium: 1.5
+  gain_loss: 1.5

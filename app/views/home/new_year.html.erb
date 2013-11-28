@@ -1,0 +1,12 @@
+<div class="container">
+<%= form_tag year_create_home_index_path do  %>
+    <div>
+      </br><%= label_tag :year %>
+      <%= text_field_tag :year %>
+    </div>
+
+    <%= submit_tag "Submit " ,:class=>"btn btn-primary"%>
+
+<% end %>
+<%=link_to "back",:back%>
+</div>

@@ -1,0 +1,21 @@
+ <%if params[:note]=="farmer"%>
+
+    $('#sale_farmer').html("<%= escape_javascript(render :partial =>'home/sales_information_farmer',:locals=>{:li_id=>@id,:@year=>@year}) %>");
+     var id = <%= params[:data]%>
+         $("#year_"+id).addClass('list-select');
+       
+    <%if !ArchiveYear.find_by_year_and_user_id(params[:data],current_user.id).nil?%>
+        <%if ArchiveYear.find_by_year_and_user_id(params[:data],current_user.id).archive==true%>
+        	$(".archive_year_farmer_sales").show();
+        <%end%>
+    <%end%>    
+
+<%else%>
+
+        $('#sale').html("<%= escape_javascript(render :partial =>'home/sales_information',:locals=>{:@user_id=>params[:user_id]}) %>");
+        <%if Year.find_by_year(params[:data]).archive==true%>
+        	$(".archive_year").show();
+        <%end%>
+         var id = <%= params[:data]%>
+         $("#consultant_"+id).addClass('list-select');
+<%end%>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  content: MyString
+  recommended_id: 1
+  recommender_id: 1
+
+two:
+  content: MyString
+  recommended_id: 1
+  recommender_id: 1

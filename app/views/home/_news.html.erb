@@ -1,0 +1,33 @@
+  <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseEleven">News or Recommendations<%if !@count.blank?%> (<%=@count%>) <%end%> <i class="normal"></i></a>
+            </div><!--accordion-heading-->
+            <div id="collapseEleven" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">
+                  <div class="news">
+                   <%if !@user_news.blank?%>
+					 <%@user_news.each do |news|%>
+					 
+					 <div class="news-inner">
+					  <h3><%=news.title_of_news_piece%></h3>
+
+					  <a href="javascript:void(0);">
+             
+            <%if !news.document.blank?%>
+              <%=image_tag news.document,:size=>"106x78"%>
+            <%end%>  
+            </a>
+					  <p><%=User.find(news.user_id).first_name%><br /><i>Date: <%=news.created_at.strftime("%d/%m/%Y")%></i></p>
+					  <i class="bars"></i>
+					  <div class="clearfix"></div><!--clearfix-->
+					</div><!--news-inner--><div class="clearfix"></div><!--clearfix-->
+					<%end%>
+					<%end%>
+    
+                  </div><!--news-->
+                </div><!--accordion-inner-->
+              </div><!--inner-->
+            </div><!--accordion-body-->
+          </div><!--accordion-group-->
+ 

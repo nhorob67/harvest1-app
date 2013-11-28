@@ -1,0 +1,30 @@
+<div class="container">
+<%if !@user.blank?%>
+
+<h3>List of Farmers</h3>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>First Name</th>
+      <th>Email</th>
+      <th>Cell Number</th>
+   
+    </tr>
+    
+    <% @user.each do |user| %>
+       
+      <tr>
+        <%if user.has_role? :user %>
+        <td><%= user.first_name%></td>
+        <td><%= user.email %></td>
+        <td><%= user.cell_number %></td>
+        <%#= user.unhashed_password %>
+        <%end%>
+      </tr>
+    <% end %>    
+  
+  <%else%>
+  <h3>Farmer not found. </h3>
+  </table>
+<%end%>
+</div>

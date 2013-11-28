@@ -1,0 +1,23 @@
+<%= form_tag add_archive_home_index_path ,:remote=>true do %>
+	<div class="text-select" style="width: 60%;margin-left: 351px;">
+    <div style="padding-left: 6px;">Please select farmer</div>
+    <%=select_tag 'year[farmers_id]',  options_for_select(@farmer.map{|c| [c.first_name, c.id]}) %>     
+    
+  </div>
+	
+<%end%>
+
+<script type="text/javascript"> 
+	$('#year_farmers_id').change(function(){
+	  var data= $(this).val();
+  $.ajax({
+    type: 'POST',
+   	url: '<%= add_archive_home_index_path %> ',
+   	data: {select_user_id:  data }
+ 	})  
+	  })
+</script>
+
+<div id ="archive_form">
+</div>
+ 

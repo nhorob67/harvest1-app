@@ -1,0 +1,43 @@
+        <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">Add News<i class="normal"></i></a> </div>
+           
+            <!--accordion-heading-->
+            <div id="collapseSix" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> 
+                <%= form_for Recommend.new ,:url=>recommed_create_home_index_path do |f| %>
+                  <div class="">
+            <table class="table nor-margin" >
+              <thead>
+                <tr>
+                  <th colspan="2"> <%=f.text_field :title_of_news_piece,:class=>"input-xxlarge",:style=>"width: 98.3%; height: 30px; width: 98.3%; margin-bottom: 16px;",:placeholder=>"Add Title"%>
+                  <hr /></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="2">
+                    <%=f.text_area :content,:rows=> 4,:class=>"input-xxlarge",:style=>"width: 98.3%; "%>
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div class="fileupload fileupload-new" data-provides="fileupload" style="float: left;">
+  <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><%=f.file_field :document%></span>
+  <span class="fileupload-preview"></span>
+  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+</div>
+              <%= f.submit "Submit" ,:class=>"btn pull-right btn-primary"%>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            
+          </div><!--inner-->
+                 <%end%>
+                </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>

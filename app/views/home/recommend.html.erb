@@ -1,0 +1,531 @@
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $('.ac-combination-1').click(function(e){
+    //$('.ac-combination-1').addClass('normal');
+    if($(this).find('i.actives').length != 0)
+    {
+      $('.ac-combination-1 i').each(function(index){
+        $(this).removeClass('actives');
+        $(this).addClass('normal'); 
+      });
+      $(this).children("i").removeClass('actives');
+      $(this).children("i").addClass('normal');
+    }
+    else
+    {
+      $('.ac-combination-1 i').each(function(index){
+        $(this).removeClass('actives');
+        $(this).addClass('normal'); 
+      });
+      $(this).children("i").removeClass('normal');
+      $(this).children("i").addClass('actives');
+    }
+  });
+});
+</script>
+ 
+<script type="text/javascript">
+  jQuery(document).ready(function(){ 
+        jQuery("#sortclass1").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+    jQuery("#sortclass2").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+    });
+</script>
+<div class="container-fluid">
+  <div class="clearfix"></div>
+    <!--clearfix-->
+    <div class="row-fluid">
+      <div class="container" style="margin-top:-15px; ">
+        <div class="offset1 span7">
+        </div>
+        <!--span7-->
+        <div class="offset4"></div>
+        <!--offset4-->
+      </div>
+      <!--container-->
+    </div>
+  <!--row-fluid-->
+  <div class="clearfix"></div>
+  <!--clearfix-->
+  <div class="row-fluid">
+    <div class="container" style="margin-top:-15px; margin-left: -30px;">
+      <div class="span12">
+        <div class="accordion" id="accordion2">
+           <!--accordion-group-->
+        <%if current_user.has_role? :consultant%>
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">Farmer<i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseEight" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> 
+                
+                  <div style="width: 92%; margin: auto;">
+                      <div class="row-fluid">
+                            <div class="" style=" margin-left: -35px;">
+                              <div class="span6">
+                                <table class="table table-bordered new-tab">
+                                      <%= render "farmer"%>
+                                    </table>
+                              </div><!--span6-->
+                              <div class="span3">
+                                <%= render "add_consultant"%>
+                              </div><!--span3-->
+                             
+                            </div><!--container-->
+              </div><!--row-fluid--><div class="clearfix"></div><!--clearfix-->
+                  </div><!--end--> 
+                
+                </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+        <%end%>
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"><%if !current_user.has_role? :admin%>New Recomemendation<%else%>Add News<%end%> <i class="actives"></i></a> </div>
+            <!--accordion-heading-->
+            <%=render "add_recommend"%>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+        <%if !current_user.has_role? :admin%>  
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Past Recommendations <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">
+                  <%if current_user.has_role? :admin%>
+                  <%=render "recommend_admin"%>
+                  <%else%>
+                <div id="user_info">
+                  Please choose farmer
+                </div>
+                <%end%>
+                 </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Crop Information <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseThree" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"><%if current_user.has_role? :admin%> <%= link_to "Add Crop",create_crop_information_home_index_path,:class=>"btn "%> <%else%> <div id="crop_info">Please choose farmer</div><%end%> </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">Sales/Hedges <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseFour" class="accordion-body collapse">
+              <div id="sale">
+                <%=render "sales_information"%>
+            </div>
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">Profit Analyzer <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseFive" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> Content Goes Here.. </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+          <%if !current_user.has_role? :consultant%>
+          <div class="accordion-group">
+
+          <%=render "add_news"%>
+           
+            <!--accordion-body-->
+          </div>
+          <%end%>
+      <%end%>  
+       <%if !current_user.has_role? :consultant%>
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">Previous News<i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseSeven" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> 
+                
+                  <div class="">
+                  <table class="table nor-margin">
+                   <%= render "recommend_admin"%>
+                  </table>
+                    
+                  </div><!--end-->
+                
+                </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+        <%end%>
+          <!--accordion-group-->
+
+
+         <%if current_user.has_role? :admin%>
+
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">Consultants<i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseEight" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> 
+                
+                  <div style="width: 92%; margin: auto;">
+                      <div class="row-fluid">
+                            <div class="" style=" margin-left: -35px;">
+                              <div class="span6">
+                                <table class="table table-bordered new-tab">
+                                      <%= render "farmer"%>
+                                    </table>
+                              </div><!--span6-->
+                              <div class="span3">
+                                <%= render "add_consultant"%>
+                              </div><!--span3-->
+                             
+                            </div><!--container-->
+              </div><!--row-fluid--><div class="clearfix"></div><!--clearfix-->
+                  </div><!--end--> 
+                
+                </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+           
+         <%end%> 
+          <!--accordion-group-->
+
+    <%if !current_user.has_role? :admin  %>
+      <%if !current_user.has_role? :consultant  %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseNine">Futures Quotes <i class="normal"></i></a>
+            </div><!--accordion-heading-->
+            <div id="collapseNine" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">
+                  Content Goes Here..
+                </div><!--accordion-inner-->
+              </div><!--inner-->
+            </div><!--accordion-body-->
+          </div><!--accordion-group-->
+          
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseTen">Cash Price Map <i class="actives"></i></a>
+            </div><!--accordion-heading-->
+            <div id="collapseTen" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">
+                  <div class="checkboxes">
+                    <label><input type="checkbox" name="checkbox" /> Cash Price </label>
+                    <label><input type="checkbox" name="checkbox" /> Basis </label><div class="clearfix"></div><!--clearfix-->
+                  </div><!--checkboxes--><div class="clearfix"></div><!--clearfix-->
+                  <div id="map_canvas_custom_134946" style="width:1005; height:400px" ></div>
+          <a class="mapgen-link" style="font:8px Arial;text-decoration:none;color:#5C5C5C;text-align: right; display: block; width: 100%;" href="http://map-generator.net/en">map-generator.net</a>
+                </div><!--accordion-inner-->
+              </div><!--inner-->
+            </div><!--accordion-body-->
+          </div><!--accordion-group-->
+         <div id="news"><%=render "news"%></div>
+
+        <%end%>
+        <%end%>
+        <%if current_user.has_role? :admin  %>
+
+      <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseNine">Year<i class="normal"></i></a>
+            </div><!--accordion-heading-->
+            <div id="collapseNine" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">
+                 
+                   
+                   <li><%= link_to 'Add Year',new_year_home_index_path,:class=>"btn" %><li>
+                   <%=render "sales_hedge_year"%>
+                    <%if !Year.all.blank?%>
+                     <h3>Year list</h3>
+                     <table>
+                      <%Year.all.each do|year|%>
+                        <tr> 
+                          <td>
+                            <%=year.year%>
+                          </td>  
+                        </tr>
+                      <%end%>
+                     </table>
+                   <%end%>
+                </div><!--accordion-inner-->
+              </div><!--inner-->
+            </div><!--accordion-body-->
+        </div><!--accordion-group-->
+               
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwelve">Cash Price Admin<i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseTwelve" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> 
+                  <div class="scroll-class">
+                      <table class="table table-condensed">
+                        <thead>
+                          <tr class="non">
+                          <td colspan="2">&nbsp;</td>
+                          <td colspan="2">Corn</td>
+                          <td colspan="2">Soybeans</td>
+                          <td colspan="2">Wheat</td>
+                          </tr>
+                          <tr>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>Spot</th>
+                            <th>New Crop</th>
+                            <th>Spot</th>
+                            <th>New Crop</th>
+                            <th>Spot</th>
+                            <th>New Crop</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td>Feature Price</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Farmers Elevator</td>
+                            <td>58104</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Newco Chicken</td>
+                            <td>58103</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Grain Crop</td>
+                            <td>67152</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Farmers Elevator</td>
+                            <td>58104</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Newco Chicken</td>
+                            <td>58103</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Grain Crop</td>
+                            <td>67152</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Farmers Elevator</td>
+                            <td>58104</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Newco Chicken</td>
+                            <td>58103</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                          <tr>
+                            <td>Grain Crop</td>
+                            <td>67152</td>
+                            <td>$7.00</td>
+                            <td>$5.00</td>
+                            <td>$12.00</td>
+                            <td>$10.00</td>
+                            <td>$7.00</td>
+                            <td>$7.5.00</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div><!--scroll-class-->
+                </div>
+                <!--accordion-inner-->
+                <div class="clearfix"></div>
+                  <!--clearfix-->
+                    <div style="padding-left: 0;">
+                        <input type="text" name="text" placeholder="Buyer name" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="text" placeholder="Zip Code" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button name="btn" class="btn" style="position: relative; top: -6px;">Add New Buyer</button>
+                    </div>
+                    <!--container-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+       <%end%>
+        </div>
+        <!--accordion-->
+     
+
+<%if current_user.has_role? :admin  %>
+<div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">All User <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">  <%= render "users_list"%></div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+<%end%>
+ </div>
+      <!--span12-->
+    </div>
+    <!--container-->
+  </div>
+  <!--row-fluid-->
+  <div class="clearfix"></div>
+  <!--clearfix-->
+</div>
+<!--container-fluid-->
+<script type="text/javascript" >
+   
+(function(d, t) {var g = d.createElement(t),s = d.getElementsByTagName(t)[0];
+   g.src = "http://map-generator.net/en/maps/134946.js?point=New+York%2C+NY%2C+USA";
+   s.parentNode.insertBefore(g, s);}(document, "script"));
+
+</script>
+<script>
+  $(document).ready(function(){
+    $('#selectall').click(function () {
+         var checked = $(this).is(':checked');
+        $('.selectedId').each(function () {
+            var checkBox = $(this);
+            console.debug(checkBox);
+            if (checked) {
+                checkBox.prop('checked', true);                
+            }
+            else {
+                checkBox.prop('checked', false);                
+            }
+        });
+    });
+  });
+</script>
+<script type="text/javascript"> 
+
+
+$('#_home_recommend_search_farmer_id').change(function(){
+  var data= $(this).val();
+  
+      $.ajax({
+      type: 'POST',
+           url: '<%= recommend_search_home_index_path %> ',
+           data: {select_user_id:  data }
+         })  
+  })
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+   $(".addnew_fancybox").fancybox({
+
+
+    openEffect: "fade",
+    closeEffect: "fade",
+    autoSize: true,
+    minWidth: 300,
+    scrolling: 'auto',
+  
+   });
+});
+</script>
+<script type="text/javascript"> 
+
+
+$('#_home_recommend_search_farmers_id').change(function(){
+  var data= $(this).val();
+  
+      $.ajax({
+      type: 'POST',
+           url: '<%= recommend_search_home_index_path %> ',
+           data: {select_user_id:  data }
+         })  
+  })
+</script>

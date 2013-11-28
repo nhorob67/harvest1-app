@@ -1,0 +1,63 @@
+<div class="container">
+<%= form_tag create_crop_sale_home_index_path do  %>
+   
+
+    <div>
+      </br><%= label_tag :Open_order %>
+      <%= select_tag('sales[open_order]', options_for_select([['Yes', true], ['No',false]])) %>
+    </div>
+ 
+
+    <div>
+      <%= label_tag :Bushels %>
+        <%=text_field_tag 'sales[bushel]' %>
+    </div>
+  
+    <div>
+      <%=label_tag :Delivery_Location %>
+      <%= text_field_tag 'sales[delivery_location]'%>
+    </div>
+    <div>
+      <%= label_tag :Future_month %>
+      <%= select_tag 'sales[future_month]', options_for_select(@months) %>
+  </div>
+  
+  <div>
+      <%= label_tag :Basis %>
+      <%= text_field_tag 'sales[basis]'%>
+  </div>
+  <div>
+      <%= label_tag :Cash_price %>
+      <%= text_field_tag 'sales[cash_prise]'%>
+  </div>
+  <div>
+      <%= label_tag :Sale_duration %>
+      <%= select_tag('sales[sale_duration]', options_for_select([['Long', 'long'], ['Short', 'short']])) %>
+  </div>
+  <div>
+      <%= label_tag :contracts %>
+      <%= text_field_tag 'sales[contract]'%>
+  </div>
+   <div>
+      <%= label_tag :Sale_Type %>
+      <%= select_tag('sales[sale_duration]', options_for_select([['Put', 'put'], ['Call', 'call']])) %>
+  </div>
+   <div>
+      <%= label_tag :Stike_price %>
+      <%= text_field_tag 'sales[strike_price]'%>
+  </div>
+   <div>
+      <%= label_tag :premium %>
+      <%= text_field_tag 'sales[premium]'%>
+  </div>
+   <div>
+      <%= label_tag :Sale_Income %>
+      <%= text_field_tag 'sales[sale_income]'%>
+  </div>
+
+
+
+<%= submit_tag "Submit Information" ,:class=>"btn btn-primary"%>
+  <%end%>
+  <%= link_to "Back ",root_path,:class=>"btn-primary"%>
+</div>

@@ -1,0 +1,21 @@
+<div class="container">
+<%= form_tag crop_information_home_index_path do  %>
+    <div>
+     <%= label_tag :crop_name %>
+      <%= text_field_tag 'crop[crop_name]'%>
+     </div>
+     <div>
+      <%= label_tag :year %>
+      <%=select_tag 'crop[year]', options_for_select(Year.all.collect(&:year))%>
+    </div>
+    <div>
+      <%= label_tag :how_many_acres %>
+        <%=text_field_tag 'crop[acre]' %>
+    </div>
+  
+
+<%= submit_tag "Submit Information" ,:class=>"btn btn-primary"%>
+  <%end%>
+  <%= link_to "Back" ,:back%>
+</div>
+

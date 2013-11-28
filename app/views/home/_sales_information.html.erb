@@ -1,0 +1,17 @@
+
+
+
+<%if !@user_id.blank?%>
+ <%if @user_id.to_i!=current_user.id
+  params[:select_user_id]=@user_id
+  %>
+	  <% @user_id=params[:select_user_id]%>
+	  <%=render "sale_information_user"%>
+  <%else%>
+	  <% @user_id=current_user.id%>
+	  <%=render "sale_information_current_user"%>
+  <%end%>
+<%else%>
+  <% @user_id=current_user.id%>
+  <%=render "sale_information_current_user"%>
+<%end%>

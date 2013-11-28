@@ -1,0 +1,401 @@
+
+<style>
+ .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#f1f1f1; }
+</style>
+ 
+
+<% @user_id=current_user.id%>
+
+ <div class="inner">
+  <div class="accordion-inner">
+  
+    <ul class="one">
+        <li class="archive_farmer" id="sales">
+          <p><a href="#">Archive</a></p>
+        </li>
+
+        <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+        <%if !(@archive_year.include? year.year)%>
+
+        <li ><%= link_to"<p id=year_#{year.year}>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>       
+          
+        <% end %>
+        <% end %>
+        <%else%>
+        No Sales/Hedges this year.
+        <% end %>      
+    </ul>
+    <ul class="two">
+        <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+        <% if (@archive_year.include? year.year)%>       
+          <li style="display:none" class="archive_year_farmer_sales" ><%= link_to"<p id=year_#{year.year}>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>
+        <% end %>
+        <% end %>
+        <%else%>
+        No Sales/Hedges this year.
+        <% end %>      
+    </ul>
+    <div class="clearfix"></div>
+    <!--clearfix-->
+    <div id="open_popup"  style="display: none;"> 
+      
+      <h3>Sales/Hedges</h3>
+      <%=form_tag hedge_sale_home_index_path ,:remote=>true ,:style=>"padding-left: 56px;" do%>
+      <%=radio_button_tag "hedge_sale", 'cash',:checked=>true%>&nbsp;&nbsp;Cash Sale</br>
+      <%=radio_button_tag "hedge_sale", 'forward'%>&nbsp;&nbsp;Forward Contract</br>
+      <%=radio_button_tag "hedge_sale", 'hedge'%>&nbsp;&nbsp;Hedge-To-Arrive</br>
+      <%=radio_button_tag "hedge_sale", 'basis'%>&nbsp;&nbsp;Basis Contract</br>
+      <%=radio_button_tag "hedge_sale", 'future'%>&nbsp;&nbsp;Futures</br>
+      <%=radio_button_tag "hedge_sale", 'option'%>&nbsp;&nbsp;Options</br></br>
+      <%= submit_tag "select" ,:class=>"btn btn "%>
+      <%end%>
+
+    </div>
+  
+   
+    <%if @cash_sale.blank? && @forward_contract.blank? && @hedge_to_arrive.blank?&&@future.blank?&& @option.blank?&& @basic_contract.blank?%>
+    
+       <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
+       <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
+      </div>
+    <%end%>
+    
+    <%if !@cash_sale.blank? || !@forward_contract.blank? || !@hedge_to_arrive.blank?||!@future.blank?|| !@option.blank?|| !@basic_contract.blank?%>
+      <div class="news" style="margin-top:20px;"> <a href="javascript:void(0);" class="pull-left corn">
+
+        <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
+        <br/>
+        <%if !@cash_sale.blank? %>
+         <%hash=Hash[(@cash_sale.collect{|s| [ s.id,s.crop_name]})]%>
+          <%@group=hash.group_by{ |k,v| v }.each_with_object({}) { |(k,v), h| h[v.map(&:first).join(', ')] = k }%>
+          <%i=0%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do %>
+          <%if !@group.keys[i].blank?%>
+            <%=params[:data]%> Cash Sale information
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
+          <tr class="title-tab">
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
+          </tr>
+        <%end%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do|keys|%>
+                    <tr>
+              <td><%=CashSale.find(keys).year%></td>
+              <td><%= CashSale.find(keys).crop_name%></td>
+              <%if CashSale.find(keys).open_order==true%>
+                <td >Yes</td>
+              <%else%>
+                <td>No</td>
+              <%end%>
+              <td><%= CashSale.find(keys).bushels%></td>
+              <td><%= CashSale.find(keys).delivery_location%></td>
+              <td><%= CashSale.find(keys).futures_price%></td>
+              <td><%= CashSale.find(keys).basic%></td>
+              <td><%= CashSale.find(keys).cash_price%></td>
+              <td><%= CashSale.find(keys).contact_number%></td>
+              <td><%= CashSale.find(keys).percentage_production%></td>
+             </tr> 
+         <%end%>
+          <%end%> 
+        </table>
+       <%i=i+1%>
+    <%end%>
+    
+    <%end%>
+  <%end%>
+<%end%>
+  <%if !@forward_contract.blank?%>
+     <%hash=Hash[(@forward_contract.collect{|s| [ s.id,s.crop_name]})]%>
+    <%@group=hash.group_by{ |k,v| v }.each_with_object({}) { |(k,v), h| h[v.map(&:first).join(', ')] = k }%>
+    <%i=0%>
+    <%if !@group.keys[i].blank?%>
+      <%@group.keys[i].split(",").each do %>
+      <%if !@group.keys[i].blank?%>
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;" >
+          <tr class="title-tab">
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Period</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
+          </tr>
+           <%end%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do|keys|%>
+
+          
+            <tr>
+              <td><%=ForwardContract.find(keys).year%></td>
+               <td><%=ForwardContract.find(keys).crop_name%></td>
+               <%if ForwardContract.find(keys).open_order==true%>
+               <td style="white-space:nowrap;">Yes</td>
+              <%else%>
+               <td style="white-space:nowrap;">No</td>
+              <%end%>
+              
+              <td><%= ForwardContract.find(keys).bushels%></td>
+              <td><%= ForwardContract.find(keys).delivery_location%></td>
+              <td><%= ForwardContract.find(keys).delivery_period%></td>
+              <td><%= ForwardContract.find(keys).futures_price%></td>
+              <td><%= ForwardContract.find(keys).basic%></td>
+              <td><%= ForwardContract.find(keys).cash_price%></td>
+              <td><%= ForwardContract.find(keys).contact_number%></td>
+              <td><%= ForwardContract.find(keys).percentage_production%></td>
+            </tr> 
+          <%end%>
+          <%end%> 
+        </table>
+   <%i=i+1%>
+    <%end%>
+    
+    <%end%>
+  <%end%>
+  <%if !@hedge_to_arrive.blank?%>
+     <%hash=Hash[(@hedge_to_arrive.collect{|s| [ s.id,s.crop_name]})]%>
+    <%@group=hash.group_by{ |k,v| v }.each_with_object({}) { |(k,v), h| h[v.map(&:first).join(', ')] = k }%>
+    <%i=0%>
+    
+    <%if !@group.keys[i].blank?%>
+   
+      <%@group.keys[i].split(",").each do %>
+      <%if !@group.keys[i].blank?%>
+      <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Hedge To Arrive</a>
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
+          <tr class="title-tab">
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Month</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Est.Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
+          </tr>
+          <%end%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do|keys|%>
+            <tr>
+              <td><%=HedgeToArrive.find(keys).year%></td>
+               <td><%= HedgeToArrive.find(keys).crop_name%></td>
+               <%if HedgeToArrive.find(keys).open_order==true%>
+               <td style="white-space:nowrap;">Yes</td>
+              <%else%>
+               <td style="white-space:nowrap;">No</td>
+              <%end%>
+              
+              <td><%= HedgeToArrive.find(keys).bushels%></td>
+         
+              <td><%= HedgeToArrive.find(keys).delivery_location%></td>
+              <td><%= HedgeToArrive.find(keys).future_month%></td>
+              <td><%= HedgeToArrive.find(keys).futures_price%></td>
+              <td><%= HedgeToArrive.find(keys).basic%></td>
+              <td><%= HedgeToArrive.find(keys).cash_price%></td>
+              <td><%= HedgeToArrive.find(keys).contact_number%></td>
+              <td><%= HedgeToArrive.find(keys).percentage_production%></td>
+            </tr> 
+          <%end%>
+          <%end%>
+           
+      </table> 
+      <%i=i+1%>
+    <%end%>
+    
+    <%end%>
+  <%end%>
+
+   <%if !@future.blank?%>
+   <%hash=Hash[(@future.collect{|s| [ s.id,s.crop_name]})]%>
+    <%@group=hash.group_by{ |k,v| v }.each_with_object({}) { |(k,v), h| h[v.map(&:first).join(', ')] = k }%>
+    <%i=0%>
+     <%if !@group.keys[i].blank?%>
+   
+      <%@group.keys[i].split(",").each do %>
+      <%if !@group.keys[i].blank?%>
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
+          <tr class="title-tab">
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Duration </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Month</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
+          
+          </tr>
+
+       <%end%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do|keys|%>
+       <tr>
+              <td><%=Future.find(keys).year%></td>
+              <td><%= Future.find(keys).crop_name%></td>
+              <%if Future.find(keys).open_order==true%>
+                <td>Yes</td>
+              <%else%>
+                <td>No</td>
+              <%end%>
+              <td><%= Future.find(keys).long_short%></td>
+              <td><%= Future.find(keys).contract%></td>
+              <td><%= Future.find(keys).future_month%></td>
+              <td><%= Future.find(keys).futures_price%></td>
+              <td><%= Future.find(keys).gain_loss%></td>
+            
+            </tr> 
+      <%end%>
+          <%end%>
+           
+      </table> 
+  <%i=i+1%>
+    <%end%>
+    
+    <%end%>
+  <%end%>
+     <%if !@option.blank?%>
+  <%hash=Hash[(@option.collect{|s| [ s.id,s.crop_name]})]%>
+    <%@group=hash.group_by{ |k,v| v }.each_with_object({}) { |(k,v), h| h[v.map(&:first).join(', ')] = k }%>
+    <%i=0%>
+     <%if !@group.keys[i].blank?%>
+   
+      <%@group.keys[i].split(",").each do %>
+      <%if !@group.keys[i].blank?%>
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
+          <tr class="title-tab">
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Duration </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Put/Call</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Strike Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> premium </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
+          
+          </tr>
+          <%end%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do|keys|%>
+             <tr>
+              <td style="white-space:nowrap;"><%=Option.find(keys).year%></td>
+              <td style="white-space:nowrap;"><%=Option.find(keys).crop_name%></td>
+              <%if Option.find(keys).open_order==true%>
+               <td style="white-space:nowrap;">Yes</td>
+              <%else%>
+               <td style="white-space:nowrap;">No</td>
+              <%end%>
+              <td style="white-space:nowrap;"><%= Option.find(keys).long_short%></td>
+              <td style="white-space:nowrap;"><%= Option.find(keys).contract%></td>
+              <td style="white-space:nowrap;"><%= Option.find(keys).put_call%></td>
+              <td style="white-space:nowrap;"><%= Option.find(keys).strike_price%></td>
+              <td style="white-space:nowrap;"><%= Option.find(keys).premium%></td>
+              <td style="white-space:nowrap;"><%= Option.find(keys).gain_loss%></td>
+            
+            </tr> 
+            <%end%>
+          <%end%>
+           
+      </table> 
+  <%i=i+1%>
+    <%end%>
+    
+    <%end%>
+  <%end%>
+
+  <%if !@basic_contract.blank?%>
+  <%hash=Hash[(@basic_contract.collect{|s| [ s.id,s.crop_name]})]%>
+    <%@group=hash.group_by{ |k,v| v }.each_with_object({}) { |(k,v), h| h[v.map(&:first).join(', ')] = k }%>
+    <%i=0%>
+     <%if !@group.keys[i].blank?%>
+   
+      <%@group.keys[i].split(",").each do %>
+      <%if !@group.keys[i].blank?%>
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Basis Contract</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
+          <tr class="title-tab">
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Month</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
+          </tr>
+          <%end%>
+          <%if !@group.keys[i].blank?%>
+          <%@group.keys[i].split(",").each do|keys|%>
+            <tr>
+              <td style="white-space:nowrap;"><%=BasicContract.find(keys).year%></td>
+              <td style="white-space:nowrap;"><%=BasicContract.find(keys).crop_name%></td>
+              <%if BasicContract.find(keys).open_order==true%>
+               <td style="white-space:nowrap;">Yes</td>
+              <%else%>
+               <td style="white-space:nowrap;">No</td>
+              <%end%>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).bushels%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).delivery_location%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).future_month%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).futures_price%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).basic%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).cash_price%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).contact_number%></td>
+              <td style="white-space:nowrap;"><%= BasicContract.find(keys).percentage_production%></td>
+            </tr> 
+          <%end%>
+          <%end%>
+           
+      </table> 
+  <%i=i+1%>
+    <%end%>
+    
+    <%end%>
+  <%end%>
+   <%if @cash_sale.blank? && @forward_contract.blank? && @option.blank?&& @hedge_to_arrive.blank?&& @basic_contract.blank?&& @future.blank?%>
+  No Information Present
+  <%end%>
+<!--news-->
+  </div>
+  <!--accordion-inner-->
+</div>
+              <!--inner-->
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".archive_farmer").click(function(){
+      var id = $(this).attr("id");
+      $(".archive_year_farmer_"+id).toggle();
+    });
+
+  });
+</script>
+
+

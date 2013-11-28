@@ -1,0 +1,53 @@
+<div class="container-fluid" id="sign_in_form">
+ 
+  <div class="clearfix"></div>
+  <!--clearfix-->
+  <div class="row-fluid">
+    <div class="container" style="margin-top:-15px;">
+      <div class="offset1 span7">
+       
+      </div>
+      <!--span7-->
+      <div class="offset4"></div>
+      <!--offset4-->
+    </div>
+    <!--container-->
+  </div>
+  <!--row-fluid-->
+  <div class="clearfix"></div>
+  <!--clearfix-->
+  <div class="row-fluid">
+    <div class="container" style="margin-top:-15px;">
+    	<div align="center">
+	    	<table>
+	    	<tr>
+	    		<td>
+	    		<h4 style="margin-right: 128px;">Sign In</h4>
+	    		</td>
+	    		<td><%=link_to "Create Account", new_user_registration_path%></td>
+	    	</tr>
+	    	
+	    	</table>
+			<%= form_tag(new_user_session_path) do  %>
+			<div style="margin-right: 167px;">
+			EMAIL
+			</div>
+			<div>
+			  <%=email_field_tag 'user[email]', nil,:autofocus => true %>
+			</div>  
+			<div style="margin-right: 140px;">
+			 PASSWORD
+			</div>
+			<div> 
+			  <%=password_field_tag 'user[password]' %>
+			 </div> 
+
+			 <%= image_tag 'cross1.png',:style=>"width: 8px; max-height: 15px ! important;" ,:class=>"close"%>
+			 <%= submit_tag "Sign in" ,:class=>"btn btn-primary"%>
+			<% end %>
+	</div>
+	</div>
+	</div>
+	</div>
+
+<%#= render "devise/shared/links" %>

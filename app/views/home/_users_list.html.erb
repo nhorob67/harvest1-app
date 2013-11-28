@@ -1,0 +1,39 @@
+<div class="container">
+<%if !@users.blank?%>
+
+<h3>List of users</h3>
+
+
+
+  <table class="table table-bordered">
+    <tr>
+      <th>First Name</th>
+      <th>Email</th>
+      <th>Cell Number</th>
+      <th>Role</th>
+      <th>Destroy</th>
+    </tr>
+    
+    <% @users.each do |user| %>
+       
+      <tr>
+        <%if !user.has_role? :admin %>
+        <td><%= user.first_name%></td>
+        <td><%= user.email %></td>
+        <td><%= user.cell_number %></td>
+        <%if user.has_role? :consultant %>
+        <td>Consultant</td>
+        <%else%>
+        <td>User</td>
+        <%end%>
+        <td><%=link_to "Delete",user_destroy_home_index_path(user),:method=>:delete, data: { confirm: 'Are you sure?' }%></td>
+        
+       <%end%>
+      </tr>
+    <% end %>    
+  
+  <%else%>
+  <h3>User not found. </h3>
+  </table>
+<%end%>
+</div>

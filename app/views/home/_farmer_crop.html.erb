@@ -1,0 +1,17 @@
+
+ <%if !@crop_information.blank?%>
+    <table class="table table-bordered">
+      <tr>
+        <th>Name Of crop</th>
+        <th>Year’s of crops going to plant</th>
+      </tr>
+      <% @crop_information.each do |crop_information| %>
+        <tr>
+          <td><%= crop_information.crop_name%></td>
+          <td><%=  crop_information.year %></td>
+        </tr>
+      <%end%>
+    </table>
+  <%else%>
+    <h4>Crop Information not found. </h4>
+  <%end%>

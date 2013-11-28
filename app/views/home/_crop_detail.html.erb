@@ -1,0 +1,217 @@
+<style>
+ .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#f1f1f1; }
+</style>
+  <%if !@select_user_id.nil? %>
+    <%params[:select_user_id]=@select_user_id%>
+  <%end%>
+  <div class="accordion-inner">
+    <ul class="one">
+      <li id="archive_farmer_search" id="crop">
+        <p class="consultantArchive"><a href="#">Archive</a></p>
+      </li>
+        <%if !@years.nil?%>
+        <% @years.each do |year| %>
+         
+          <% if (@archive_year.include? year.year)%>   
+         
+            <li style="display:none" class="archive_year_farmer_crop_show" ><%= link_to"<p id=search_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>
+          <% end %>
+        <% end %>
+    
+      <% end %>  
+    </ul>
+    <ul class="two">
+     
+      <%if !@years.nil?%>
+        <% @years.each do |year| %> 
+          <%if !(@archive_year.include? year.year)%>
+
+            <li style="width: 9%;"><%= link_to"<p id=search_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>       
+            
+          <% end %>
+        <% end %>
+      
+      <% end %>   
+           
+    </ul>
+  <div class="clearfix"></div>
+  <!--clearfix-->
+ 
+    <br>
+  <%if !@crop_info.blank?%>
+    <br>
+    <br>
+      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+        <tr>
+          <td style="width: 13%;">
+            <table>
+              <tr style="height: 59px;"><th >Crop Name</th></tr>
+              <tr style="height: 62px;"><th >  Year </th></tr>
+               <tr style="height: 58px;"><th>  Expenses </th></tr>
+                <tr style="height: 48px;"><th>  Acre </th></tr>
+                <tr style="height: 59px;"><th>  Yield </th></tr>
+
+                <tr style="height: 51px;"><th >  Production </th></tr>
+
+               
+                  <tr style="height: 66px;"><th > Fertilizer</th></tr>
+                 
+               
+                  <tr style="height: 48px;"><th >  Seed</th></tr>
+               
+              
+                  <tr style="height: 61px;"><th > Chemical </th></tr>
+              
+                
+                  <tr style="height: 62px;"><th > Insurance </th></tr>
+               
+                
+                  <tr style="height: 45px;"><th >fuel </th></tr>
+                 
+               
+                  <tr style="height:63px;"><th >Land cost</th></tr>
+                 
+                
+                  <tr style="height: 46px;"><th >Over Head </th></tr>
+               
+               
+                  <tr style="height: 22px;"><th > Family Living </th></tr>
+                
+                <tr style="height: 46px;"><th >  Total Expenses </th></tr>
+               <tr style="height: 61px;"><th >  BreakEven </th></tr>
+               <%User.find(params[:select_user_id]).crop_information_expenses.each do |expense|%>
+
+                  <%if expense.year==params[:data].to_i%>
+                    <tr style="height: 57px;"><th > <%= expense.expense %></th></tr>
+                  <%end%>
+                <%end%>
+              </table>
+             </td> 
+          <%@crop_info.each do |crop|%>   
+
+            <td>
+              <table>  
+              
+                <tr ><td>
+                  
+                  <%=text_field_tag '',!crop.crop_name.blank? ? crop.crop_name : "-", :style=>"width:100px;", :disabled =>true%>
+                  
+                  </td>
+                </tr>                  
+                <tr><td ><%=text_field_tag '',!crop.year.blank? ? crop.year : "-", :style=>"width:100px;", :disabled =>true%></td></tr>
+                <tr ><td>
+               
+                  <%=text_field_tag '',!crop.expenses.blank? ? crop.expenses : "-", :style=>"width:100px;", :disabled =>true%>
+                  
+                </td></tr>
+                <tr ><td>
+                  
+                  <%=text_field_tag '',!crop.acre.blank? ? crop.acre : "-", :style=>"width:100px;", :disabled =>true%>
+                 
+                   </td></tr>
+                <tr ><td>
+               
+                  <%=text_field_tag '',!crop.yield.blank? ? crop.yield : "-", :style=>"width:100px;", :disabled =>true%>
+                
+                </td>
+            
+                </tr>
+                <tr ><td>
+               
+                  <%=text_field_tag '',!((crop.yield.to_i)*(crop.acre.to_i)).blank? ? (crop.yield.to_i)*(crop.acre.to_i) : "-", :style=>"width:100px;", :disabled =>true%>
+                
+                </td></tr>       
+                <tr ><td>
+                
+                  <%=text_field_tag '',!crop.fertilizer.blank? ? crop.fertilizer : "-", :style=>"width:100px;", :disabled =>true%>
+                  
+                  </td></tr>
+                 <tr><td>
+
+                  <%=text_field_tag '',!crop.seed.blank? ? crop.seed : "-", :style=>"width:100px;", :disabled =>true%>
+                
+                </td></tr>
+                  <tr><td >
+                 
+                    <%=text_field_tag '',!crop.chemical.blank? ? crop.chemical : "-", :style=>"width:100px;", :disabled =>true%>
+                    
+                  </td></tr>
+                   <tr><td>
+                 
+                    <%=text_field_tag '', !crop.insurance.blank? ? crop.insurance : "-", :style=>"width:100px;", :disabled =>true%>
+                  
+                  </td></tr>
+                  <tr ><td >
+                    
+                    <%= text_field_tag '',!crop.fuel.blank? ? crop.fuel : " ", :style=>"width:100px;", :disabled =>true%>
+                    
+                    </td></tr>
+                 
+                 <tr ><td>
+                   
+                  <%=text_field_tag '',!crop.land_cost.blank? ? crop.land_cost : " ", :style=>"width:100px;", :disabled =>true%>
+                  
+                  </td></tr>
+                  <tr><td>
+                      
+                    <%=text_field_tag '',!crop.overhead.blank? ? crop.overhead : " ", :style=>"width:100px;", :disabled =>true%>
+                    
+                  </td></tr>
+                   <tr><td>
+                  
+                    <%=text_field_tag '',!crop.family_living.blank? ? crop.family_living : " ", :style=>"width:100px;", :disabled =>true%>
+                  
+                  </td></tr>            
+                 <tr><td >
+                  
+                  <%=text_field_tag '', !crop.total_expenses.blank? ? crop.total_expenses : " ", :style=>"width:100px;", :disabled =>true%>
+                  
+                  </td></tr>
+                  <tr><td>
+                    
+                    <%=text_field_tag '',!crop.breakeven.blank? ? crop.breakeven : " ", :style=>"width:100px;", :disabled =>true%>
+                    
+                    </td></tr>
+                <%User.find(params[:select_user_id]).crop_information_expenses.each do |expense|%>
+                
+                  <%if expense.year==params[:data].to_i%>
+                    <tr ><td><%=text_field_tag '',!crop.expense_category.blank? ?  crop.expense_category : " ", :style=>"width:100px;", :disabled =>true%> 
+                      
+                    </td></tr>
+                  <%end%>
+                <% end%>
+              </table>
+       
+            </td>
+          <%end%>   
+       </tr>
+      </table>   
+  <%else%>
+    <h3>Crop not found. </h3>
+  <%end%>
+
+</div>
+  <!--accordion-inner-->
+
+
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#archive_farmer_search").click(function(){
+    
+      
+      $(".archive_year_farmer_crop_show").toggle();
+      $('.accordion-inner').find('.list-select').removeClass('list-select');
+       $('.consultantArchive').addClass('list-select');
+    });
+ $(".fancybox").fancybox()  
+});
+
+ 
+
+
+
+</script>

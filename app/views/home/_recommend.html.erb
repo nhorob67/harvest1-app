@@ -1,0 +1,27 @@
+ <%if !@recommend.blank?%>
+    <table class="table table-bordered">
+      <tr>
+        
+        <th>Content</th>
+        <th>Document</th>
+        <th>Date</th>
+      </tr>
+     
+      <% @recommend.each do |recommend| %>
+
+        <tr>
+          
+          <td><%= raw recommend.content %></td>
+          <%if !recommend.document.blank?%>
+            <td><%=image_tag recommend.document,:size=>"106x78"%></td>
+          <%else%>  
+            <td> </td>
+          <%end%>
+          <td><%=recommend.created_at.strftime("%B,%d %Y")%></td>
+        </tr>
+      <% end %>    
+    </table>
+    <%else%>
+    <h3>Recommend not found. </h3>
+    
+  <%end%>

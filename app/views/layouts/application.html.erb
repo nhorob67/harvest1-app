@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HarvestProfit</title>
+  <%= stylesheet_link_tag    "bootstrap.css","bootstrap-responsive.css","bootstrap-fileupload.min.css","style.css","jquery.fancybox", :media => "all" %>
+  <%= javascript_include_tag "application","best_in_place.js" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= render 'layouts/header' %>  
+<div class="container" style=" margin-top: 25px;">
+	<%= bootstrap_flash %>
+
+<%= yield %>
+</div>
+</body>
+</html>
+

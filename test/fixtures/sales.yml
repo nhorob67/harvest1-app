@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  open_order: false
+  bushel: 1
+  delivery_location: MyString
+  future_month: 2013-10-12
+  basis: 9.99
+  cash_prise: 9.99
+  sale_duration: MyString
+  contract: 1
+  sale_type: MyString
+  strike_price: 9.99
+  premium: 9.99
+  sale_income: 9.99
+
+two:
+  open_order: false
+  bushel: 1
+  delivery_location: MyString
+  future_month: 2013-10-12
+  basis: 9.99
+  cash_prise: 9.99
+  sale_duration: MyString
+  contract: 1
+  sale_type: MyString
+  strike_price: 9.99
+  premium: 9.99
+  sale_income: 9.99

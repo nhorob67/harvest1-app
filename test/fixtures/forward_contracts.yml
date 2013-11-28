@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  open_order: false
+  bushels: 1
+  delivery_location: MyString
+  delivery_period: MyString
+  futures_price: 1.5
+  basic: 1.5
+  cash_price: 1.5
+  contact_number: 1
+  percentage_production: 1.5
+
+two:
+  open_order: false
+  bushels: 1
+  delivery_location: MyString
+  delivery_period: MyString
+  futures_price: 1.5
+  basic: 1.5
+  cash_price: 1.5
+  contact_number: 1
+  percentage_production: 1.5

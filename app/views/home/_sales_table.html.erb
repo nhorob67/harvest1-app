@@ -1,0 +1,15 @@
+ <div id="open_popup" > 
+      
+      <h3>Sales/Hedges</h3>
+      <%=form_tag hedge_sale_home_index_path ,:remote=>true ,:style=>"padding-left: 56px;" do%>
+      <%=radio_button_tag "hedge_sale", 'cash',:checked=>true%>&nbsp;&nbsp;Cash Sale</br>
+      <%=radio_button_tag "hedge_sale", 'forward'%>&nbsp;&nbsp;Forward Contract</br>
+      <%=radio_button_tag "hedge_sale", 'hedge'%>&nbsp;&nbsp;Hedge-To-Arrive</br>
+      <%=radio_button_tag "hedge_sale", 'basis'%>&nbsp;&nbsp;Basis Contract</br>
+      <%=radio_button_tag "hedge_sale", 'future'%>&nbsp;&nbsp;Futures</br>
+      <%=radio_button_tag "hedge_sale", 'option'%>&nbsp;&nbsp;Options</br></br>
+      <%=hidden_field_tag "crop_name",params[:crop]%>
+      <%= submit_tag "select" ,:class=>"btn btn "%>
+      <%end%>
+
+    </div>

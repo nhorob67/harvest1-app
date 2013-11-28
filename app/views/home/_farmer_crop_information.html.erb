@@ -1,0 +1,33 @@
+<div class="inner">
+	<h3>All Farmer crop information</h3>
+  <div class="accordion-inner"> 
+
+    <table class="table table-bordered">
+     	<%if !@crop_information.blank?%>
+	      <tr>
+          <th>Crop Name</th>
+	        <th>Year</th>
+	        <th>Farmer Name</th>
+	      </tr>
+ 
+        <% @crop_information.each do |crop| %>
+          <tr>
+           
+            <td><%=crop.crop_name%></td>
+            <td><%=crop.year%></td>	
+            <%if !crop.user_id.nil?%>			          
+              <td><%=User.find(crop.user_id).first_name%></td>
+            <%else%>
+            <td></td>
+            <%end%>  
+          </tr>
+        <%end%>
+      <%else%> 
+        Content Goes Here..
+      <%end%>     
+    </table>
+
+  </div>
+  <!--accordion-inner-->
+</div>
+              <!--inner-->

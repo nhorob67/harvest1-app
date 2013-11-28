@@ -1,0 +1,74 @@
+#accordion-container {
+	font-size: 13px;
+	background: #ffffff;
+/*	padding: 5px 10px 10px 10px;
+	border: 1px solid #cccccc;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 5px 15px #cccccc;
+	-webkit-box-shadow: 0 5px 15px #cccccc;
+	box-shadow: 0 5px 15px #cccccc;*/
+}
+
+.accordion-header {
+	font-size: 18px;
+	background: #ebebeb;
+	margin: 5px 0 0 0;
+	padding: 5px 0;
+	border: 1px solid #000;
+	cursor: pointer;
+	color: #666666;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+		color: #fff;
+	text-decoration: underline; 
+	font-weight: normal;
+}
+
+.active-header {
+	-moz-border-radius: 8px 8px 0 0;
+	-webkit-border-radius: 8px 8px 0 0;
+	border-radius: 8px 8px 0 0;
+	background: #3b5719 url(images/active-header.gif);
+	background-repeat: no-repeat;
+	background-position: right 50%;
+}
+
+.active-header:hover {
+	background: url(images/active-header.gif) #3b5719;
+	background-repeat: no-repeat;
+	background-position: right 50%;
+
+}
+
+.inactive-header {
+	background: #3b5719 url(images/inactive-header.gif);
+	background-repeat: no-repeat;
+	background-position: right 50%;
+
+}
+
+.inactive-header:hover {
+	background: url(images/inactive-header.gif) #3b5719;
+	background-repeat: no-repeat;
+	background-position: right 50%;
+}
+
+.accordion-content {
+	display: none;
+	width: 872px !important;
+	padding: 10px;
+	padding-top: 0;
+	background: #ffffff;
+	/*border: 1px solid #cccccc;*/
+	border-top: 0;
+	/*-moz-border-radius: 0 0 5px 5px;
+	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;*/
+}
+
+div.table-bordered{ border-radius:0; margin-top: 5px; }
+table.nor-margin{ margin-bottom:0; margin-top: 0; }
+

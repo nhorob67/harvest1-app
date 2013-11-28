@@ -1,0 +1,266 @@
+ <div class="inner">
+  <div class="accordion-inner">
+     <ul class="one">
+        <li id="archive">
+          <p><a href="#">Archive</a></p>
+        </li>
+
+        <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+        <%if year.archive!=true%>
+        <li><%= link_to"<p>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>@user_id}, :remote => true %></li>       
+          
+        <% end %>
+        <% end %>
+      
+        <% end %>       
+    </ul>
+    <ul class="two">
+        <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+        <%if year.archive==true%>       
+          <li style="display:none" class="archive_year"><%= link_to"<p>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>@user_id}, :remote => true %></li>
+        <% end %>
+        <% end %>
+        
+        <% end %>      
+    </ul>
+    
+    <div class="clearfix"></div>
+    <!--clearfix-->
+    <div id="open_popup"  style="display: none;"> 
+      
+      <h3>Sales/Hedges</h3>
+      <%=form_tag hedge_sale_home_index_path ,:remote=>true ,:style=>"padding-left: 56px;" do%>
+      <%=radio_button_tag "hedge_sale", 'cash',:checked=>true%>&nbsp;&nbsp;Cash Sale</br>
+      <%=radio_button_tag "hedge_sale", 'forward'%>&nbsp;&nbsp;Forward Contract</br>
+      <%=radio_button_tag "hedge_sale", 'hedge'%>&nbsp;&nbsp;Hedge-To-Arrive</br>
+      <%=radio_button_tag "hedge_sale", 'basis'%>&nbsp;&nbsp;Basis Contract</br>
+      <%=radio_button_tag "hedge_sale", 'future'%>&nbsp;&nbsp;Futures</br>
+      <%=radio_button_tag "hedge_sale", 'option'%>&nbsp;&nbsp;Options</br></br>
+      <%= submit_tag "select" ,:class=>"btn btn "%>
+      <%end%>
+
+    </div>
+    <%if @cash_sale.blank?%>
+    
+       <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
+       <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
+      </div>
+    <%end%>
+    <%if !@cash_sale.blank?%>
+    <div class="news" style="margin-top:20px;"> <a href="javascript:void(0);" class="pull-left corn">
+      <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
+      Cash Sale information
+      <table id="sortclass1" class="table table-bordered new-tab tablesorter" >
+        
+          <tr class="title-tab">
+            <th><i class="arr"></i> Year</th>
+            <th><i class="arr"></i> OpenOrder</th>
+            <th><i class="arr"></i> Bushels </th>
+            <th><i class="arr"></i> DeliveryLocation</th>
+            <th><i class="arr"></i> FuturePrice</th>
+            <th><i class="arr"></i> Basis </th>
+            <th><i class="arr"></i> CashPrice</th>
+            <th><i class="arr"></i> ContactNum </th>
+            <th><i class="arr"></i> %Percentage</th>
+          </tr>
+        
+          <%@cash_sale.each do|cash_sale|%>
+      
+            <tr>
+              <td><%=cash_sale.year%></td>
+              <td><%= cash_sale.open_order%></td>
+              <td><%= cash_sale.bushels%></td>
+              <td><%= cash_sale.delivery_location%></td>
+              <td><%= cash_sale.futures_price%></td>
+              <td><%= cash_sale.basic%></td>
+              <td><%= cash_sale.cash_price%></td>
+              <td><%= cash_sale.contact_number%></td>
+              <td><%= cash_sale.percentage_production%></td>
+             </tr> 
+          <%end%>
+  
+      </table>
+    </div>
+
+  <%end%>
+
+  <%if !@forward_contract.blank?%>
+  
+    <a href="javascript:void(0);" class="pull-left corn">Forward Contract</a>
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" >
+          <tr class="title-tab">
+            <th><i class="arr"></i> Year</th>
+            <th><i class="arr"></i> Open Order</th>
+            <th><i class="arr"></i> Bushels </th>
+            <th><i class="arr"></i> Delivery Location</th>
+            <th><i class="arr"></i> Delivery Period</th>            
+            <th><i class="arr"></i> Future Price</th>
+            <th><i class="arr"></i> Basis </th>
+            <th><i class="arr"></i> Cash Price</th>
+            <th><i class="arr"></i> Contact Number </th>
+            <th><i class="arr"></i> %</th>
+          </tr>
+
+          <%@forward_contract.each do |forward_contract|%>
+            <tr>
+              <td><%=forward_contract.year%></td>
+              <td><%= forward_contract.open_order%></td>
+              <td><%= forward_contract.bushels%></td>
+              <td><%= forward_contract.delivery_location%></td>
+              <td><%= forward_contract.delivery_period%></td>
+              <td><%= forward_contract.futures_price%></td>
+              <td><%= cash_sale.basic%></td>
+              <td><%= forward_contract.cash_price%></td>
+              <td><%= forward_contract.contact_number%></td>
+              <td><%= forward_contract.percentage_production%></td>
+            </tr> 
+          <%end%>  
+        </table>
+  <%end%>
+   <%if !@hedge_to_arrive.blank?%>
+  
+    <a href="javascript:void(0);" class="pull-left corn">Hedge To Arrive</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+          <tr class="title-tab">
+            <th><i class="arr"></i> Year</th>
+            <th><i class="arr"></i> Open Order</th>
+            <th><i class="arr"></i> Bushels </th>
+            <th><i class="arr"></i> Delivery Location</th>
+            <th><i class="arr"></i> Future Month</th>            
+            <th><i class="arr"></i> Future Price</th>
+            <th><i class="arr"></i> Basis </th>
+            <th><i class="arr"></i> Cash Price</th>
+            <th><i class="arr"></i> Contact Number </th>
+            <th><i class="arr"></i> %</th>
+          </tr>
+
+
+          <%@hedge_to_arrive.each do |hedge_to_arrive|%>
+            <tr>
+              <td><%=hedge_to_arrive.year%></td>
+              <td><%= hedge_to_arrive.open_order%></td>
+              <td><%= hedge_to_arrive.bushels%></td>
+              <td><%= hedge_to_arrive.delivery_location%></td>
+              <td><%= hedge_to_arrive.future_month%></td>
+              <td><%= hedge_to_arrive.futures_price%></td>
+              <td><%= hedge_to_arrive.basic%></td>
+              <td><%= hedge_to_arrive.cash_price%></td>
+              <td><%= hedge_to_arrive.contact_number%></td>
+              <td><%= hedge_to_arrive.percentage_production%></td>
+            </tr> 
+          <%end%> 
+      </table> 
+  <%end%>
+   <%if !@future.blank?%>
+  
+    <a href="javascript:void(0);" class="pull-left corn">Future</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+          <tr class="title-tab">
+            <th><i class="arr"></i> Year</th>
+            <th><i class="arr"></i> Open Order</th>
+            <th><i class="arr"></i> Duration </th>
+            <th><i class="arr"></i> Contract Number</th>
+            <th><i class="arr"></i> Future Month</th>            
+            <th><i class="arr"></i> Future Price</th>
+            <th><i class="arr"></i> Weight </th>
+          
+          </tr>
+
+      <%@future.each do |future|%>
+       <tr>
+              <td><%=future.year%></td>
+              <td><%= future.open_order%></td>
+              <td><%= future.long_short%></td>
+              <td><%= future.contract%></td>
+              <td><%= future.future_month%></td>
+              <td><%= future.futures_price%></td>
+              <td><%= future.gain_loss%></td>
+            
+            </tr> 
+      <%end%>  
+  <%end%>
+     <%if !@option.blank?%>
+  
+    <a href="javascript:void(0);" class="pull-left corn">option</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+          <tr class="title-tab">
+            <th><i class="arr"></i> Year</th>
+            <th><i class="arr"></i> Open Order</th>
+            <th><i class="arr"></i> Duration </th>
+            <th><i class="arr"></i> Contract</th>
+            <th><i class="arr"></i> Put/Call</th>            
+            <th><i class="arr"></i> Strike Price</th>
+            <th><i class="arr"></i> premium </th>
+            <th><i class="arr"></i> Weight </th>
+          
+          </tr>
+          <%@option.each do |option|%>
+             <tr>
+              <td><%=option.year%></td>
+              <td><%= option.open_order%></td>
+              <td><%= option.long_short%></td>
+              <td><%= option.contract%></td>
+              <td><%= option.put_call%></td>
+              <td><%= option.strike_price%></td>
+              <td><%= option.premium%></td>
+              <td><%= option.gain_loss%></td>
+            
+            </tr> 
+          <%end%>  
+  <%end%>
+
+  <%if !@basic_contract.blank?%>
+  
+    <a href="javascript:void(0);" class="pull-left corn">Basis Contract</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+          <tr class="title-tab">
+            <th><i class="arr"></i> Year</th>
+            <th><i class="arr"></i> OpenOrder</th>
+            <th><i class="arr"></i> Bushels </th>
+            <th><i class="arr"></i> Delivery Location</th>
+            <th><i class="arr"></i> Future Month</th>            
+            <th><i class="arr"></i> Future Price</th>
+            <th><i class="arr"></i> Basis </th>
+            <th><i class="arr"></i> Cash Price</th>
+            <th><i class="arr"></i> Contact Number </th>
+            <th><i class="arr"></i> %</th>
+          </tr>
+
+
+          <%@basic_contract.each do |basic_contract|%>
+            <tr>
+              <td><%=basic_contract.year%></td>
+              <td><%= basic_contract.open_order%></td>
+              <td><%= basic_contract.bushels%></td>
+              <td><%= basic_contract.delivery_location%></td>
+              <td><%= basic_contract.future_month%></td>
+              <td><%= basic_contract.futures_price%></td>
+              <td><%= basic_contract.basic%></td>
+              <td><%= basic_contract.cash_price%></td>
+              <td><%= basic_contract.contact_number%></td>
+              <td><%= basic_contract.percentage_production%></td>
+            </tr> 
+          <%end%> 
+      </table> 
+  <%end%>
+   <%if @cash_sale.blank? && @forward_contract.blank? && @option.blank?&& @hedge_to_arrive.blank?&& @basic_contract.blank?&& @future.blank?%>
+  No Information Present
+  <%end%>
+<!--news-->
+  </div>
+  <!--accordion-inner-->
+</div>
+<!--inner-->
+<script>
+$(document).ready(function() {
+
+$("#archive").click(function(){
+
+
+$(".archive_year").toggle();
+});
+
+});
+</script>

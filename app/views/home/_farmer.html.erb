@@ -1,0 +1,26 @@
+ <thead>
+    <tr class="title-tab">
+      <th><i class="arr"></i> Name</th>
+      <th><i class="arr"></i> Email </th>
+      
+       <th><i class="arr"></i>Password </th>
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @consultant_users.each do |user| %>
+        <tr>
+          
+          <td><%=user.first_name%></td>
+          <td><%= user.email %></td>
+        
+         <td><%= user.orignal_password %></td> 
+        
+      
+        </tr>
+    <%end%>
+    <tr>
+    <tr>
+  </tbody>

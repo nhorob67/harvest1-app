@@ -1,0 +1,360 @@
+
+<div class="container">
+<%= form_tag hedge_sale_create_home_index_path do  %>
+   
+  <%if id=="cash"%>
+    <h4 style="padding-left: 187px;">Cash Sale</h4>
+    <table>
+      <tr>
+        <td style="padding-left: 187px;">
+          <div>
+            <%= label_tag :year %>
+            <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+          </div>
+          <div>
+              </br><%= label_tag :crop %>
+            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+          </div>
+          <div>
+            </br><%= label_tag :Open_Order %>
+             <%= select_tag :open_order, options_for_select([['No',false],['Yes', true]]) %>
+          </div>
+          
+          <div>
+            <%= label_tag :Bushels %>
+               <%=text_field_tag :bushels %>  
+          </div>
+       
+          <div>
+            <%=label_tag :Delivery_Location %>
+             <%= text_field_tag :delivery_location%>
+          </div> 
+        </td>
+        <td style="padding-left: 187px;">
+           <div>
+            <%= label_tag :Future_Price %>
+            <%= text_field_tag :futures_price%>
+          </div>
+          <div>
+              <%= label_tag :Basis %>
+              <%= text_field_tag :basic%>
+          </div>   
+          <div>
+              <%= label_tag :Cash_Price %>
+              <%= text_field_tag :cash_price,nil,:disabled=>true%>
+          </div>    
+          <div>
+            <%= label_tag :contract_Number %>
+            <%= text_field_tag :contact_number%>
+          </div>   
+
+
+          <div>
+              <%= label_tag :percentage_Production %>
+              <%= text_field_tag :percentage_production ,nil,:readonly => true%>
+          </div>
+        </td>
+       </tr>
+    </table>
+  <%end%>
+
+<%if id=="forward"%>
+    <h4 style="padding-left: 187px;">Forward Contract</h4>
+    <table>
+      <tr>
+        <td style="padding-left: 187px;">
+           <div>
+           </br>  </br> <%= label_tag :year %>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+          </div>
+          <div>
+              </br><%= label_tag :crop %>
+            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+          </div>
+          <div>
+            </br><%= label_tag :Open_order %>
+                 <%= select_tag :open_order, options_for_select([['No',false],['Yes', true]]) %>
+          </div>
+          <div>
+            </br><%= label_tag :Bushels %>
+               <%=text_field_tag :bushels %>  
+          </div>
+          <div>
+          </br>  <%=label_tag :Delivery_Location %>
+             <%= text_field_tag :delivery_location%>
+          </div>
+          <div>
+          </br>  <%= label_tag :delivery_period %>
+            <%= text_field_tag :delivery_period%>
+          </div>
+        </td>
+        <td style="padding-left: 187px;">
+           <div>
+            <%= label_tag :Future_price %>
+             <%= text_field_tag :futures_price%>
+          </div>
+          <div>
+           </br>   <%= label_tag :Basis %>
+            <%= text_field_tag :basic%>
+          </div>
+          <div>
+           </br>   <%= label_tag :Cash_price %>
+           <%= text_field_tag :cash_price,nil,:disabled=>true%>
+          </div>
+           <div>
+            </br>  <%= label_tag :contract_number %>
+             <%= text_field_tag :contact_number%>
+          </div>
+          <div>
+             </br> <%= label_tag :percentage_production %>
+             <%= text_field_tag :percentage_production,nil,:readonly => true%>
+          </div>
+        </td>
+      </tr>
+    </table>  
+  <%end%>
+
+<%if id=="hedge"%>
+    <h4 style="padding-left: 187px;">Hedge-To-Arrive</h4>
+    <table>
+      <tr>
+        <td style="padding-left: 187px;">
+          </br>
+          <div>
+            <%= label_tag :year %>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+          </div>
+
+          <div>
+              <%= label_tag :crop %>
+            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+          </div>
+          <div>
+           <%= label_tag :Open_Order %>
+            <%= select_tag :open_order, options_for_select([['No',false],['Yes', true]]) %>
+          </div>
+          <div>
+            <%= label_tag :Bushels %>
+               <%=text_field_tag :bushels %>  
+          </div>
+          <div>
+            <%=label_tag :Delivery_Location %>
+             <%= text_field_tag :delivery_location%>
+          </div>
+          <div>
+            <%= label_tag :future_Month %>
+             <%=select_month(Date.today, :start_year => Time.now.month) %>
+          </div>
+         
+          
+        </td>
+        <td style="padding-left: 187px;">  
+          </br>
+            <div>
+            <%= label_tag :future_year %>          
+            <%=select_year(Date.today, :start_year => Time.now.year, :end_year => Time.now.year+5) %>
+          </div>
+       
+          <div>
+            <%= label_tag :Future_Price %>
+            <%= text_field_tag :futures_price%>
+          </div>
+         
+          <div>
+              <%= label_tag "Est_Basis"%>
+              <%= text_field_tag :basic%>
+          </div>
+          <div>
+              <%= label_tag :Cash_Price %>
+          <%= text_field_tag :cash_price,nil,:disabled=>true%>
+          </div>
+           <div>
+              <%= label_tag :contract_Number %>
+             <%= text_field_tag :contact_number%>
+          </div>
+
+         
+          <div>
+              <%= label_tag :percentage_Of_Production %>
+             <%= text_field_tag :percentage_production,nil,:readonly => true%>
+          </div>
+        </td>
+      </tr>
+    </table>      
+  <%end%>
+
+  <%if id=="basis"%>
+
+    <h4 style="padding-left: 187px;">Basis Contract</h4>
+    <table>
+      <tr>
+        <td style="padding-left: 187px;">
+            <div>
+            <%= label_tag :year %>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+          </div>
+           <div>
+              <%= label_tag :crop %>
+            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+          </div>
+
+          <div>
+           <%= label_tag :Open_Order %>
+            <%= select_tag :open_order, options_for_select([['No',false],['Yes', true]]) %>
+          </div>
+          <div>
+            <%= label_tag :Bushels %>
+              <%=text_field_tag :bushels %>   
+          </div>
+          <div>
+            <%=label_tag :Delivery_Location %>
+             <%= text_field_tag :delivery_location%>
+          </div>
+            <div>
+            <%= label_tag :future_Month %>
+             <%=select_month(Date.today, :start_year => Time.now.month) %>
+          </div>
+          
+          
+        </td>
+        <td style="padding-left: 187px;"> 
+           <div>
+            <%= label_tag :future_Year %>          
+            <%=select_year(Date.today, :start_year => Time.now.year, :end_year => Time.now.year+5) %>
+          </div>
+        <div>
+            <%= label_tag :Future_Price %>
+            <%= text_field_tag :futures_price%>
+          </div>         
+          <div>
+              <%= label_tag :Basis %>
+              <%= text_field_tag :basic%>
+          </div>
+          <div>
+              <%= label_tag :Cash_Price %>
+          <%= text_field_tag :cash_price,nil,:disabled=>true%>
+          </div>  
+           <div>
+            <%= label_tag :contract_Number %>
+             <%= text_field_tag :contact_number%>
+          </div>
+         
+          <div>
+              <%= label_tag :percentage_Of_Production %>
+             <%= text_field_tag :percentage_production,nil,:readonly => true%>
+          </div>
+        </td>
+      </tr>
+    </table>         
+  <%end%>
+
+<%if id=="future"%>
+    <h4 style="padding-left: 187px;">Futures</h4>
+    <table>
+      <tr>
+        <td style="padding-left: 187px;">
+          <br>
+          <div>
+            <%= label_tag :year %>
+            <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+          </div>
+
+          <div>
+              <%= label_tag :crop %>
+            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+          </div>
+
+          <div>
+            <%= label_tag :Open_Order %>
+            <%= select_tag :open_order, options_for_select([['No',false],['Yes', true]]) %>
+          </div>
+          <div>
+            <%= label_tag :long_Short %>
+             <%= select_tag :long_short, options_for_select([['Long', 'long'], ['Short', 'short']]) %>
+          </div>
+          <div>
+            <%=label_tag :contract_Number %>
+          <%= text_field_tag :contract%>
+          </div>
+        </td>
+         <td style="padding-left: 187px;"> 
+            <div>
+            <%= label_tag :future_Month %>
+             <%=select_month(Date.today, :start_year => Time.now.month) %>
+          </div>
+           <div>
+            <%= label_tag :future_Year %>          
+            <%=select_year(Date.today, :start_year => Time.now.year, :end_year => Time.now.year+5) %>
+          </div>
+          <div>
+            <%= label_tag :Future_Price %>
+            <%= text_field_tag :futures_price%>
+          </div>
+          
+        <div>
+            <%= label_tag :gain_Loss %>
+          <%= text_field_tag :gain_loss%>
+        </div>
+      </td>
+    </tr>
+  </table>      
+<%end%>
+
+<%if id=="option"%>
+    <h4 style="padding-left: 187px;">Options</h4>
+    <table>
+      <tr>
+        <td style="padding-left: 187px;">
+           </br>
+          <div>
+              <%= label_tag :crop %>
+            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+          </div>
+          <div>
+            <%= label_tag :year %>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+          </div>
+          <div>
+           <%= label_tag :Open_Order %>
+            <%= select_tag :open_order, options_for_select([['No',false],['Yes', true]]) %>
+          </div>
+          <div>
+            <%= label_tag :long_Short %>
+              <%= select_tag :long_short, options_for_select([['Long', 'long'], ['Short', 'short']]) %>
+          </div>
+          <div>
+            <%=label_tag :contract_Number %>
+          <%= text_field_tag :contract%>
+          </div>
+          
+        </td>
+        <td style="padding-left: 187px;">  
+          <div>
+            <%= label_tag :put_Call %>
+             <%= select_tag :put_call, options_for_select([['Put', 'put'], ['Call', 'call']]) %>
+          </div>
+          <div>
+              <%= label_tag :stike_Price %>
+            <%= text_field_tag :stike_price%>
+          </div>
+          <div>
+              <%= label_tag :premium %>
+          <%= text_field_tag :premium%>
+          </div>       
+           <div>
+              <%= label_tag :gain_Loss %>
+             <%= text_field_tag :gain_loss%>
+          </div>
+          
+       </td>
+     </tr>
+    </table>    
+<%end%>
+ <%= hidden_field_tag "id",id %>
+ 
+
+ <%=hidden_field_tag :user_id,current_user.id%>
+<p style="padding-left: 187px;"><%= submit_tag "Submit Information" ,:class=>"btn btn-primary"%></p>
+  <%end%>
+  <%#= link_to "Back ",recommend_home_index_path,:class=>"btn-primary"%>
+</div>

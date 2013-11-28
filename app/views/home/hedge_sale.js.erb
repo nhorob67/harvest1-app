@@ -1,0 +1,8 @@
+$.fancybox('<%= escape_javascript(render(:partial => 'hedge_sale', :locals => {:id => params[:hedge_sale]}))%>',
+  {
+    openEffect: "fade",
+    closeEffect: "fade",
+    autoSize: true,
+    minWidth: 480,
+    scrolling: 'auto',
+  });

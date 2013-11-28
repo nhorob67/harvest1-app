@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  label_name: MyString
+  crop_information_id: 1
+  label_value: MyString
+
+two:
+  label_name: MyString
+  crop_information_id: 1
+  label_value: MyString

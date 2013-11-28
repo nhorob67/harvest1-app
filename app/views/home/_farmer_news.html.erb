@@ -1,0 +1,33 @@
+
+<div class="inner">
+  <div class="accordion-inner">
+    <div class="news">
+      <div class="news-inner">
+        <h3>Contents of Farmers</h3>
+        <a href="javascript:void(0);"></a>
+
+        
+        <%if !@recommends.nil?%>
+          <table class="table table-bordered">
+            <tr>
+              <th>Content</th>
+              <th>Document</th>
+              <th>Date</th>
+            </tr>
+            <% @recommends.each do |recommend|%>
+              <tr>
+
+                <td><%=recommend.content%></td>
+                <%if !recommend.document_file_name.blank?%>
+                  <td><%=recommend.document_file_name%></td>
+                <%end%>
+                <td><%=recommend.created_at.strftime("%d/%m/%Y")%></td>
+            	<tr>
+            <%end%>
+          </table>
+        <%end%>
+        <div class="clearfix"></div><!--clearfix-->
+      </div><!--news-inner--><div class="clearfix"></div><!--clearfix-->
+    </div><!--news-->
+  </div><!--accordion-inner-->
+</div><!--inner-->

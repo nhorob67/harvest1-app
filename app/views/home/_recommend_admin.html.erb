@@ -1,0 +1,21 @@
+
+<%if !@recommend.blank?%>
+    
+      <tr>
+        <th>Title of news piece</th>
+        <th>Content</th>
+      </tr>
+     
+      <% @recommend.each do |recommend| %>
+
+        <tr>
+          <td><%= recommend.title_of_news_piece%></td>
+          <td><%= raw recommend.content %></td>
+          
+        </tr>
+      <% end %>    
+   
+    <%else%>
+    <h3>Recommend not found. </h3>
+    
+  <%end%>

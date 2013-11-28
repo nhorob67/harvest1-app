@@ -1,0 +1,220 @@
+<script type="text/javascript">
+
+$(document).ready(function(){
+  $('.ac-combination-1').click(function(e){
+    //$('.ac-combination-1').addClass('normal');
+    if($(this).find('i.actives').length != 0)
+    {
+      $('.ac-combination-1 i').each(function(index){
+        $(this).removeClass('actives');
+        $(this).addClass('normal'); 
+      });
+      $(this).children("i").removeClass('actives');
+      $(this).children("i").addClass('normal');
+    }
+    else
+    {
+      $('.ac-combination-1 i').each(function(index){
+        $(this).removeClass('actives');
+        $(this).addClass('normal'); 
+      });
+      $(this).children("i").removeClass('normal');
+      $(this).children("i").addClass('actives');
+    }
+  });
+});
+</script>
+<script type="text/javascript">
+  jQuery(document).ready(function() 
+    { 
+        jQuery("#sortclass1").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+    jQuery("#sortclass2").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+    } 
+);
+</script>
+
+<div class="container-fluid"> 
+  <div class="row-fluid">
+    <div class="container" style="margin-top:-15px;  margin-left: -30px;">
+      <div class="span12">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle ac-combination-1" data-parent="#accordion2" href="#collapseNine">Futures Quotes </a>
+            </div><!--accordion-heading-->
+            <div class="accordion-body">
+              <%=render "farmer_future_quoate" %>
+            </div><!--accordion-body-->
+          </div><!--accordion-group-->
+          <div id ="notSign" onclick="valid(<%=current_user%>)">
+
+            <% if !user_signed_in? %>
+           
+                <div class="accordion-group" >
+                  <div class="accordion-heading">
+                      <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseEleven">News or Recommendations<i class="normal"></i></a>
+                  </div><!--accordion-heading-->
+                  <% if user_signed_in? %>
+                    <div id="collapseEleven" class="accordion-body collapse">
+                      <%=render "farmer_news"%>
+                    </div>
+                  <%end%><!--accordion-body-->
+                </div><!--accordion-group-->
+               
+               <div class="accordion-group">
+                <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Crop Information <i class="normal"></i></a> </div>
+                <!--accordion-heading-->
+                <% if user_signed_in? %>
+                  <div id="collapseThree" class="accordion-body collapse">
+                    <%=render "farmer_crop_information"%>
+                  </div>
+                <%end%>  
+                <!--accordion-body-->
+              </div>
+              <!--accordion-group-->
+             
+              <div class="accordion-group">
+                <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">Sales/Hedges<i class="normal"></i></a> </div>
+                <!--accordion-heading-->
+                <% if user_signed_in? %>
+                <div id="collapseFive" class="accordion-body collapse">
+                  <div class="inner">
+                    <div class="accordion-inner"> Content Goes Here.. </div>
+                    <!--accordion-inner-->
+                  </div>
+                  <!--inner-->
+                </div>
+                <%end%>
+                <!--accordion-body-->
+              </div>
+              <!--accordion-group-->
+            <%end%>
+          
+      </div>
+        <% if user_signed_in? %>
+          <%if current_user.has_role? :user %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseEleven">News or Recommendations <i class="normal"></i></a>
+            </div><!--accordion-heading-->
+            <div id="collapseEleven" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner">
+                  <div class="news">
+                      <% if !@recommend.nil? %>
+                        <% @recommend.reverse.each do |recommend|%>
+                            <div class="news-inner">
+                              <%if User.find(recommend.user_id).has_role? :consultant%>
+                              
+                              <h3>New Recommendation -<i><%=recommend.created_at.strftime("%B,%d %Y")%></i></h3>
+                               <p><%#=User.find(recommend.user_id).first_name%></p>
+                              <h4> <%=recommend.content%></h4>
+                              <%if !recommend.document.blank?%>
+                                <a href="javascript:void(0);"><%=image_tag recommend.document,:size=>"106x78"%></a>
+                              <%end%>  
+                             
+                             <%else%>
+                             <h3>News(<%=recommend.title_of_news_piece%>) -<i><%=recommend.created_at.strftime("%B,%d %Y")%></i></h3>
+                              <%if !recommend.document.blank?%>
+                                <a href="javascript:void(0);"><%=image_tag recommend.document,:size=>"106x78"%></a>
+                              <%end%>  
+                              <h4> <%=recommend.content%></h4>
+                             
+                             <%end%>
+                              <div class="clearfix"></div><!--clearfix-->
+                            </div><!--news-inner--><div class="clearfix"></div><!--clearfix-->
+                      <%end%>
+                      <%end%>
+                  </div><!--news-->
+                </div><!--accordion-inner-->
+              </div><!--inner-->
+            </div><!--accordion-body-->
+          </div><!--accordion-group-->
+ <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Crop Information <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div id="crop_farmer">
+                <%=render "crop_farmer_information"%> 
+              </div> 
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+        
+
+          <!--accordion-group-->
+          <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">Sales/Hedges <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseFour" class="accordion-body collapse">
+              <div id="sale_farmer">
+              
+                <%=render "sales_information_farmer"%> 
+              </div> 
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+
+           
+           <div class="accordion-group">
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">Profit Analyzer <i class="normal"></i></a> </div>
+            <!--accordion-heading-->
+            <div id="collapseFive" class="accordion-body collapse">
+              <div class="inner">
+                <div class="accordion-inner"> Content Goes Here.. </div>
+                <!--accordion-inner-->
+              </div>
+              <!--inner-->
+            </div>
+            <!--accordion-body-->
+          </div>
+          <!--accordion-group-->
+
+         
+
+           <%end%>
+        <%end%>
+           </div>
+        <!--accordion-->
+      </div>
+      <!--span12-->
+    </div>
+    <!--container-->
+  </div>
+  <!--row-fluid-->
+  <div class="clearfix"></div>
+  <!--clearfix-->
+</div>
+<!--container-fluid-->
+
+<script type="text/javascript" >
+(function(d, t) {var g = d.createElement(t),s = d.getElementsByTagName(t)[0];
+   g.src = "http://map-generator.net/en/maps/134946.js?point=New+York%2C+NY%2C+USA";
+   s.parentNode.insertBefore(g, s);}(document, "script"));
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".addnew_fancybox").fancybox({
+
+
+    openEffect: "fade",
+    closeEffect: "fade",
+    autoSize: true,
+    minWidth: 480,
+    scrolling: 'auto',
+  
+  });
+});
+function valid(user)
+{
+  
+if(user==undefined){alert("You have to sign in first")
+}
+}
+</script>
+
+
+
