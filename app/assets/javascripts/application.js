@@ -16,4 +16,5 @@
 //= require best_in_place
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
+//= require tinymce
 //= require_tree .
