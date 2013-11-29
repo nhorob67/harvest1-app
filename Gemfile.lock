@@ -1,13 +1,13 @@
 GIT
   remote: git://github.com/Nerian/bootstrap-datepicker-rails.git
-  revision: 42579640e693f832bdffd507041644f9d93a624a
+  revision: 8400591e149d0e9f50957c76fe7f51a73972b887
   specs:
-    bootstrap-datepicker-rails (1.1.1.8)
+    bootstrap-datepicker-rails (1.1.1.9)
       railties (>= 3.0)
 
 GIT
   remote: git://github.com/thoughtbot/paperclip.git
-  revision: 144693101637b784ef3524749019ff8112c0df81
+  revision: 6459f2c00f16051ec397fe911bc21078291ce3b8
   specs:
     paperclip (3.5.2)
       activemodel (>= 3.0.0)
@@ -47,7 +47,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    arel (3.0.2)
+    arel (3.0.3)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     best_in_place (2.1.0)
@@ -73,8 +73,8 @@ GEM
       debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.3)
-    devise (3.1.1)
+    debugger-ruby_core_source (1.2.4)
+    devise (3.2.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -105,14 +105,14 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.25)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
     multi_json (1.8.2)
     multi_xml (0.5.5)
-    mysql2 (0.3.13)
+    mysql2 (0.3.14)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
-    orm_adapter (0.4.0)
+    orm_adapter (0.5.0)
     pg (0.17.0)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -170,6 +170,8 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
+    tinymce-rails (4.0.11)
+      railties (>= 3.1.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -180,17 +182,17 @@ GEM
       httparty (~> 0.10.0)
       i18n (~> 0.5)
       jwt (>= 0.1.3)
-    twilio-ruby (3.6.0)
+    twilio-ruby (3.11.4)
       builder (>= 2.1.2)
       jwt (>= 0.1.2)
-      multi_json (>= 1.0.3)
+      multi_json (>= 1.3.0)
     twitter-bootstrap-rails (2.2.8)
       actionpack (>= 3.1)
       execjs
       rails (>= 3.1)
       railties (>= 3.1)
     tzinfo (0.3.38)
-    uglifier (2.3.0)
+    uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     warden (1.2.3)
@@ -219,6 +221,7 @@ DEPENDENCIES
   sqlite3
   taps
   therubyracer
+  tinymce-rails
   twilio-rb
   twilio-ruby
   twitter-bootstrap-rails
