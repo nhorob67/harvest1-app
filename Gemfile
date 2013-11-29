@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'twilio-rb'
 gem 'twilio-ruby'
+gem 'tinymce-rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem "activerecord-postgresql-adapter"

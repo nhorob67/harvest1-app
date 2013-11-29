@@ -23,8 +23,9 @@
                     <%end%>
                     <div class="clearfix"></div>
                     <!--clearfix-->
+                    <%= f.text_area :content ,:class=>"tinymce", :rows => 6, :cols => 5%><br>
+                    <%= tinymce %>
                     
-                    <%= f.text_area :content ,:class=>"taextr" %>
                     
                     <!--<button name="btn" class="btn pull-left">Upload File</button>
                     <button name="btn" class="btn pull-right">Submit</button>-->
