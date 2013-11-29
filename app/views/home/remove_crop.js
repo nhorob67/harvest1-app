@@ -1,0 +1,26 @@
+<%if params[:note]=="farmer"%>
+
+$('#crop_info').html("<%= escape_javascript(render :partial =>'home/crop_detail',:locals=>{:@select_user_id=>params[:selected_user_id]}) %>");
+<%if !(ArchiveYear.find_by_year_and_user_id(params[:data],params[:selected_user_id])).blank?%>
+	<%if ArchiveYear.find_by_year_and_user_id(params[:data],params[:selected_user_id]).archive==true%>
+		        	
+		$(".archive_year_farmer_crop_show").show();
+	<%end%>
+ 
+
+<%end%>	
+var id = <%= params[:data]%>
+ $("#search_"+id).addClass('list-select');
+<%else%>
+
+	$('#crop_farmer').html("<%= escape_javascript(render :partial =>'home/crop_farmer_information') %>"); 
+		
+		<%if !(ArchiveYear.find_by_year_and_user_id(params[:data],current_user.id)).blank?%>
+			<%if (ArchiveYear.find_by_year_and_user_id(params[:data],current_user.id)).archive==true%>
+		        	
+				$("#archive_year_farmer_crop").show();
+		  	<%end%>
+		<%end%>  	
+		 var id = <%= params[:data]%>
+         $("#crop_"+id).addClass('list-select');
+<%end%>

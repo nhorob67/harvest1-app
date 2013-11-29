@@ -39,18 +39,8 @@
                       <%= f.submit "Submit" ,:class=>"btn pull-right btn-primary"%>
                     <%end%>
                   <% end %>
-                 
-            <%if !current_user.has_role? :admin%>
-                    <%= form_for recommend_search_home_index_path,:remote=>true do |f|%>
-                    <div class="clearfix"></div>
-                    <div class="text-select" style="margin: auto; width: 60%;">
-                          <p>Which farmer's data do you want to display?</p>
-                          <%= f.select :farmer_id, @user.map{|c| [c.first_name, c.id]}, { include_blank: "lists of farmers" },:class=>"select" %>
-                    </div>
-                        <!--text-select--><br>
                   </div>
-                   <%end%>
-                    <%end%>  
+             
                   <!--che-->
                 </div>
                 <!--accordion-inner-->

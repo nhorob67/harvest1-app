@@ -40,6 +40,7 @@ devise_for :users, controllers: {sessions: "sessions",registrations: "registrati
     end
     member do 
     put 'update_label'
+    get 'remove_crop'
     end
   end
   # The priority is based upon order of creation:

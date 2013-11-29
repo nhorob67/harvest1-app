@@ -5,10 +5,11 @@
     <%= submit_tag "Save Changes" ,:class=>"btn btn-primary",:style=>"float: right;"%>
     <br>
     <br>
+    <div style="width: 895px; height: 970px; overflow: auto;">   
       <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
         <tr>
           <td>
-            <table>
+            <table style="width: 139px;">
               <tr style="height: 22px;"><th >Crop Name</th></tr>
              
                 <tr style="height: 48px;"><th>  Acre </th></tr>
@@ -78,6 +79,7 @@
                 <%end%>
               </table>
              </td> 
+
           <%@crop_info.each do |crop|%>   
 
             <td>
@@ -86,39 +88,41 @@
                 <tr>  <%=text_field_tag 'crop[][crop_name]', crop.crop_name , :style=>"width:100px;" %>
                 </tr>                  
                
-                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][acre]',!crop.acre.nil? ? crop.acre : " ", :style=>"width:100px; "%></td></tr>
-                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][yield]',!crop.yield.nil? ? crop.yield : " ", :style=>"width:100px;"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][production]', !crop.production.nil? ? crop.production : " ", :style=>"width:100px;", :disabled =>true%></td></tr>  
+                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][acre]',!crop.acre.nil? ? crop.acre : " ", :style=>"width:100px;",:class=>"acre total_fertilizer",:id=>"acre_#{crop.crop_name}"%></td></tr>
+                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][yield]',!crop.yield.nil? ? crop.yield : " ", :style=>"width:100px;",:id=>"yield_#{crop.crop_name}",:class=>"yield"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][production]', !crop.production.nil? ? crop.production : " ", :style=>"width:100px;", :disabled =>true,:id=>"production_#{crop.crop_name}"%></td></tr>  
                   <tr><td></td></tr>
-                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][projected_price]', !crop.projected_price.nil? ? crop.projected_price : " ", :style=>"width:100px;"%></td></tr>
+                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][projected_price]', !crop.projected_price.nil? ? crop.projected_price : " ", :style=>"width:100px;",:id=>"projected_#{crop.crop_name}",:class=>"projected"%></td></tr>
                    <tr><td></td></tr> 
-                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][per_acre_avenue]', (crop.projected_price.to_i*crop.yield.to_i), :style=>"width:100px;", :disabled =>true%></td></tr>
+                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][per_acre_avenue]', (crop.projected_price.to_i*crop.yield.to_i), :style=>"width:100px;", :disabled =>true,:id=>"per_acre_avenue_#{crop.crop_name}"%></td></tr>
                    <tr><td></td></tr>
                    <tr><td></td></tr>
                    <tr><td></td></tr>
                    <tr><td></td></tr>
-                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fertilizer]',!crop.fertilizer.nil? ? crop.fertilizer : " ", :style=>"width:100px;"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][seed]',!crop.seed.nil? ? crop.seed : " ", :style=>"width:100px;"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][chemical]',!crop.chemical.nil? ? crop.chemical : " ", :style=>"width:100px;"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][insurance]',!crop.chemical.nil? ? crop.insurance : " ", :style=>"width:100px;"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fuel]',!crop.fuel.nil? ? crop.fuel : "", :style=>"width:100px;"%></td></tr>
+                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fertilizer]',!crop.fertilizer.nil? ? crop.fertilizer : " ", :style=>"width:100px;",:class=>"fertilizer total_fertilizer",:id=>"fertilizer_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][seed]',!crop.seed.nil? ? crop.seed : " ", :style=>"width:100px;",:class=>"seed",:id=>"seed_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][chemical]',!crop.chemical.nil? ? crop.chemical : " ", :style=>"width:100px;",:class=>"chemical",:id=>"chemical_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][insurance]',!crop.chemical.nil? ? crop.insurance : " ", :style=>"width:100px;",:class=>"insurance",:id=>"insurance_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fuel]',!crop.fuel.nil? ? crop.fuel : "", :style=>"width:100px;",:class=>"fuel",:id=>"fuel_#{crop.crop_name}"%></td></tr>
                  
-                 <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][land_cost]',!crop.land_cost.nil? ? crop.land_cost : " ", :style=>"width:100px;"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][overhead]',!crop.overhead.nil? ? crop.overhead : " ", :style=>"width:100px; "%></td></tr>
-                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][family_living]',!crop.family_living.nil? ? crop.family_living : " ", :style=>"width:100px;" %></td></tr>            
-                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_expenses]',!crop.total_expenses.nil? ? crop.total_expenses : " ", :style=>"width:100px; ", :disabled =>true %></td></tr>
+                 <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][land_cost]',!crop.land_cost.nil? ? crop.land_cost : " ", :style=>"width:100px;",:class=>"land_cost",:id=>"land_cost_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][overhead]',!crop.overhead.nil? ? crop.overhead : " ", :style=>"width:100px; ",:class=>"overhead",:id=>"overhead_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][family_living]',!crop.family_living.nil? ? crop.family_living : " ", :style=>"width:100px;",:class=>"family_living",:id=>"family_living_#{crop.crop_name}" %></td></tr>            
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_expenses]',!crop.total_expenses.nil? ? crop.total_expenses : " ", :style=>"width:100px; ", :disabled =>true,:id=>"total_expenses_#{crop.crop_name}"  %></td></tr>
                   <tr><td></td></tr>
-                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][profit_loss]',!crop.projected_price.blank?&&!crop.yield.blank?&&!crop.total_expenses.blank? ? ((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses) : " ", :style=>"width:100px; ", :disabled =>true %></td></tr>
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][profit_loss]',!crop.projected_price.blank?&&!crop.yield.blank?&&!crop.total_expenses.blank? ? ((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses) : " ", :style=>"width:100px; ", :disabled =>true,:class=>"profit_loss",:id=>"profit_loss_#{crop.crop_name}" %></td></tr>
                    <tr><td></td></tr>
                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven]',!crop.breakeven.nil? ? crop.breakeven : " ", :style=>"width:100px; "%></td></tr>
-                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_price]',(!crop.yield.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.yield.to_i) : "", :style=>"width:100px; ", :disabled =>true%></td></tr>
-                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_yield]',(!crop.projected_price.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.projected_price) : "", :style=>"width:100px; ", :disabled =>true%></td></tr>
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_price]',(!crop.yield.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.yield.to_i) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_price_#{crop.crop_name}" %></td></tr>
+                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_yield]',(!crop.projected_price.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.projected_price) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_yield_#{crop.crop_name}"%></td></tr><br>
+               
                 <%current_user.crop_information_expenses.each do |expense|%>
                 
                   <%if expense.year==params[:data].to_i%>
                     <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][expense_category]',!crop.expense_category.nil? ? crop.expense_category : "",:style=>"width:100px;" %></td></tr>
                   <%end%>
                 <% end%>
+                
               </table>
        
             </td>
@@ -130,18 +134,17 @@
              
                 <tr><th style=" padding: 0;  height: 41px;" >TOTAL</th>
                 </tr>                  
-                <tr><td style=" padding: 0;  height: 81px;"></td></tr>
-                <tr><td style=" padding: 0;"></td></tr>
-                <tr><td style=" padding: 0;height:216px;">  <%=text_field_tag 'crop[][total_acre]', @total_acre,:style=>"width:100px; ", :disabled =>true%></td></tr>
+                
+                <tr><td style=" padding: 0;height:299px;">  <%=text_field_tag 'crop[][total_acre]', @total_acre,:style=>"width:100px; ", :disabled =>true,:id=>"total_acre"%></td></tr>
                 <tr><td style=" padding: 0;"> </td></tr>
                   <tr><td style=" padding: 0;"> </td></tr>  
                    <tr><td style=" padding: 0;">  </td></tr> 
                    <tr><td style=" padding: 0;">  </td></tr>     
-                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fertilizer]', @total_fertilizer,:style=>"width:100px;", :disabled =>true%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_seed]',@total_seed, :style=>"width:100px;", :disabled =>true%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_chemical]', @total_chemical,:style=>"width:100px;", :disabled =>true%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_insurance]', @total_insurance, :style=>"width:100px;", :disabled =>true%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fuel]',@total_fuel,:style=>"width:100px;", :disabled =>true%></td></tr>
+                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fertilizer]', @total_fertilizer,:style=>"width:100px;", :disabled =>true,:id=>"total_fertilizer"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_seed]',@total_seed, :style=>"width:100px;", :disabled =>true,:id=>"total_seed"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_chemical]', @total_chemical,:style=>"width:100px;", :disabled =>true,:id=>"total_chemical"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_insurance]', @total_insurance, :style=>"width:100px;", :disabled =>true,:id=>"total_insurance"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fuel]',@total_fuel,:style=>"width:100px;", :disabled =>true,:id=>"total_fuel"%></td></tr>
                  
                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_land_cost]', @total_land_cost, :style=>"width:100px;", :disabled =>true%></td></tr>
                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_overhead]',@total_overhead,:style=>"width:100px; ", :disabled =>true%></td></tr>
@@ -155,8 +158,255 @@
           </td>  
        </tr>
       </table>
+    </div>
       <%= link_to "Add Expenses".html_safe,"#expense",:class=>"fancybox button"%>
     <%end%>
   <%else%>
     <h3>Crop not found. </h3>
   <%end%>
+<script>
+  $(document).ready(function() {
+      $('.acre').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+
+         var yield=$('#yield_'+str).val();
+        if(yield==""){
+          var prod=val*1
+        }
+        else{
+           var prod=val*yield
+        }
+        var total_acre = 0;
+        var totalElems = document.getElementsByClassName("acre");
+        for (var i = 0; i < totalElems.length; i++) {
+          total_acre += parseInt(totalElems[i].value, 10);
+
+        }
+        $('#production_'+str).val(prod)
+        $('#total_acre').val(total_acre)
+        
+      });
+
+      $('.yield').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+         var acre=$('#acre_'+str).val();
+        if(acre==""){
+          var prod=val*1
+        }
+        else{
+           var prod=val*acre
+        }
+        $('#production_'+str).val(prod)
+      });
+      $('.yield').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+         var projected=$('#projected_'+str).val();
+        if(projected==""){
+          var prod=val*1
+        }
+        else{
+           var avenue=val*projected
+        }
+        $('#per_acre_avenue_'+str).val(avenue)
+
+        $('#profit_loss_'+str).val(avenue- $('#total_expenses_'+str).val());
+      });
+      $('.projected').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+         var yield=$('#yield_'+str).val();
+        if(yield==""){
+          var prod=val*1
+        }
+        else{
+           var avenue=val*yield
+        }
+        $('#per_acre_avenue_'+str).val(avenue)
+      });
+      $('.fertilizer').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+        var total=0;
+         total += +val;
+         total += +$('#seed_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#insurance_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#land_cost_'+str).val();
+          total += +($('#overhead_'+str).val());
+          total += +($('#family_living_'+str).val());
+        
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.seed').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#insurance_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#land_cost_'+str).val();
+          total += +($('#overhead_'+str).val());
+          total += +($('#family_living_'+str).val());
+        
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.chemical').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#seed_'+str).val();
+         total += +$('#insurance_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#land_cost_'+str).val();
+          total += +($('#overhead_'+str).val());
+          total += +($('#family_living_'+str).val());
+        
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.insurance').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#seed_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#land_cost_'+str).val();
+          total += +($('#overhead_'+str).val());
+          total += +($('#family_living_'+str).val());
+        
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.land_cost').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[2]
+        
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#seed_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#insurance_'+str).val();
+          total += +$('#overhead_'+str).val();
+          total += +$('#family_living_'+str).val();
+       
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.fuel').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+        
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#seed_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#land_cost_'+str).val();
+          total += +$('#insurance_'+str).val();
+          total += +$('#overhead_'+str).val();
+          total += +$('#family_living_'+str).val();
+       
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.overhead').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[1]
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#seed_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#insurance_'+str).val();
+          total += +($('#land_cost_'+str).val());
+          total += +($('#family_living_'+str).val());
+        
+       
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+      });
+      $('.family_living').keyup(function() {
+        var id = $(this).attr('id');
+        var val=$("#"+id).val();
+        var str=id.split(/_/)[2]
+
+        var total=0;
+         total += +val;
+         total += +$('#fertilizer_'+str).val();
+         total += +$('#seed_'+str).val();
+         total += +$('#chemical_'+str).val();
+         total += +$('#fuel_'+str).val();
+          total += +$('#insurance_'+str).val();
+          total += +($('#overhead_'+str).val());     
+          var profit_loss=0
+        $('#total_expenses_'+str).val(total)
+        $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
+        
+        $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
+        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+        
+        
+      });
+  });
+</script>

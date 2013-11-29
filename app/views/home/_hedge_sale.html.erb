@@ -33,11 +33,11 @@
         <td style="padding-left: 187px;">
            <div>
             <%= label_tag :Future_Price %>
-            <%= text_field_tag :futures_price%>
+            <%= text_field_tag :futures_price,nil,:class=>"future_price"%>
           </div>
           <div>
               <%= label_tag :Basis %>
-              <%= text_field_tag :basic%>
+              <%= text_field_tag :basic,nil,:class=>"basic"%>
           </div>   
           <div>
               <%= label_tag :Cash_Price %>
@@ -358,3 +358,22 @@
   <%end%>
   <%#= link_to "Back ",recommend_home_index_path,:class=>"btn-primary"%>
 </div>
+ <script>
+  // $(document).ready(function() {
+  //   $('.future_price').keyup(function() {
+  //   var id = $(this).attr('id');
+  //     var val=$("#"+id).val();  
+  //     total= val +$('#basic').val();
+
+  //     $('#cash_price').val(total)
+  //   });
+  //    $('.basic').keyup(function() {
+  //   var id = $(this).attr('id');
+  //     var val=$("#"+id).val();
+
+  //      val += +$('#futures_price').val();
+  //     $('#cash_price').val(val)
+      
+  //   });
+  // });   
+  </script>

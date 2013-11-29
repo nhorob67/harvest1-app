@@ -91,6 +91,19 @@ $(document).ready(function(){
             <%=render "add_recommend"%>
             <!--accordion-body-->
           </div>
+          <%if !current_user.has_role? :admin%>
+             <br>
+              <br>
+            <%= form_for recommend_search_home_index_path,:remote=>true do |f|%>
+              <div class="clearfix"></div>
+              <div class="text-select" style="margin: auto; width: 60%;">
+                    <p>Which farmer's data do you want to display?</p>
+                    <%= f.select :farmer_id, @user.map{|c| [c.first_name, c.id]}, { include_blank: "lists of farmers" },:class=>"select" %>
+              </div>
+              <br>
+         
+           <%end%>
+          <%end%> 
           <!--accordion-group-->
         <%if !current_user.has_role? :admin%>  
           <div class="accordion-group">
