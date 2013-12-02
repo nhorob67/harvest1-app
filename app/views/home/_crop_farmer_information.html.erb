@@ -2,31 +2,32 @@
 <div class="inner">
   <div class="accordion-inner">
     <ul class="one">
-      <li id="archive_farmer_individual" id="crop">
+      <li id="archive_farmer_individual" id ="crop" style="width:16%">
         <p class="farmerArchive"><a href="#">Archive</a></p>
       </li>
        <%if !@year.nil?%>
         <% @year.each do |year| %> 
-     
-          <% if (@archive_year.include? year.year)%>       
-            <li style="display:none" id="archive_year_farmer_crop" ><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year,:user_id=>current_user.id}, :remote => true %></li>
-          <% end %>
-        <% end %>
-     
-      <% end %>   
-       
-    </ul>
-    <ul class="two">
-       <%if !@year.nil?%>
-        <% @year.each do |year| %> 
+         
           <%if !(@archive_year.include? year.year)%>
 
-            <li><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id}, :remote => true %></li>       
+            <li style="width:19%"><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id}, :remote => true %></li>       
             
           <% end %>
         <% end %>
       
       <% end %>    
+       
+    </ul>
+    <ul class="two">
+       <%if !@year.nil?%>
+        <% @year.each do |year| %> 
+         <% if (@archive_year.include? year.year)%>       
+            <li style="display:none" class="archive_year_farmer_crop" ><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year,:user_id=>current_user.id}, :remote => true %></li>
+          <% end %>
+        <% end %>
+     
+      <% end %>   
+         
 
     </ul>
   <div class="clearfix"></div>
@@ -65,7 +66,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#archive_farmer_individual").click(function(){   
-      $("#archive_year_farmer_crop").toggle();
+      $(".archive_year_farmer_crop").toggle();
       $('.accordion-inner').find('.list-select').removeClass('list-select');
        $('.farmerArchive').addClass('list-select');
     });

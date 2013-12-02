@@ -5,7 +5,8 @@
     <%= submit_tag "Save Changes" ,:class=>"btn btn-primary",:style=>"float: right;"%>
     <br>
     <br>
-    <div style="width: 895px; height: 970px; overflow: auto;">   
+      <div style="width: 895px; height: 975px; overflow: auto;">   
+
       <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
         <tr>
           <td>
@@ -19,7 +20,7 @@
                 <tr><td></td></tr>
                 <tr style="height: 45px;"><th >  Projected price </th></tr>
                 <tr><td></td></tr>
-                <tr style="height: 45px;"><th >  Per Acre Revenue </th></tr>
+                <tr style="height: 45px;"><th >  Per Acre Revenue  </th></tr>
                 <tr><th>  
                 <%=label_tag "Expenese"%>
               </th>
@@ -70,7 +71,8 @@
                 <tr><td></td></tr>
                <tr style="height: 42px;"><th >  BreakEven </th></tr>
                 <tr style="height: 42px;"><th >  BreakEven Price</th></tr>
-                <tr style="height: 42px;"><th >  BreakEven Yield</th></tr>
+                <tr style="height: 42px;"><th >  BreakEven Yield </th></tr>
+
                <%current_user.crop_information_expenses.each do |expense|%>
 
                   <%if expense.year==params[:data].to_i%>
@@ -79,7 +81,6 @@
                 <%end%>
               </table>
              </td> 
-
           <%@crop_info.each do |crop|%>   
 
             <td>
@@ -88,7 +89,7 @@
                 <tr>  <%=text_field_tag 'crop[][crop_name]', crop.crop_name , :style=>"width:100px;" %>
                 </tr>                  
                
-                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][acre]',!crop.acre.nil? ? crop.acre : " ", :style=>"width:100px;",:class=>"acre total_fertilizer",:id=>"acre_#{crop.crop_name}"%></td></tr>
+                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][acre]',!crop.acre.nil? ? crop.acre : " ", :style=>"width:100px;",:class=>"acre total_acre",:id=>"acre_#{crop.crop_name}"%></td></tr>
                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][yield]',!crop.yield.nil? ? crop.yield : " ", :style=>"width:100px;",:id=>"yield_#{crop.crop_name}",:class=>"yield"%></td></tr>
                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][production]', !crop.production.nil? ? crop.production : " ", :style=>"width:100px;", :disabled =>true,:id=>"production_#{crop.crop_name}"%></td></tr>  
                   <tr><td></td></tr>
@@ -100,29 +101,33 @@
                    <tr><td></td></tr>
                    <tr><td></td></tr>
                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fertilizer]',!crop.fertilizer.nil? ? crop.fertilizer : " ", :style=>"width:100px;",:class=>"fertilizer total_fertilizer",:id=>"fertilizer_#{crop.crop_name}"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][seed]',!crop.seed.nil? ? crop.seed : " ", :style=>"width:100px;",:class=>"seed",:id=>"seed_#{crop.crop_name}"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][chemical]',!crop.chemical.nil? ? crop.chemical : " ", :style=>"width:100px;",:class=>"chemical",:id=>"chemical_#{crop.crop_name}"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][insurance]',!crop.chemical.nil? ? crop.insurance : " ", :style=>"width:100px;",:class=>"insurance",:id=>"insurance_#{crop.crop_name}"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fuel]',!crop.fuel.nil? ? crop.fuel : "", :style=>"width:100px;",:class=>"fuel",:id=>"fuel_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][seed]',!crop.seed.nil? ? crop.seed : " ", :style=>"width:100px;",:class=>"seed count_seed",:id=>"seed_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][chemical]',!crop.chemical.nil? ? crop.chemical : " ", :style=>"width:100px;",:class=>"chemical count_chemical",:id=>"chemical_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][insurance]',!crop.insurance.nil? ? crop.insurance : " ", :style=>"width:100px;",:class=>"insurance count_insurance",:id=>"insurance_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fuel]',!crop.fuel.nil? ? crop.fuel : "", :style=>"width:100px;",:class=>"fuel count_fuel",:id=>"fuel_#{crop.crop_name}"%></td></tr>
                  
-                 <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][land_cost]',!crop.land_cost.nil? ? crop.land_cost : " ", :style=>"width:100px;",:class=>"land_cost",:id=>"land_cost_#{crop.crop_name}"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][overhead]',!crop.overhead.nil? ? crop.overhead : " ", :style=>"width:100px; ",:class=>"overhead",:id=>"overhead_#{crop.crop_name}"%></td></tr>
-                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][family_living]',!crop.family_living.nil? ? crop.family_living : " ", :style=>"width:100px;",:class=>"family_living",:id=>"family_living_#{crop.crop_name}" %></td></tr>            
+                 <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][land_cost]',!crop.land_cost.nil? ? crop.land_cost : " ", :style=>"width:100px;",:class=>"land_cost count_land_cost",:id=>"land_cost_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][overhead]',!crop.overhead.nil? ? crop.overhead : " ", :style=>"width:100px; ",:class=>"overhead count_overhead",:id=>"overhead_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][family_living]',!crop.family_living.nil? ? crop.family_living : " ", :style=>"width:100px;",:class=>"family_living count_family_living",:id=>"family_living_#{crop.crop_name}" %></td></tr>            
                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_expenses]',!crop.total_expenses.nil? ? crop.total_expenses : " ", :style=>"width:100px; ", :disabled =>true,:id=>"total_expenses_#{crop.crop_name}"  %></td></tr>
                   <tr><td></td></tr>
-                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][profit_loss]',!crop.projected_price.blank?&&!crop.yield.blank?&&!crop.total_expenses.blank? ? ((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses) : " ", :style=>"width:100px; ", :disabled =>true,:class=>"profit_loss",:id=>"profit_loss_#{crop.crop_name}" %></td></tr>
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][profit_loss]',!crop.projected_price.blank?&&!crop.yield.blank?&&!crop.total_expenses.blank? ? ((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses) : " ", :style=>"width:100px; ", :disabled =>true,:class=>"profit_loss count_profit_loss",:id=>"profit_loss_#{crop.crop_name}" %></td></tr>
                    <tr><td></td></tr>
                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven]',!crop.breakeven.nil? ? crop.breakeven : " ", :style=>"width:100px; "%></td></tr>
                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_price]',(!crop.yield.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.yield.to_i) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_price_#{crop.crop_name}" %></td></tr>
-                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_yield]',(!crop.projected_price.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.projected_price) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_yield_#{crop.crop_name}"%></td></tr><br>
-               
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_yield]',(!crop.projected_price.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.projected_price) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_yield_#{crop.crop_name}"%><br>
+                      
+                    <%= link_to 'Remove',remove_crop_home_path(crop.id,:data=>params[:data],:user_id=>params[:user_id]), id: "#{crop.id}", class: 'removecrop', data: { confirm: 'Are you sure?' },:remote=> true %> 
+
+                                        
+                      </td></tr>
                 <%current_user.crop_information_expenses.each do |expense|%>
                 
                   <%if expense.year==params[:data].to_i%>
                     <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][expense_category]',!crop.expense_category.nil? ? crop.expense_category : "",:style=>"width:100px;" %></td></tr>
+
                   <%end%>
                 <% end%>
-                
               </table>
        
             </td>
@@ -130,7 +135,7 @@
             <%=hidden_field_tag 'crop[][user_id]',current_user.id%>
           <%end%> 
           <td>
-             <table>  
+               <table>  
              
                 <tr><th style=" padding: 0;  height: 41px;" >TOTAL</th>
                 </tr>                  
@@ -154,16 +159,25 @@
                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_weight]',@total_weight,:style=>"width:100px; ", :disabled =>true%></td></tr>
                 <tr><td></td></tr>
               </table>
+
+
        
           </td>  
        </tr>
       </table>
-    </div>
+      </div>
+
       <%= link_to "Add Expenses".html_safe,"#expense",:class=>"fancybox button"%>
     <%end%>
   <%else%>
     <h3>Crop not found. </h3>
   <%end%>
+
+
+
+
+
+
 <script>
   $(document).ready(function() {
       $('.acre').keyup(function() {
@@ -184,8 +198,196 @@
           total_acre += parseInt(totalElems[i].value, 10);
 
         }
+        var count_seed=0
+        var count_chemical=0
+        var total_count_chemical = 0
+        var count_insurance=0
+        var total_count_insurance = 0
+        var count_fuel=0
+        var total_count_fuel = 0
+        var count=0
+        var total_count=0
+        var count_land_cost = 0
+        var total_count_land_cost = 0
+        var count_overhead = 0
+        var total_count_overhead = 0
+        var count_family_living = 0
+        var total_count_family_living = 0
+        var count_profit_loss = 0
+        var total_profit_loss = 0
+        var land_cost = document.getElementsByClassName("count_land_cost");
+        var insurance = document.getElementsByClassName("count_insurance");
+        var overhead = document.getElementsByClassName("count_overhead");
+        var acre = document.getElementsByClassName("total_acre");
+        var chemical = document.getElementsByClassName("count_chemical");
+        var seed = document.getElementsByClassName("count_seed");
+        var fertilizer = document.getElementsByClassName("total_fertilizer");
+        var fuel = document.getElementsByClassName("count_fuel");
+        var family_living = document.getElementsByClassName("count_family_living");
+        var profit_loss = document.getElementsByClassName("count_profit_loss");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < fertilizer.length; i++) {
+            for (var i = 0; i < seed.length; i++) {
+              for (var i = 0; i < chemical.length; i++) {
+                for (var i = 0; i < fuel.length; i++) {
+                  for (var i = 0; i < land_cost.length; i++) {
+                    for (var i = 0; i < insurance.length; i++) {
+                      for (var i = 0; i < overhead.length; i++) {
+                        for (var i = 0; i < family_living.length; i++) {
+                          for (var i = 0; i < profit_loss.length; i++) {
+                            if(isNaN(parseInt(fertilizer[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count =0
+                            }
+                            else if(isNaN(parseInt(fertilizer[i].value))){
+                              total_count = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count = ((parseInt(fertilizer[i].value))*1)
+                            }
+                            else {
+                              total_count = ((parseInt(acre[i].value))*(parseInt(fertilizer[i].value)))
+                            }
+                             count=count+total_count 
+                            if(isNaN(parseInt(seed[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_seed =0
+                            }
+                            else if(isNaN(parseInt(seed[i].value))){
+                              total_count_seed = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_seed = ((parseInt(seed[i].value))*1)
+                            }
+                            else {
+                              total_count_seed = ((parseInt(acre[i].value))*(parseInt(seed[i].value)))
+                            }       
+                             count_seed=count_seed+total_count_seed  
+
+                            if(isNaN(parseInt(chemical[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_chemical =0
+                            }
+                            else if(isNaN(parseInt(chemical[i].value))){
+                              total_count_chemical = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_chemical = ((parseInt(chemical[i].value))*1)
+                            }
+                            else {
+                              total_count_chemical = ((parseInt(acre[i].value))*(parseInt(chemical[i].value)))
+                            }
+                             count_chemical=count_chemical+total_count_chemical    
+
+                            if(isNaN(parseInt(fuel[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_fuel =0
+                            }
+                            else if(isNaN(parseInt(fuel[i].value))){
+                              total_count_fuel = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_fuel = ((parseInt(fuel[i].value))*1)
+                            }
+                            else {
+                              total_count_fuel = ((parseInt(acre[i].value))*(parseInt(fuel[i].value)))
+                            }
+                             count_fuel=count_fuel+total_count_fuel   
+
+                            if(isNaN(parseInt(land_cost[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_land_cost =0
+                            }
+                            else if(isNaN(parseInt(land_cost[i].value))){
+                              total_count_land_cost = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_land_cost = ((parseInt(land_cost[i].value))*1)
+                            }
+                            else {
+                              total_count_land_cost = ((parseInt(acre[i].value))*(parseInt(land_cost[i].value)))
+                            }
+                             count_land_cost=count_land_cost+total_count_land_cost 
+                            if(isNaN(parseInt(insurance[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_insurance =0
+                            }
+                            else if(isNaN(parseInt(insurance[i].value))){
+                              total_count_insurance = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_insurance = ((parseInt(insurance[i].value))*1)
+                            }
+                            else {
+                              total_count_insurance = ((parseInt(acre[i].value))*(parseInt(insurance[i].value)))
+                            }
+                             count_insurance=count_insurance+total_count_insurance 
+                            if(isNaN(parseInt(overhead[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_overhead =0
+                            }
+                            else if(isNaN(parseInt(overhead[i].value))){
+                              total_count_overhead = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_overhead = ((parseInt(overhead[i].value))*1)
+                            }
+                            else {
+                              total_count_overhead = ((parseInt(acre[i].value))*(parseInt(overhead[i].value)))
+                            }
+                             count_overhead=count_overhead+total_count_overhead  
+                            if(isNaN(parseInt(family_living[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_count_family_living =0
+                            }
+                            else if(isNaN(parseInt(family_living[i].value))){
+                              total_count_family_living = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_count_family_living = ((parseInt(family_living[i].value))*1)
+                            }
+                            else {
+                              total_count_family_living= ((parseInt(acre[i].value))*(parseInt(family_living[i].value)))
+                            }
+                             count_family_living=count_family_living+total_count_family_living   
+                            if(isNaN(parseInt(profit_loss[i].value)) && isNaN(parseInt(acre[i].value))){
+                              total_profit_loss =0
+                            }
+                            else if(isNaN(parseInt(profit_loss[i].value))){
+                              total_profit_loss = ((parseInt(acre[i].value))*1)
+                            }
+                            else if(isNaN(parseInt(acre[i].value))){
+                              total_profit_loss = ((parseInt(profit_loss[i].value))*1)
+                            }
+                            else {
+                              total_profit_loss= ((parseInt(acre[i].value))*(parseInt(profit_loss[i].value)))
+                            }
+                             count_profit_loss=count_profit_loss+total_profit_loss  
+                          }   
+                        }   
+                      }    
+                    }      
+                  }    
+                }
+              }  
+            }
+          }
+        }
+        var total_weight=0;
+        $('#crop__total_weight').val(count_profit_loss);
+        $('#crop__total_family_living').val(count_family_living);
+        $('#crop__total_overhead').val(count_overhead);
+        $('#total_insurance').val(count_insurance)
+        $('#crop__total_land_cost').val(count_land_cost)
+        $('#total_chemical').val(count_chemical)
+        $('#total_seed').val(count_seed)
+        $('#total_fertilizer').val(count)
         $('#production_'+str).val(prod)
         $('#total_acre').val(total_acre)
+        $('#total_fuel').val(count_fuel)
+        
+        total_weight += +count_family_living
+        total_weight += +count_overhead
+        total_weight += +count_insurance
+        total_weight += +count_chemical
+        total_weight += +count_seed
+        total_weight += +count
+        total_weight += +total_acre
+        total_weight += +prod
+        total_weight += +count_fuel
+        $('#crop__totalExpenses').val(total_weight)
         
       });
 
@@ -242,15 +444,37 @@
          total += +$('#fuel_'+str).val();
           total += +$('#land_cost_'+str).val();
           total += +($('#overhead_'+str).val());
-          total += +($('#family_living_'+str).val());
-        
-       
+          total += +($('#family_living_'+str).val());       
         $('#total_expenses_'+str).val(total)
         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+        var count=0
+        var total_count=0
+        var acre = document.getElementsByClassName("total_acre");
+        var fertilizer = document.getElementsByClassName("total_fertilizer");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < fertilizer.length; i++) {
+            if(isNaN(parseInt(fertilizer[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(fertilizer[i].value))){
+              total_count = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count = ((parseInt(fertilizer[i].value))*1)
+            }
+            else {
+              total_count = ((parseInt(acre[i].value))*(parseInt(fertilizer[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+
+          $('#total_fertilizer').val(count)
       });
       $('.seed').keyup(function() {
         var id = $(this).attr('id');
@@ -273,6 +497,41 @@
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+         var count_seed=0
+       
+        var total_count=0
+        var total_count_seed = 0
+        var acre = document.getElementsByClassName("total_acre");
+        var seed = document.getElementsByClassName("count_seed");
+       
+        for (var i = 0; i < acre.length; i++) {
+          
+            for (var i = 0; i < seed.length; i++) {
+    
+            if(isNaN(parseInt(seed[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count_seed =0
+            }
+            else if(isNaN(parseInt(seed[i].value))){
+              total_count_seed = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count_seed = ((parseInt(seed[i].value))*1)
+            }
+            else {
+              total_count_seed = ((parseInt(acre[i].value))*(parseInt(seed[i].value)))
+            }
+            
+             count_seed=count_seed+total_count_seed     
+           }
+        
+        }
+        $('#total_seed').val(count_seed)
+        $('#total_fertilizer').val(count)
+        $('#production_'+str).val(prod)
+        $('#total_acre').val(total_acre)
+
+
       });
       $('.chemical').keyup(function() {
         var id = $(this).attr('id');
@@ -295,6 +554,31 @@
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+        var count=0
+        var total_count=0
+        var acre = document.getElementsByClassName("total_acre");
+        var chemical = document.getElementsByClassName("count_chemical");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < chemical.length; i++) {
+            if(isNaN(parseInt(chemical[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(chemical[i].value))){
+              total_count = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count = ((parseInt(chemical[i].value))*1)
+            }
+            else {
+              total_count = ((parseInt(acre[i].value))*(parseInt(chemical[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+
+          $('#total_chemical').val(count)
+
       });
       $('.insurance').keyup(function() {
         var id = $(this).attr('id');
@@ -340,6 +624,29 @@
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+        var count=0
+        var total_count=0
+        var acre = document.getElementsByClassName("total_acre");
+        var insurance = document.getElementsByClassName("count_insurance");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < insurance.length; i++) {
+            if(isNaN(parseInt(insurance[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(insurance[i].value))){
+              total_count = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count = ((parseInt(insurance[i].value))*1)
+            }
+            else {
+              total_count = ((parseInt(acre[i].value))*(parseInt(insurance[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+
+          $('#total_insurance').val(count)
       });
       $('.fuel').keyup(function() {
         var id = $(this).attr('id');
@@ -363,6 +670,29 @@
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+         var count=0
+        var total_count=0
+        var acre = document.getElementsByClassName("total_acre");
+        var fuel = document.getElementsByClassName("count_fuel");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < fuel.length; i++) {
+            if(isNaN(parseInt(fuel[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(fuel[i].value))){
+              total_count = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count = ((parseInt(fuel[i].value))*1)
+            }
+            else {
+              total_count = ((parseInt(acre[i].value))*(parseInt(fuel[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+
+          $('#total_fuel').val(count)
       });
       $('.overhead').keyup(function() {
         var id = $(this).attr('id');
@@ -385,6 +715,29 @@
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+         var count=0
+        var total_count=0
+        var acre = document.getElementsByClassName("total_acre");
+        var overhead = document.getElementsByClassName("count_overhead");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < overhead.length; i++) {
+            if(isNaN(parseInt(overhead[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(overhead[i].value))){
+              total_count = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count = ((parseInt(overhead[i].value))*1)
+            }
+            else {
+              total_count = ((parseInt(acre[i].value))*(parseInt(overhead[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+          $('#crop__total_overhead').val(count);
+         
       });
       $('.family_living').keyup(function() {
         var id = $(this).attr('id');
@@ -405,7 +758,28 @@
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
         $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
-        
+          var count=0
+        var total_count=0
+        var acre = document.getElementsByClassName("total_acre");
+        var family_living = document.getElementsByClassName("count_family_living");
+        for (var i = 0; i < acre.length; i++) {
+          for (var i = 0; i < family_living.length; i++) {
+            if(isNaN(parseInt(family_living[i].value)) && isNaN(parseInt(acre[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(family_living[i].value))){
+              total_count = ((parseInt(acre[i].value))*1)
+            }
+            else if(isNaN(parseInt(acre[i].value))){
+              total_count = ((parseInt(family_living[i].value))*1)
+            }
+            else {
+              total_count = ((parseInt(acre[i].value))*(parseInt(family_living[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+         $('#crop__total_family_living').val(count);
         
       });
   });

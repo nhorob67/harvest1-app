@@ -107,7 +107,7 @@ $(document).ready(function(){
                               
                               <h3>New Recommendation -<i><%=recommend.created_at.strftime("%B,%d %Y")%></i></h3>
                                <p><%#=User.find(recommend.user_id).first_name%></p>
-                              <h4> <%=recommend.content%></h4>
+                              <h4> <%=recommend.content.html_safe%></h4>
                               <%if !recommend.document.blank?%>
                                 <a href="javascript:void(0);"><%=image_tag recommend.document,:size=>"106x78"%></a>
                               <%end%>  
@@ -117,7 +117,7 @@ $(document).ready(function(){
                               <%if !recommend.document.blank?%>
                                 <a href="javascript:void(0);"><%=image_tag recommend.document,:size=>"106x78"%></a>
                               <%end%>  
-                              <h4> <%=recommend.content%></h4>
+                              <h4> <%=recommend.content.html_safe%></h4>
                              
                              <%end%>
                               <div class="clearfix"></div><!--clearfix-->

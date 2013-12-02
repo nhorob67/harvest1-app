@@ -26,7 +26,6 @@
                     <%= f.text_area :content ,:class=>"tinymce", :rows => 6, :cols => 5%><br>
                     <%= tinymce %>
                     
-                    
                     <!--<button name="btn" class="btn pull-left">Upload File</button>
                     <button name="btn" class="btn pull-right">Submit</button>-->
                     <div class="fileupload fileupload-new" data-provides="fileupload" style="float: left;">
@@ -40,8 +39,18 @@
                       <%= f.submit "Submit" ,:class=>"btn pull-right btn-primary"%>
                     <%end%>
                   <% end %>
+                 
+            <%if !current_user.has_role? :admin%>
+                    
+                    <div class="clearfix"></div>
+                    <div class="text-select" style="margin: auto; width: 60%;">
+                          <p></p>
+                         
+                    </div>
+                        <!--text-select--><br>
                   </div>
-             
+                  
+                    <%end%>  
                   <!--che-->
                 </div>
                 <!--accordion-inner-->

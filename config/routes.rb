@@ -24,7 +24,7 @@ devise_for :users, controllers: {sessions: "sessions",registrations: "registrati
       post 'create_crop_sale'
       post 'hedge_sale'
       post 'hedge_sale_create'
-      delete 'user_destroy'
+     
       get 'sign_in'
       get 'sale'
       get 'crop'
@@ -41,6 +41,7 @@ devise_for :users, controllers: {sessions: "sessions",registrations: "registrati
     member do 
     put 'update_label'
     get 'remove_crop'
+     get 'user_destroy'
     end
   end
   # The priority is based upon order of creation:

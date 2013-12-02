@@ -160,16 +160,29 @@ class HomeController < ApplicationController
 
   def user_destroy
     
-    @user=User.find(params[:format])
+       
+      
+    @user=User.find(params[:id])
     @user.destroy
     
-    @crop=CropInformation.find_by_user_id(params[:format])
-    @crop.destroy
-     @recommend=Recommend.find_by_recommended_id(params[:format])
-     @recommend.destroy
-    redirect_to users_list_home_index_path
-  end
 
+    @crop=CropInformation.find_by_user_id(params[:id])
+    if !@crop.nil?
+          @crop.destroy
+    end      
+     @recommend=Recommend.find_by_recommended_id(params[:id])
+    if  !@recommend.nil?  
+     @recommend.destroy
+    end  
+
+    @users=User.all
+
+    respond_to do |format|                
+
+       format.js
+     end
+  
+  end
   def consultant_create
     params[:user][:orignal_password]=params[:user][:password]
     if !((params[:user]["email"].blank?) || (params[:user]["password"].blank?))
@@ -347,72 +360,13 @@ end
   end
 
   def sale
+     #@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
     @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
     @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
     @year=Year.all
-    @cash_sale=[]
-    @forward_contract=[]
-    @hedge_to_arrive=[]
-    @basic_contract=[]
-    @future=[]
-    @option=[]
     
-    @id = params[:data].to_i
-    if  params[:data]!=""
-      @cash_sales=CashSale.find_all_by_user_id(params[:user_id])
-      if !@cash_sales.blank?
-        @cash_sales.each do|cash_sale|
-          if cash_sale.year==params[:data].to_i
-            @cash_sale=@cash_sale + Array(cash_sale)
-          end  
-        end
-      end
-      @forward_contracts=ForwardContract.find_all_by_user_id(params[:user_id])
-      if @forward_contracts.blank?
-        @forward_contracts.each do|forward_contract|
-          if forward_contract.year==params[:data].to_i
-            @forward_contract=@forward_contract + Array(forward_contract)
-          end  
-        end
-      end  
-      @hedge_to_arrives=HedgeToArrive.find_all_by_user_id(params[:user_id])
-      if !@hedge_to_arrives.blank?
-        @hedge_to_arrives.each do|hedge_to_arrive|
-          if hedge_to_arrive.year==params[:data].to_i
-            @hedge_to_arrive=@hedge_to_arrive + Array(hedge_to_arrive)
-          end  
-        end
-      end
-      @basic_contracts=BasicContract.find_all_by_user_id(params[:user_id])
-      if !@basic_contracts.blank?
-        @basic_contracts.each do|basic_contract|
-          if basic_contract.year==params[:data].to_i
-            @basic_contract=@basic_contract + Array(basic_contract)
-          end  
-        end
-      end
-
-      @futures=Future.find_all_by_user_id(params[:user_id])
-      if !@futures.blank?
-        @futures.each do|future|
-      
-          if future.year==params[:data].to_i
-
-            @future=@future + Array(future)
-          end  
-        end
-      end
-      @options=Option.find_all_by_user_id(params[:user_id])
-      if !@options.blank?
-        @options.each do|option|
-          if option.year==params[:data].to_i
-            @option=@option + Array(option)
-          end  
-        end
-      end
-    else
-      
-     end 
+   
+          
     
      respond_to do |format|
          format.js
@@ -600,7 +554,9 @@ end
   end
 
   def hedge_sale
-       @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
+
+      @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
+
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
       @years=Year.all
       @unarchive_year=[]
@@ -659,8 +615,13 @@ end
   end
 
   def recommend
-
+    @unarchive_years=[]
     @year=Year.all
+    @year.each do |year|
+     if year.archive !=true
+      @unarchive_years << year
+     end
+    end  
     @user=[]
     @farmer=[]
     @recommend=Recommend.new
@@ -689,35 +650,59 @@ end
     @consultant_users=User.find(:all, :conditions => ["consultant_id=?", current_user.id ])
   end
 
-
   def recommed_create
-    
-  
-    @recommended_ids=params[:recommended_id]
-      if !@recommended_ids.blank?
-        @recommended_ids.each do |recom|
-          if !User.find(recom).cell_number.blank?
-            if User.find(recom).cell_number[0]=="+"
-              @twilio_client = Twilio::REST::Client.new TWILIO_SID,TWILIO_TOKEN
-              @twilio_client.account.sms.messages.create({:from => '+12027602229', :to => User.find(recom).cell_number, :body => params[:recommend][:content]})
-            end            
-          end  
+    if !current_user.has_role? :admin 
+        @recommended_ids=params[:recommended_id]
+        if !params[:recommend][:content].blank?
+           @message=params[:recommend][:content].gsub!(/(<[^>]*>)|\n|\t/s) {" "}
+            if !@recommended_ids.blank?
+              @recommended_ids.each do |recom|
+                
+                if !User.find(recom).cell_number.blank?
+                  if User.find(recom).cell_number[0]=="+"
 
-          UserMailer.welcome_email(current_user.email, User.find(recom),params[:recommend][:content]).deliver
-          params[:recommend][:recommended_id]=recom
-          @recommend=Recommend.create(params[:recommend])  
-          @recommend.user_id=current_user.id  
-          @recommend.save
-        end
+                    @twilio_client = Twilio::REST::Client.new TWILIO_SID,TWILIO_TOKEN
+                    @twilio_client.account.sms.messages.create({:from => '+12027602229', :to => User.find(recom).cell_number, :body => @message})
+                  end            
+                end  
+
+                UserMailer.welcome_email(current_user.email, User.find(recom),@message).deliver
+                params[:recommend][:recommended_id]=recom
+                @recommend=Recommend.create(params[:recommend])  
+                @recommend.user_id=current_user.id  
+                @recommend.save
+              end
+            else
+              
+              @all_recomended=User.where(:consultant_id=>current_user.id)
+              @all_recomended.each do |recom|
+                @recomended_id=recom.id
+                if !User.find(@recomended_id).cell_number.blank?
+                  if User.find(@recomended_id).cell_number[0]=="+"
+                    @twilio_client = Twilio::REST::Client.new TWILIO_SID,TWILIO_TOKEN
+                    @twilio_client.account.sms.messages.create({:from => '+12027602229', :to => User.find(@recomended_id).cell_number, :body => @message})
+                  end            
+                end
+                UserMailer.welcome_email(current_user.email, User.find(@recomended_id),@message).deliver
+                params[:recommend][:recommended_id]=recom.id
+                @recommend=Recommend.create(params[:recommend])  
+                @recommend.user_id=current_user.id  
+                @recommend.save
+              end 
+           end
+        end  
+
+
       else
         @recommend=Recommend.create(params[:recommend])  
         @recommend.user_id=current_user.id  
         @recommend.recommended_id=params[:recommended_id]
         @recommend.save
       end 
+
+
     redirect_to recommend_home_index_path
   end
-
   def recommend_search
 
     @archive_year=ArchiveYear.find_all_by_user_id(params[:select_user_id]).collect(&:year)
@@ -790,8 +775,17 @@ end
       redirect_to recommend_home_index_path
     end
   end
-  def archive_select
-   ArchiveYear.create(user_id: params[:user_id],year: params[:year],archive: true)
+ def archive_select
+    
+    @users=User.all
+    @users.each do |user|
+      user.has_role? :user
+      ArchiveYear.create(user_id: user.id,year: params[:year],archive: true)
+      
+    end  
+   @year=Year.find_by_year(params[:year].to_i)
+   @year.archive=true
+   @year.save
    redirect_to recommend_home_index_path
   end
 end

@@ -284,7 +284,7 @@ $(document).ready(function(){
                  
                    
                    <li><%= link_to 'Add Year',new_year_home_index_path,:class=>"btn" %><li>
-                   <%=render "sales_hedge_year"%>
+                     <%=render "archive_select_year"%>
                     <%if !Year.all.blank?%>
                      <h3>Year list</h3>
                      <table>
@@ -459,7 +459,7 @@ $(document).ready(function(){
             <!--accordion-heading-->
             <div id="collapseTwo" class="accordion-body collapse">
               <div class="inner">
-                <div class="accordion-inner">  <%= render "users_list"%></div>
+                <div id ="users_list_div" class="accordion-inner">  <%= render "users_list"%></div>
                 <!--accordion-inner-->
               </div>
               <!--inner-->

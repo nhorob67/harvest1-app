@@ -91,11 +91,11 @@
         <td style="padding-left: 187px;">
            <div>
             <%= label_tag :Future_price %>
-             <%= text_field_tag :futures_price%>
+             <%= text_field_tag :futures_price,nil,:class=>"fwd_future_price"%>
           </div>
           <div>
            </br>   <%= label_tag :Basis %>
-            <%= text_field_tag :basic%>
+            <%= text_field_tag :basic,nil,:class=>"fwd_basic"%>
           </div>
           <div>
            </br>   <%= label_tag :Cash_price %>
@@ -157,12 +157,12 @@
        
           <div>
             <%= label_tag :Future_Price %>
-            <%= text_field_tag :futures_price%>
+            <%= text_field_tag :futures_price,nil,:class=>"hedge_future_price"%>
           </div>
          
           <div>
               <%= label_tag "Est_Basis"%>
-              <%= text_field_tag :basic%>
+              <%= text_field_tag :basic,nil,:class=>"hedge_future_price"%>
           </div>
           <div>
               <%= label_tag :Cash_Price %>
@@ -224,11 +224,11 @@
           </div>
         <div>
             <%= label_tag :Future_Price %>
-            <%= text_field_tag :futures_price%>
+            <%= text_field_tag :futures_price,nil,:class=>"basis_future_price"%>
           </div>         
           <div>
               <%= label_tag :Basis %>
-              <%= text_field_tag :basic%>
+              <%= text_field_tag :basic,nil,:class=>"basis_basic"%>
           </div>
           <div>
               <%= label_tag :Cash_Price %>
@@ -359,21 +359,119 @@
   <%#= link_to "Back ",recommend_home_index_path,:class=>"btn-primary"%>
 </div>
  <script>
-  // $(document).ready(function() {
-  //   $('.future_price').keyup(function() {
-  //   var id = $(this).attr('id');
-  //     var val=$("#"+id).val();  
-  //     total= val +$('#basic').val();
-
-  //     $('#cash_price').val(total)
-  //   });
-  //    $('.basic').keyup(function() {
-  //   var id = $(this).attr('id');
-  //     var val=$("#"+id).val();
-
-  //      val += +$('#futures_price').val();
-  //     $('#cash_price').val(val)
+ 
+  $(document).ready(function() {
+    $('.future_price').keyup(function() {
+    var id = $(this).attr('id');
+       var val=$("#"+id).val();  
+     var basic=$('#basic').val();
+      if (basic=="")
+      {
+       var total=parseFloat(val) + 0
+      }
+      else{
+       var total=(parseFloat(val) + parseFloat(basic))
+      }
+      $('#cash_price').val(total)
+    });
+     $('.basic').keyup(function() {
+      var id = $(this).attr('id');
+      var val=$("#"+id).val();
+       var futures_price=$('#futures_price').val();
+        if (futures_price=="")
+        {
+         var total=parseFloat(val) + 0
+        }
+        else{
+           var total=(parseFloat(val) + parseFloat(futures_price))
+        }
       
-  //   });
-  // });   
+        $('#cash_price').val(total)
+      
+    });
+      $('.fwd_future_price').keyup(function() {
+    var id = $(this).attr('id');
+       var val=$("#"+id).val();  
+     var basic=$('#basic').val();
+      if (basic=="")
+      {
+       var total=parseFloat(val) + 0
+      }
+      else{
+       var total=(parseFloat(val) + parseFloat(basic))
+      }
+      $('#cash_price').val(total)
+    });
+     $('.fwd_basic').keyup(function() {
+      var id = $(this).attr('id');
+      var val=$("#"+id).val();
+       var futures_price=$('#futures_price').val();
+        if (futures_price=="")
+        {
+         var total=parseFloat(val) + 0
+        }
+        else{
+           var total=(parseFloat(val) + parseFloat(futures_price))
+        }
+      
+        $('#cash_price').val(total)
+      
+    });
+       $('.hedge_future_price').keyup(function() {
+    var id = $(this).attr('id');
+       var val=$("#"+id).val();  
+     var basic=$('#basic').val();
+      if (basic=="")
+      {
+       var total=parseFloat(val) + 0
+      }
+      else{
+       var total=(parseFloat(val) + parseFloat(basic))
+      }
+      $('#cash_price').val(total)
+    });
+     $('.hedge_basic').keyup(function() {
+      var id = $(this).attr('id');
+      var val=$("#"+id).val();
+       var futures_price=$('#futures_price').val();
+        if (futures_price=="")
+        {
+         var total=parseFloat(val) + 0
+        }
+        else{
+           var total=(parseFloat(val) + parseFloat(futures_price))
+        }
+      
+        $('#cash_price').val(total)
+      
+    });
+         $('.basis_future_price').keyup(function() {
+    var id = $(this).attr('id');
+       var val=$("#"+id).val();  
+     var basic=$('#basic').val();
+      if (basic=="")
+      {
+       var total=parseFloat(val) + 0
+      }
+      else{
+       var total=(parseFloat(val) + parseFloat(basic))
+      }
+      $('#cash_price').val(total)
+    });
+     $('.basis_basic').keyup(function() {
+      var id = $(this).attr('id');
+      var val=$("#"+id).val();
+       var futures_price=$('#futures_price').val();
+        if (futures_price=="")
+        {
+         var total=parseFloat(val) + 0
+        }
+        else{
+           var total=(parseFloat(val) + parseFloat(futures_price))
+        }
+      
+        $('#cash_price').val(total)
+      
+    });
+  });   
   </script>
