@@ -1,4 +1,3 @@
-
 <div class="container">
 <%= form_tag hedge_sale_create_home_index_path do  %>
    
@@ -13,7 +12,9 @@
           </div>
           <div>
               </br><%= label_tag :crop %>
-            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+
+              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
+            
           </div>
           <div>
             </br><%= label_tag :Open_Order %>
@@ -69,7 +70,7 @@
           </div>
           <div>
               </br><%= label_tag :crop %>
-            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+           <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
           </div>
           <div>
             </br><%= label_tag :Open_order %>
@@ -127,7 +128,7 @@
 
           <div>
               <%= label_tag :crop %>
-            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+            <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
           </div>
           <div>
            <%= label_tag :Open_Order %>
@@ -195,7 +196,7 @@
           </div>
            <div>
               <%= label_tag :crop %>
-            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+             <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
           </div>
 
           <div>
@@ -261,7 +262,7 @@
 
           <div>
               <%= label_tag :crop %>
-            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+             <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
           </div>
 
           <div>
@@ -308,7 +309,7 @@
            </br>
           <div>
               <%= label_tag :crop %>
-            <%=select_tag 'crop_name',  options_for_select(@crop.map{|c| [c.crop_name, c.crop_name]}) %> 
+            <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
           </div>
           <div>
             <%= label_tag :year %>

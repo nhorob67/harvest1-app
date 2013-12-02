@@ -360,7 +360,6 @@ end
   end
 
   def sale
-     #@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
     @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
     @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
     @year=Year.all
@@ -554,8 +553,8 @@ end
   end
 
   def hedge_sale
-
-      @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
+@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
+     # @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
 
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
       @years=Year.all
@@ -764,12 +763,16 @@ end
     if @year.save
       flash[:notice] = 'Year saved.'
      
+     User.all.each do |user|
+        if user.has_role? :user
+          CropInformation.create(crop_name: 'Corn',year:@year.year,user_id: user.id)
+          CropInformation.create(crop_name: 'Soyabean',year:@year.year,user_id: user.id)
+          CropInformation.create(crop_name: 'Wheat',year:@year.year,user_id: user.id) 
+        end
+      end
+      
      
-      CropInformation.create(crop_name: 'Corn',year:@year.year)
-      CropInformation.create(crop_name: 'Soyabean',year:@year.year)
-      CropInformation.create(crop_name: 'Wheat',year:@year.year)
-     
-     redirect_to recommend_home_index_path 
+      redirect_to recommend_home_index_path 
     else
       flash[:notice] = 'Year already created.'
       redirect_to recommend_home_index_path
