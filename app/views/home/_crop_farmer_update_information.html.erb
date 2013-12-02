@@ -69,7 +69,7 @@
                 <tr><td></td></tr>
                 <tr style="height: 46px;"><th >  Profit/Loss </th></tr>
                 <tr><td></td></tr>
-               <tr style="height: 42px;"><th >  BreakEven </th></tr>
+            
                 <tr style="height: 42px;"><th >  BreakEven Price</th></tr>
                 <tr style="height: 42px;"><th >  BreakEven Yield </th></tr>
 
@@ -113,7 +113,7 @@
                   <tr><td></td></tr>
                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][profit_loss]',!crop.projected_price.blank?&&!crop.yield.blank?&&!crop.total_expenses.blank? ? ((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses) : " ", :style=>"width:100px; ", :disabled =>true,:class=>"profit_loss count_profit_loss",:id=>"profit_loss_#{crop.crop_name}" %></td></tr>
                    <tr><td></td></tr>
-                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven]',!crop.breakeven.nil? ? crop.breakeven : " ", :style=>"width:100px; "%></td></tr>
+                 
                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_price]',(!crop.yield.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.yield.to_i) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_price_#{crop.crop_name}" %></td></tr>
                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_yield]',(!crop.projected_price.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.projected_price) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_yield_#{crop.crop_name}"%><br>
                       
@@ -195,8 +195,9 @@
         var total_acre = 0;
         var totalElems = document.getElementsByClassName("acre");
         for (var i = 0; i < totalElems.length; i++) {
-          total_acre += parseInt(totalElems[i].value, 10);
-
+          if(!(isNaN(parseInt(totalElems[i].value)))){
+            total_acre += parseInt(totalElems[i].value, 10);
+          }
         }
         var count_seed=0
         var count_chemical=0
@@ -415,6 +416,10 @@
         else{
            var avenue=val*projected
         }
+        var total=$('#total_expenses_'+str).val();
+        
+        
+        $('#breakeven_price_'+str).val(total/(val));
         $('#per_acre_avenue_'+str).val(avenue)
 
         $('#profit_loss_'+str).val(avenue- $('#total_expenses_'+str).val());
@@ -450,7 +455,8 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
 
         var count=0
         var total_count=0
@@ -496,7 +502,8 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+        $('#breakeven_yield_'+str).val((total/($('#projected_'+str).val())));
 
          var count_seed=0
        
@@ -553,7 +560,8 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
 
         var count=0
         var total_count=0
@@ -600,7 +608,7 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
       });
       $('.land_cost').keyup(function() {
         var id = $(this).attr('id');
@@ -623,7 +631,7 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
         var count=0
         var total_count=0
         var acre = document.getElementsByClassName("total_acre");
@@ -669,7 +677,7 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
          var count=0
         var total_count=0
         var acre = document.getElementsByClassName("total_acre");
@@ -714,7 +722,7 @@
          $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
          var count=0
         var total_count=0
         var acre = document.getElementsByClassName("total_acre");
@@ -757,7 +765,8 @@
         $('#profit_loss_'+str).val(($('#per_acre_avenue_'+str).val()-total));
         
         $('#breakeven_price_'+str).val(total/($('#yield_'+str).val()));
-        $('#projected_'+str).val(total/($('#breakeven_yield_'+str).val()));
+
+        $('#breakeven_yield_'+str).val(total/($('#projected_'+str).val()));
           var count=0
         var total_count=0
         var acre = document.getElementsByClassName("total_acre");

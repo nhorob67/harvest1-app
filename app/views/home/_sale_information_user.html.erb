@@ -42,34 +42,37 @@
       <%end%>
 
     </div>
-    <%if @cash_sale.blank?%>
-    
-       <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
+  
+     <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
        <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
-      </div>
-    <%end%>
-    <%if !@cash_sale.blank?%>
-    <div class="news" style="margin-top:20px;"> <a href="javascript:void(0);" class="pull-left corn">
-      <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
-      Cash Sale information
-      <table id="sortclass1" class="table table-bordered new-tab tablesorter" >
+
+    <%if !@crop.blank?%>
+     <%@crop.each do|name|  %>
+    <h3><%=name%></h3>
+    <br/>
+    <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+
+     
         
+            <%=params[:data]%> Cash Sale information
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
-            <th><i class="arr"></i> Year</th>
-            <th><i class="arr"></i> OpenOrder</th>
-            <th><i class="arr"></i> Bushels </th>
-            <th><i class="arr"></i> DeliveryLocation</th>
-            <th><i class="arr"></i> FuturePrice</th>
-            <th><i class="arr"></i> Basis </th>
-            <th><i class="arr"></i> CashPrice</th>
-            <th><i class="arr"></i> ContactNum </th>
-            <th><i class="arr"></i> %Percentage</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-        
-          <%@cash_sale.each do|cash_sale|%>
-      
-            <tr>
+        <%if !@cash_sale.blank? %>
+        <%@cash_sale.each do|cash_sale|%>
+                    <tr>
               <td><%=cash_sale.year%></td>
+              <td><%=cash_sale.crop_name%></td>
               <td><%= cash_sale.open_order%></td>
               <td><%= cash_sale.bushels%></td>
               <td><%= cash_sale.delivery_location%></td>
@@ -79,98 +82,116 @@
               <td><%= cash_sale.contact_number%></td>
               <td><%= cash_sale.percentage_production%></td>
              </tr> 
-          <%end%>
+         <%end%>
+          <%else%>
+       <tr><th>No Information present</th></tr>
+      <%end%> 
+        </table>
+ 
+   <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
   
-      </table>
-    </div>
-
-  <%end%>
-
-  <%if !@forward_contract.blank?%>
-  
-    <a href="javascript:void(0);" class="pull-left corn">Forward Contract</a>
-        <table id="sortclass1" class="table table-bordered new-tab tablesorter" >
+    
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;" >
           <tr class="title-tab">
-            <th><i class="arr"></i> Year</th>
-            <th><i class="arr"></i> Open Order</th>
-            <th><i class="arr"></i> Bushels </th>
-            <th><i class="arr"></i> Delivery Location</th>
-            <th><i class="arr"></i> Delivery Period</th>            
-            <th><i class="arr"></i> Future Price</th>
-            <th><i class="arr"></i> Basis </th>
-            <th><i class="arr"></i> Cash Price</th>
-            <th><i class="arr"></i> Contact Number </th>
-            <th><i class="arr"></i> %</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Period</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-
+          
+       
+           <%if !@forward_contract.blank?%>
+            
           <%@forward_contract.each do |forward_contract|%>
             <tr>
-              <td><%=forward_contract.year%></td>
-              <td><%= forward_contract.open_order%></td>
-              <td><%= forward_contract.bushels%></td>
-              <td><%= forward_contract.delivery_location%></td>
-              <td><%= forward_contract.delivery_period%></td>
-              <td><%= forward_contract.futures_price%></td>
-              <td><%= cash_sale.basic%></td>
-              <td><%= forward_contract.cash_price%></td>
-              <td><%= forward_contract.contact_number%></td>
-              <td><%= forward_contract.percentage_production%></td>
+              <td style="white-space:nowrap;"><%=forward_contract.year%></td>
+              <td style="white-space:nowrap;"><%=forward_contract.crop_name%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.open_order%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.bushels%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.delivery_location%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.delivery_period%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.futures_price%></td>
+              <td style="white-space:nowrap;"><%= cash_sale.basic%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.cash_price%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.contact_number%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.percentage_production%></td>
             </tr> 
           <%end%>  
+           <%else%>
+       <tr><th>No Information present</th></tr>
+      <%end%> 
         </table>
-  <%end%>
-   <%if !@hedge_to_arrive.blank?%>
+ 
+   <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
   
-    <a href="javascript:void(0);" class="pull-left corn">Hedge To Arrive</a>
-     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+    
+      <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Hedge To Arrive</a>
+        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
-            <th><i class="arr"></i> Year</th>
-            <th><i class="arr"></i> Open Order</th>
-            <th><i class="arr"></i> Bushels </th>
-            <th><i class="arr"></i> Delivery Location</th>
-            <th><i class="arr"></i> Future Month</th>            
-            <th><i class="arr"></i> Future Price</th>
-            <th><i class="arr"></i> Basis </th>
-            <th><i class="arr"></i> Cash Price</th>
-            <th><i class="arr"></i> Contact Number </th>
-            <th><i class="arr"></i> %</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Month</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Est.Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-
-
-          <%@hedge_to_arrive.each do |hedge_to_arrive|%>
+         
+          <%if !@hedge_to_arrive.blank?%>
+            <%@hedge_to_arrive.each do |hedge_to_arrive|%>
             <tr>
-              <td><%=hedge_to_arrive.year%></td>
-              <td><%= hedge_to_arrive.open_order%></td>
-              <td><%= hedge_to_arrive.bushels%></td>
-              <td><%= hedge_to_arrive.delivery_location%></td>
-              <td><%= hedge_to_arrive.future_month%></td>
-              <td><%= hedge_to_arrive.futures_price%></td>
-              <td><%= hedge_to_arrive.basic%></td>
-              <td><%= hedge_to_arrive.cash_price%></td>
-              <td><%= hedge_to_arrive.contact_number%></td>
-              <td><%= hedge_to_arrive.percentage_production%></td>
+              <td style="white-space:nowrap;"><%=hedge_to_arrive.year%></td>
+              <td style="white-space:nowrap;"><%=hedge_to_arrive.crop_name%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.open_order%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.bushels%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.delivery_location%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.future_month%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.futures_price%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.basic%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.cash_price%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.contact_number%></td>
+              <td style="white-space:nowrap;"><%= hedge_to_arrive.percentage_production%></td>
             </tr> 
-          <%end%> 
-      </table> 
-  <%end%>
-   <%if !@future.blank?%>
+          <%end%>
+           <%else%>
+       <tr><th>No Information present</th></tr>
+      <%end%> 
+     </table>
+   
   
-    <a href="javascript:void(0);" class="pull-left corn">Future</a>
-     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+   <%@future=Future.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+    
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
-            <th><i class="arr"></i> Year</th>
-            <th><i class="arr"></i> Open Order</th>
-            <th><i class="arr"></i> Duration </th>
-            <th><i class="arr"></i> Contract Number</th>
-            <th><i class="arr"></i> Future Month</th>            
-            <th><i class="arr"></i> Future Price</th>
-            <th><i class="arr"></i> Weight </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Duration </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Month</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
           
           </tr>
-
+      <%if !@future.blank?%>
+  
       <%@future.each do |future|%>
        <tr>
               <td><%=future.year%></td>
+              <td><%=future.crop_name%></td>
               <td><%= future.open_order%></td>
               <td><%= future.long_short%></td>
               <td><%= future.contract%></td>
@@ -180,25 +201,32 @@
             
             </tr> 
       <%end%>  
-  <%end%>
-     <%if !@option.blank?%>
+      <%else%>
+       <tr><th>No Information present</th></tr>
+      <%end%>         
+      </table> 
+ 
   
-    <a href="javascript:void(0);" class="pull-left corn">option</a>
-     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+  <%@option=Option.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+  
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
-            <th><i class="arr"></i> Year</th>
-            <th><i class="arr"></i> Open Order</th>
-            <th><i class="arr"></i> Duration </th>
-            <th><i class="arr"></i> Contract</th>
-            <th><i class="arr"></i> Put/Call</th>            
-            <th><i class="arr"></i> Strike Price</th>
-            <th><i class="arr"></i> premium </th>
-            <th><i class="arr"></i> Weight </th>
-          
-          </tr>
-          <%@option.each do |option|%>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Duration </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Put/Call</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Strike Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> premium </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
+           <%if !@option.blank?%>
+ 
+           <%@option.each do |option|%>
              <tr>
               <td><%=option.year%></td>
+               <td><%=option.crop_name%></td>
               <td><%= option.open_order%></td>
               <td><%= option.long_short%></td>
               <td><%= option.contract%></td>
@@ -209,45 +237,57 @@
             
             </tr> 
           <%end%>  
-  <%end%>
-
-  <%if !@basic_contract.blank?%>
+           <%else%>
+       <tr><th>No Information present</th></tr>
+      <%end%> 
+           
+      </table> 
   
-    <a href="javascript:void(0);" class="pull-left corn">Basis Contract</a>
-     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+ 
+  <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+  
+ 
+    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Basis Contract</a>
+     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
-            <th><i class="arr"></i> Year</th>
-            <th><i class="arr"></i> OpenOrder</th>
-            <th><i class="arr"></i> Bushels </th>
-            <th><i class="arr"></i> Delivery Location</th>
-            <th><i class="arr"></i> Future Month</th>            
-            <th><i class="arr"></i> Future Price</th>
-            <th><i class="arr"></i> Basis </th>
-            <th><i class="arr"></i> Cash Price</th>
-            <th><i class="arr"></i> Contact Number </th>
-            <th><i class="arr"></i> %</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Open Order</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Bushels </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Delivery Location</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Month</th>            
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Future Prices</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Basis </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Cash Price</th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
+            <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-
-
-          <%@basic_contract.each do |basic_contract|%>
+         <%if !@basic_contract.blank?%>
+           <%@basic_contract.each do |basic_contract|%>
             <tr>
-              <td><%=basic_contract.year%></td>
-              <td><%= basic_contract.open_order%></td>
-              <td><%= basic_contract.bushels%></td>
-              <td><%= basic_contract.delivery_location%></td>
-              <td><%= basic_contract.future_month%></td>
-              <td><%= basic_contract.futures_price%></td>
-              <td><%= basic_contract.basic%></td>
-              <td><%= basic_contract.cash_price%></td>
-              <td><%= basic_contract.contact_number%></td>
-              <td><%= basic_contract.percentage_production%></td>
+              <td style="white-space:nowrap;"><%=basic_contract.year%></td>
+              <td style="white-space:nowrap;"><%=basic_contract.crop_name%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.open_order%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.bushels%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.delivery_location%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.future_month%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.futures_price%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.basic%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.cash_price%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.contact_number%></td>
+              <td style="white-space:nowrap;"><%= basic_contract.percentage_production%></td>
             </tr> 
           <%end%> 
+            <%else%>
+       <tr><th>No Information present</th></tr>
+      <%end%>
       </table> 
-  <%end%>
-   <%if @cash_sale.blank? && @forward_contract.blank? && @option.blank?&& @hedge_to_arrive.blank?&& @basic_contract.blank?&& @future.blank?%>
-  No Information Present
-  <%end%>
+  
+  
+     <%end%>
+     <%else%>
+     No Information found
+     <%end%>
 <!--news-->
   </div>
   <!--accordion-inner-->

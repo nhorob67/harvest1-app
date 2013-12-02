@@ -1,3 +1,4 @@
+<%#debugger%>
 <style>
  .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#f1f1f1; }
 </style>
@@ -6,11 +7,24 @@
   <%end%>
   <div class="accordion-inner">
     <ul class="one">
-      <li id="archive_farmer_search" id="crop">
+      <li id="archive_farmer_search" id="crop" style="width:16%">
         <p class="consultantArchive"><a href="#">Archive</a></p>
       </li>
-        <%if !@years.nil?%>
-        <% @years.each do |year| %>
+              <%if !@year.nil?%>
+         <% @year.reverse.each do |year| %> 
+          <%if !(@archive_year.include? year.year)%>
+
+            <li style="width:19%"><%= link_to"<p id=search_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>       
+            
+          <% end %>
+        <% end %>
+      
+      <% end %>   
+    </ul>
+    <ul class="two">
+     
+      <%if !@year.nil?%>
+      <% @year.each do |year| %>
          
           <% if (@archive_year.include? year.year)%>   
          
@@ -19,19 +33,7 @@
         <% end %>
     
       <% end %>  
-    </ul>
-    <ul class="two">
-     
-      <%if !@years.nil?%>
-        <% @years.each do |year| %> 
-          <%if !(@archive_year.include? year.year)%>
-
-            <li style="width: 9%;"><%= link_to"<p id=search_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>       
-            
-          <% end %>
-        <% end %>
-      
-      <% end %>   
+       
            
     </ul>
   <div class="clearfix"></div>

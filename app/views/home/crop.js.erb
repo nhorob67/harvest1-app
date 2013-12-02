@@ -18,7 +18,7 @@ var id = <%= params[:data]%>
 		<%if !(ArchiveYear.find_by_year_and_user_id(params[:data],current_user.id)).blank?%>
 			<%if (ArchiveYear.find_by_year_and_user_id(params[:data],current_user.id)).archive==true%>
 		        	
-				$(".archive_year_farmer_crop").show();
+				$(".archive_year_farmer_crop").toggle();
 		  	<%end%>
 		<%end%>  	
 		 var id = <%= params[:data]%>

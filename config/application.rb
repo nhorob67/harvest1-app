@@ -16,6 +16,8 @@ module HarvestProfit
     # -- all .rb files in that directory are automatically loaded.
     config.assets.initialize_on_precompile = false
     config.assets.precompile += %w( bootstrap.css )
+    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
 

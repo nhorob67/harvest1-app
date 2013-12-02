@@ -2,11 +2,11 @@
 <div class="inner">
   <div class="accordion-inner">
     <ul class="one">
-      <li id="archive_farmer_individual" id ="crop" style="width:16%">
-        <p class="farmerArchive"><a href="#">Archive</a></p>
+      <li id="archive_farmer_individual" id ="crop" style="width:16%" >
+        <p class="farmerArchive" style="color:#0088CC">Archive</p>
       </li>
        <%if !@year.nil?%>
-        <% @year.each do |year| %> 
+        <% @year.reverse.each do |year| %> 
          
           <%if !(@archive_year.include? year.year)%>
 

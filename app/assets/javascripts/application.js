@@ -15,6 +15,7 @@
 //= require jquery.purr
 //= require best_in_place
 //= require twitter/bootstrap
+//= require ckeditor/init
 //= require bootstrap-datepicker
 //= require tinymce
 //= require_tree .

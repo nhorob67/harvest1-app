@@ -23,8 +23,7 @@
                     <%end%>
                     <div class="clearfix"></div>
                     <!--clearfix-->
-                    <%= f.text_area :content ,:class=>"tinymce", :rows => 6, :cols => 5%><br>
-                    <%= tinymce %>
+                  <%= f.cktext_area :content, :value => "Default value", :id => "sometext" , :ckeditor => {:uiColor => "#AADC6E", :toolbar => "mini"}%><br>
                     
                     <!--<button name="btn" class="btn pull-left">Upload File</button>
                     <button name="btn" class="btn pull-right">Submit</button>-->

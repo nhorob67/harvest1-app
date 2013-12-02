@@ -183,26 +183,41 @@ class HomeController < ApplicationController
      end
   
   end
-  def consultant_create
-    params[:user][:orignal_password]=params[:user][:password]
-    if !((params[:user]["email"].blank?) || (params[:user]["password"].blank?))
-      @user=User.create(params[:user])
-      if current_user.has_role? :consultant
-        @user.add_role "user"
-      else
-        @user.add_role "consultant"
+ def consultant_create
+    
+    @users=User.all
+    @flag=1
+    @users.each do |user|
+      
+      if user.email==params[:user][:email]
+        @flag=0
       end
-
-      @user.consultant_id = current_user.id
-      if @user.save
-          redirect_to recommend_home_index_path 
-      end
-    else
-      flash[:notice] = 'Email and Password cannot blank.'
-      redirect_to recommend_home_index_path
     end
-  end
+  
+    if @flag!=0
+       
+        params[:user][:orignal_password]=params[:user][:password]
+        if !((params[:user]["email"].blank?) || (params[:user]["password"].blank?))
+          @user=User.create(params[:user])
+          if current_user.has_role? :consultant
+            @user.add_role "user"
+          else
+            @user.add_role "consultant"
+          end
 
+          @user.consultant_id = current_user.id
+          if @user.save
+              redirect_to recommend_home_index_path 
+          end
+        else
+          flash[:notice] = 'Email and Password cannot blank.'
+          redirect_to recommend_home_index_path
+        end
+    else   
+      flash.alert = "This Email already Exist"
+      redirect_to recommend_home_index_path  
+    end  
+  end
   def add_user
   	@user=User.new
   end
@@ -273,11 +288,11 @@ end
     end  
     else
 
-      @years=Year.all
+      @year=Year.all
       @archive_year=ArchiveYear.find_all_by_user_id(params[:selected_user_id]).collect(&:year)
       @unarchive_year=[]
        @crop_info = CropInformation.find(:all, :conditions=> ["year = ? AND user_id = ?", "#{params[:data]}", "#{params[:selected_user_id]}"] )
-      @years.each do |year|
+      @year.each do |year|
         if !(@archive_year.include? year.year)
           @unarchive_year=@unarchive_year+Array(year)
         end
@@ -360,13 +375,22 @@ end
   end
 
   def sale
-    @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
+    
+    if (!params[:user_id].blank?) && (User.find(params[:user_id]).has_role? :consultant)
+      @crop=["corn","Soyabean","wheat"]
+    else
+      @crop=CropInformation.find(:all , :conditions => ["user_id=?", params[:user_id]] ).collect(&:crop_name).uniq
+      
+    end    
+    #@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
     @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
     @year=Year.all
     
-   
-          
-    
+    @forward_contract
+    @hedge_to_arrive
+    @future
+    @option
+    @basic_contract
      respond_to do |format|
          format.js
       end
@@ -581,20 +605,20 @@ end
      @cash_sale=CashSale.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=>(params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year],:user_id=>params[:user_id],:crop_name=>params[:crop_name])
     end
      if params[:id]=="forward"
-     @cash_sale=ForwardContract.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:delivery_period=>params[:delivery_period],:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=> (params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
+     @forward_contracts=ForwardContract.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:delivery_period=>params[:delivery_period],:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=> (params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
     end
      if params[:id]=="hedge"
-     @cash_sale=HedgeToArrive.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:future_month=>(params[:date][:month]+"-"+params[:date][:year]),:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=>(params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
+     @hedge_to_arrive=HedgeToArrive.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:future_month=>(params[:date][:month]+"-"+params[:date][:year]),:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=>(params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
     end
      if params[:id]=="basis"
-     @cash_sale=BasicContract.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:future_month=>(params[:date][:month]+"-"+params[:date][:year]),:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=>(params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
+     @basic_contract=BasicContract.create(:open_order=>params[:open_order],:bushels=>params[:bushels],:delivery_location=>params[:delivery_location],:future_month=>(params[:date][:month]+"-"+params[:date][:year]),:futures_price=>params[:futures_price],:basic=>params[:basic],:contact_number=>params[:contact_number],:cash_price=>(params[:futures_price].to_i+params[:basic].to_i),:percentage_production=>params[:percentage_production],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
     end
      if params[:id]=="future"
 
-     @cash_sale=Future.create(:open_order=>params[:open_order],:long_short=>params[:long_short],:contract=>params[:contract],:future_month=>(params[:date][:month]+"-"+params[:date][:year]),:futures_price=>params[:futures_price],:gain_loss=>params[:gain_loss],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
+     @future=Future.create(:open_order=>params[:open_order],:long_short=>params[:long_short],:contract=>params[:contract],:future_month=>(params[:date][:month]+"-"+params[:date][:year]),:futures_price=>params[:futures_price],:gain_loss=>params[:gain_loss],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
     end
      if params[:id]=="option"
-     @cash_sale=Option.create(:open_order=>params[:open_order],:long_short=>params[:long_short],:contract=>params[:contract],:put_call=>params[:put_call],:strike_price=>params[:strike_price],:premium=>params[:premium],:gain_loss=>params[:gain_loss],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
+     @option=Option.create(:open_order=>params[:open_order],:long_short=>params[:long_short],:contract=>params[:contract],:put_call=>params[:put_call],:strike_price=>params[:strike_price],:premium=>params[:premium],:gain_loss=>params[:gain_loss],:year=>params[:year] ,:user_id=>params[:user_id],:crop_name=>params[:crop_name])
     end
     if current_user.has_role? :consultant
      redirect_to recommend_home_index_path
@@ -614,6 +638,7 @@ end
   end
 
   def recommend
+   #@crop=["corn","Soyabean","wheat"]
     @unarchive_years=[]
     @year=Year.all
     @year.each do |year|
@@ -705,7 +730,7 @@ end
   def recommend_search
 
     @archive_year=ArchiveYear.find_all_by_user_id(params[:select_user_id]).collect(&:year)
-    @years=Year.all
+    @year=Year.all
     @unarchive_year=[]
     @recommend=Recommend.find(:all, :conditions => ["recommended_id=?", params[:select_user_id].to_i] )
     @crop_information=CropInformation.find(:all, :conditions => ["user_id=?", params[:select_user_id].to_i] )
