@@ -713,24 +713,28 @@ end
                 UserMailer.welcome_email(current_user.email, User.find(@recomended_id),@message).deliver
                 params[:recommend][:recommended_id]=recom.id
                 @recommend=Recommend.create(params[:recommend])  
-                @recommend.user_id=current_user.id  
+                @recommend.user_id=current_user.id 
+                flash[:notice] = 'Successfully Added..' 
                 @recommend.save
               end 
            end
         end  
-
-
       else
         if !params[:recommend][:content].blank?
           @recommend=Recommend.create(params[:recommend])  
           @recommend.user_id=current_user.id  
           @recommend.recommended_id=params[:recommended_id]
+          flash[:notice] = 'Successfully Added..'
           @recommend.save
+
       end
       end 
-
-
-    redirect_to recommend_home_index_path
+     if !params[:recommend][:content].blank?
+        redirect_to recommend_home_index_path
+      else
+        flash[:notice] = 'Please add the information..'
+        redirect_to recommend_home_index_path
+      end
   end
   def recommend_search
 

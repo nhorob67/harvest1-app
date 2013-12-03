@@ -140,10 +140,10 @@
                 <tr><th style=" padding: 0;  height: 41px;" >TOTAL</th>
                 </tr>                  
                 
-                <tr><td style=" padding: 0;height:299px;">  <%=text_field_tag 'crop[][total_acre]', @total_acre,:style=>"width:100px; ", :disabled =>true,:id=>"total_acre"%></td></tr>
+                <tr><td style=" padding: 0;height:193px;">  <%=text_field_tag 'crop[][total_acre]', @total_acre,:style=>"width:100px; ", :disabled =>true,:id=>"total_acre"%></td></tr>
                 <tr><td style=" padding: 0;"> </td></tr>
                   <tr><td style=" padding: 0;"> </td></tr>  
-                   <tr><td style=" padding: 0;">  </td></tr> 
+                    <tr><td style=" padding: 0;;height:104px;">  <%=text_field_tag 'crop[][total_per_acre_avenue]', @total_per_acre_avenue,:style=>"width:100px;", :disabled =>true,:id=>"total_per_acre_avenue"%></td></tr>
                    <tr><td style=" padding: 0;">  </td></tr>     
                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fertilizer]', @total_fertilizer,:style=>"width:100px;", :disabled =>true,:id=>"total_fertilizer"%></td></tr>
                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_seed]',@total_seed, :style=>"width:100px;", :disabled =>true,:id=>"total_seed"%></td></tr>
@@ -423,6 +423,28 @@
         $('#per_acre_avenue_'+str).val(avenue)
 
         $('#profit_loss_'+str).val(avenue- $('#total_expenses_'+str).val());
+        var count=0
+        var total_count=0
+        var yield = document.getElementsByClassName("yield");
+        var projected = document.getElementsByClassName("projected");
+        for (var i = 0; i < yield.length; i++) {
+          for (var i = 0; i < projected.length; i++) {
+            if(isNaN(parseInt(projected[i].value)) && isNaN(parseInt(yield[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(projected[i].value))){
+              total_count = ((parseInt(yield[i].value))*0)
+            }
+            else if(isNaN(parseInt(yield[i].value))){
+              total_count = ((parseInt(projected[i].value))*0)
+            }
+            else {
+              total_count = ((parseInt(yield[i].value))*(parseInt(projected[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+        $('#total_per_acre_avenue').val(count)
       });
       $('.projected').keyup(function() {
         var id = $(this).attr('id');
@@ -436,6 +458,28 @@
            var avenue=val*yield
         }
         $('#per_acre_avenue_'+str).val(avenue)
+        var count=0
+        var total_count=0
+        var yield = document.getElementsByClassName("yield");
+        var projected = document.getElementsByClassName("projected");
+        for (var i = 0; i < yield.length; i++) {
+          for (var i = 0; i < projected.length; i++) {
+            if(isNaN(parseInt(projected[i].value)) && isNaN(parseInt(yield[i].value))){
+              total_count =0
+            }
+            else if(isNaN(parseInt(projected[i].value))){
+              total_count = ((parseInt(yield[i].value))*0)
+            }
+            else if(isNaN(parseInt(yield[i].value))){
+              total_count = ((parseInt(projected[i].value))*0)
+            }
+            else {
+              total_count = ((parseInt(yield[i].value))*(parseInt(projected[i].value)))
+            }
+             count=count+total_count   
+          }  
+        }
+        $('#total_per_acre_avenue').val(count)
       });
       $('.fertilizer').keyup(function() {
         var id = $(this).attr('id');
