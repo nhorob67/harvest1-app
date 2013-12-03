@@ -675,10 +675,12 @@ end
   end
 
   def recommed_create
+    @message=HTML::FullSanitizer.new.sanitize(params[:recommend][:content])
     if !current_user.has_role? :admin 
         @recommended_ids=params[:recommended_id]
         if !params[:recommend][:content].blank?
-           @message=params[:recommend][:content].gsub!(/(<[^>]*>)|\n|\t/s) {" "}
+          
+           
             if !@recommended_ids.blank?
               @recommended_ids.each do |recom|
                 
@@ -707,6 +709,7 @@ end
                     @twilio_client.account.sms.messages.create({:from => '+12027602229', :to => User.find(@recomended_id).cell_number, :body => @message})
                   end            
                 end
+
                 UserMailer.welcome_email(current_user.email, User.find(@recomended_id),@message).deliver
                 params[:recommend][:recommended_id]=recom.id
                 @recommend=Recommend.create(params[:recommend])  
@@ -718,10 +721,12 @@ end
 
 
       else
-        @recommend=Recommend.create(params[:recommend])  
-        @recommend.user_id=current_user.id  
-        @recommend.recommended_id=params[:recommended_id]
-        @recommend.save
+        if !params[:recommend][:content].blank?
+          @recommend=Recommend.create(params[:recommend])  
+          @recommend.user_id=current_user.id  
+          @recommend.recommended_id=params[:recommended_id]
+          @recommend.save
+      end
       end 
 
 
