@@ -24,7 +24,7 @@
         <%if user.has_role? :consultant %>
         <td>Consultant</td>
         <%else%>
-        <td>User</td>
+        <td>Farmer</td>
         <%end%>
         <td><%=link_to "Delete",user_destroy_home_path(user), data: { confirm: 'Are you sure?' ,:remote =>true }%></td>
         
