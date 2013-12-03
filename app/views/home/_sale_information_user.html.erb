@@ -50,7 +50,8 @@
      <%@crop.each do|name|  %>
     <h3><%=name%></h3>
     <br/>
-    <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+    
+    <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
 
      
         
@@ -88,7 +89,7 @@
       <%end%> 
         </table>
  
-   <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+   <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
   
     
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
@@ -130,7 +131,7 @@
       <%end%> 
         </table>
  
-   <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+   <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
   
     
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Hedge To Arrive</a>
@@ -171,7 +172,7 @@
      </table>
    
   
-   <%@future=Future.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+   <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
     
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
@@ -207,7 +208,7 @@
       </table> 
  
   
-  <%@option=Option.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+  <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
   
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
@@ -244,7 +245,7 @@
       </table> 
   
  
-  <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+  <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
   
  
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Basis Contract</a>
