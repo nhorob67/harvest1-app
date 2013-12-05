@@ -1,56 +1,53 @@
  <div class="inner">
   <div class="accordion-inner">
-     <ul class="one">
+              <ul class="one">
         <li id="archive">
-         <p style="color:#0088CC">Archive</p>
+        <p style="color:#0088CC">Archive</p>
         </li>
 
-        <%if !@year.nil?%>
-        <% @year.each do |year| %> 
-        <%if year.archive!=true%>
-        <li><%= link_to"<p>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>@user_id}, :remote => true %></li>       
-          
+      <% @years=[] %>
+      <% @year.each do |year| %>
+        <% @years << year.year %>  
+      <%end%>
+      <%@years=@years.sort%>
+
+
+        <%if !@years.nil?%>
+        <% @years.each do |year| %>
+        <%if !(@archive_year.include? year)%>
+        <%if year==Year.all.reverse.first.year && params[:data].blank?%>
+        <li><%= link_to"<p class=list-select>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
+        <%else%>
+        <li><%= link_to"<p>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
+        <%end%>
         <% end %>
         <% end %>
-      
-        <% end %>       
-    </ul>
-    <ul class="two">
-        <%if !@year.nil?%>
-        <% @year.each do |year| %> 
-        <%if year.archive==true%>       
-          <li style="display:none" class="archive_year"><%= link_to"<p>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>@user_id}, :remote => true %></li>
+
+        <% end %>
+        </ul>
+        <ul class="two">
+        <%if !@years.nil?%>
+        <% @years.each do |year| %>
+       <%if (@archive_year.include? year)%>
+        <li style="display:none" class="archive_year"><%= link_to"<p>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
         <% end %>
         <% end %>
-        
-        <% end %>      
-    </ul>
+
+        <% end %>
+        </ul>
     
     <div class="clearfix"></div>
     <!--clearfix-->
-    <div id="open_popup"  style="display: none;"> 
-      
-      <h3>Sales/Hedges</h3>
-      <%=form_tag hedge_sale_home_index_path ,:remote=>true ,:style=>"padding-left: 56px;" do%>
-      <%=radio_button_tag "hedge_sale", 'cash',:checked=>true%>&nbsp;&nbsp;Cash Sale</br>
-      <%=radio_button_tag "hedge_sale", 'forward'%>&nbsp;&nbsp;Forward Contract</br>
-      <%=radio_button_tag "hedge_sale", 'hedge'%>&nbsp;&nbsp;Hedge-To-Arrive</br>
-      <%=radio_button_tag "hedge_sale", 'basis'%>&nbsp;&nbsp;Basis Contract</br>
-      <%=radio_button_tag "hedge_sale", 'future'%>&nbsp;&nbsp;Futures</br>
-      <%=radio_button_tag "hedge_sale", 'option'%>&nbsp;&nbsp;Options</br></br>
-      <%= submit_tag "select" ,:class=>"btn btn "%>
-      <%end%>
-
-    </div>
+    
   
      <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
-       <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
+       <%= link_to "" ,"#open_popup",:class=>"addnew_fancybox  pull-right mar"%>
 
     <%if !@crop.blank?%>
      <%@crop.each do|name|  %>
     <h3><%=name%></h3>
     <br/>
-    
+
     <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
 
      
@@ -74,7 +71,12 @@
                     <tr>
               <td><%=cash_sale.year%></td>
               <td><%=cash_sale.crop_name%></td>
-              <td><%= cash_sale.open_order%></td>
+               <%if cash_sale.open_order==false%>
+                <td>No</td>
+              <%else%>
+                <td>Yes</td>
+              <%end%>
+              
               <td><%= cash_sale.bushels%></td>
               <td><%= cash_sale.delivery_location%></td>
               <td><%= cash_sale.futures_price%></td>
@@ -115,7 +117,12 @@
             <tr>
               <td style="white-space:nowrap;"><%=forward_contract.year%></td>
               <td style="white-space:nowrap;"><%=forward_contract.crop_name%></td>
-              <td style="white-space:nowrap;"><%= forward_contract.open_order%></td>
+              <%if forward_contract.open_order==false%>
+                <td style="white-space:nowrap;">No</td>
+              <%else%>
+                <td style="white-space:nowrap;">Yes</td>
+              <%end%>
+              
               <td style="white-space:nowrap;"><%= forward_contract.bushels%></td>
               <td style="white-space:nowrap;"><%= forward_contract.delivery_location%></td>
               <td style="white-space:nowrap;"><%= forward_contract.delivery_period%></td>
@@ -155,7 +162,12 @@
             <tr>
               <td style="white-space:nowrap;"><%=hedge_to_arrive.year%></td>
               <td style="white-space:nowrap;"><%=hedge_to_arrive.crop_name%></td>
-              <td style="white-space:nowrap;"><%= hedge_to_arrive.open_order%></td>
+               <%if hedge_to_arrive.open_order==false%>
+                <td style="white-space:nowrap;">No</td>
+              <%else%>
+                <td style="white-space:nowrap;">Yes</td>
+              <%end%>
+             
               <td style="white-space:nowrap;"><%= hedge_to_arrive.bushels%></td>
               <td style="white-space:nowrap;"><%= hedge_to_arrive.delivery_location%></td>
               <td style="white-space:nowrap;"><%= hedge_to_arrive.future_month%></td>
@@ -193,7 +205,13 @@
        <tr>
               <td><%=future.year%></td>
               <td><%=future.crop_name%></td>
-              <td><%= future.open_order%></td>
+               <%if future.open_order==false%>
+                <td>No</td>
+              <%else%>
+                <td >Yes</td>
+              <%end%>
+             
+              
               <td><%= future.long_short%></td>
               <td><%= future.contract%></td>
               <td><%= future.future_month%></td>
@@ -228,7 +246,13 @@
              <tr>
               <td><%=option.year%></td>
                <td><%=option.crop_name%></td>
-              <td><%= option.open_order%></td>
+                <%if option.open_order==false%>
+                <td>No</td>
+              <%else%>
+                <td >Yes</td>
+              <%end%>
+             
+             
               <td><%= option.long_short%></td>
               <td><%= option.contract%></td>
               <td><%= option.put_call%></td>
@@ -268,7 +292,12 @@
             <tr>
               <td style="white-space:nowrap;"><%=basic_contract.year%></td>
               <td style="white-space:nowrap;"><%=basic_contract.crop_name%></td>
-              <td style="white-space:nowrap;"><%= basic_contract.open_order%></td>
+              <%if basic_contract.open_order==false%>
+                <td style="white-space:nowrap;">No</td>
+              <%else%>
+                <td style="white-space:nowrap;" >Yes</td>
+              <%end%>
+             
               <td style="white-space:nowrap;"><%= basic_contract.bushels%></td>
               <td style="white-space:nowrap;"><%= basic_contract.delivery_location%></td>
               <td style="white-space:nowrap;"><%= basic_contract.future_month%></td>

@@ -1,28 +1,43 @@
 
 <div class="inner">
   <div class="accordion-inner">
-    <ul class="one">
+     <ul class="one">
       <li id="archive_farmer_individual" id ="crop" style="width:16%" >
         <p class="farmerArchive" style="color:#0088CC">Archive</p>
       </li>
-       <%if !@year.nil?%>
-        <% @year.reverse.each do |year| %> 
-         
-          <%if !(@archive_year.include? year.year)%>
 
-            <li style="width:19%"><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id}, :remote => true %></li>       
-            
+      <% @years=[] %>
+      <% @year.each do |year| %>
+        <% @years << year.year %>  
+      <%end%>
+      <%@years=@years.sort%>
+
+       <%if !@years.nil?%>
+        <%@years.each do |year| %> 
+       
+         
+          <%if !(@archive_year.include? year)%>
+         
+            <%if year==Year.all.reverse.first.year && params[:data].blank?%>
+              <li style="width:19%"><%= link_to"<p id=crop_#{year} class=list-select>#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id}, :remote => true %></li>       
+            <%else%>
+              <li style="width:19%"><%= link_to"<p id=crop_#{year} >#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id}, :remote => true %></li>       
+            <%end%>
           <% end %>
         <% end %>
       
       <% end %>    
        
     </ul>
+   
+
     <ul class="two">
-       <%if !@year.nil?%>
-        <% @year.each do |year| %> 
-         <% if (@archive_year.include? year.year)%>       
-            <li style="display:none" class="archive_year_farmer_crop" ><%= link_to"<p id=crop_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year,:user_id=>current_user.id}, :remote => true %></li>
+       <%if !@years.nil?%>
+        <% @years.each do |year| %> 
+
+        
+         <% if (@archive_year.include? year)%>       
+            <li style="display:none" class="archive_year_farmer_crop" ><%= link_to"<p id=crop_#{year}>#{year}</p>".html_safe, { :action => "crop", :data=>year,:user_id=>current_user.id}, :remote => true %></li>
           <% end %>
         <% end %>
      
@@ -66,6 +81,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#archive_farmer_individual").click(function(){   
+      
       $(".archive_year_farmer_crop").toggle();
       $('.accordion-inner').find('.list-select').removeClass('list-select');
        $('.farmerArchive').addClass('list-select');

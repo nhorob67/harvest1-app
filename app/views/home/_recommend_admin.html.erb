@@ -6,7 +6,7 @@
         <th>Content</th>
       </tr>
      
-      <% @recommend.each do |recommend| %>
+      <%  @recommend.reverse.each do |recommend| %>
 
         <tr>
           <td><%= recommend.title_of_news_piece%></td>

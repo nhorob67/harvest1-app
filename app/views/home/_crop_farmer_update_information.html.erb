@@ -11,63 +11,63 @@
         <tr>
           <td>
             <table style="width: 139px;">
-              <tr style="height: 22px;"><th >Crop Name</th></tr>
+              <tr style="height: 40px;"><th >Crop Name</th></tr>
              
-                <tr style="height: 48px;"><th>  Acre </th></tr>
-                <tr style="height: 22px;"><th>  Yield </th></tr>
+                <tr style="height: 40px;"><th>  Acre </th></tr>
+                <tr style="height: 40px;"><th>  Yield </th></tr>
 
-                <tr style="height: 45px;"><th >  Production </th></tr>
+                <tr style="height: 40px;"><th >  Production </th></tr>
                 <tr><td></td></tr>
-                <tr style="height: 45px;"><th >  Projected price </th></tr>
+                <tr style="height: 40px;"><th >  Projected price </th></tr>
                 <tr><td></td></tr>
-                <tr style="height: 45px;"><th >  Per Acre Revenue  </th></tr>
+                <tr style="height: 60px;"><th >  Per Acre Revenue  </th></tr>
                 <tr><th>  
                 <%=label_tag "Expenese"%>
               </th>
               </tr>
                 <%if @attribute_fert_cost.nil?%>
-                  <tr style="height: 22px;"><th > <%= best_in_place @attribute_fert,:name,:path=>update_label_home_path(@attribute_fert,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th > <%= best_in_place @attribute_fert,:name,:path=>update_label_home_path(@attribute_fert,data:{year: params[:data]}) %> </th></tr>
                 <%else%>
-                  <tr style="height: 22px;"><th > <%= best_in_place @attribute_fert_cost,:label_name,:path=>update_label_home_path(@attribute_fert_cost,data:{year: params[:data],:label_id=>@attribute_fert_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th > <%= best_in_place @attribute_fert_cost,:label_name,:path=>update_label_home_path(@attribute_fert_cost,data:{year: params[:data],:label_id=>@attribute_fert_cost.label_value}) %> </th></tr>
                 <%end%>  
                 <%if @attribute_seed_cost.nil?%>
-                  <tr style="height: 48px;"><th >  <%= best_in_place @attribute_seed, :name, :path=>update_label_home_path(@attribute_seed,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_seed, :name, :path=>update_label_home_path(@attribute_seed,data:{year: params[:data]}) %> </th></tr>
                 <%else%>
-                  <tr style="height: 48px;"><th >  <%= best_in_place @attribute_seed_cost, :label_name, :path=>update_label_home_path(@attribute_seed_cost,data:{year: params[:data],:label_id=>@attribute_seed_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_seed_cost, :label_name, :path=>update_label_home_path(@attribute_seed_cost,data:{year: params[:data],:label_id=>@attribute_seed_cost.label_value}) %> </th></tr>
                 <%end%>  
                 <%if @attribute_chem_cost.nil?%>
-                  <tr style="height: 22px;"><th >  <%= best_in_place @attribute_chem, :name,:path => update_label_home_path(@attribute_chem,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_chem, :name,:path => update_label_home_path(@attribute_chem,data:{year: params[:data]}) %> </th></tr>
                 <%else%>
-                  <tr style="height: 22px;"><th >  <%= best_in_place @attribute_chem_cost, :label_name,:path => update_label_home_path(@attribute_chem_cost,data:{year: params[:data],:label_id=>@attribute_chem_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_chem_cost, :label_name,:path => update_label_home_path(@attribute_chem_cost,data:{year: params[:data],:label_id=>@attribute_chem_cost.label_value}) %> </th></tr>
                 <%end%>  
                  <%if @attribute_insurance_cost.nil?%>
-                  <tr style="height: 22px;"><th >  <%= best_in_place @attribute_insurance, :name,:path => update_label_home_path(@attribute_insurance,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_insurance, :name,:path => update_label_home_path(@attribute_insurance,data:{year: params[:data]}) %> </th></tr>
                 <%else%>
-                  <tr style="height: 22px;"><th >  <%= best_in_place @attribute_insurance_cost, :label_name,:path => update_label_home_path(@attribute_insurance_cost,data:{year: params[:data],:label_id=>@attribute_insurance_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_insurance_cost, :label_name,:path => update_label_home_path(@attribute_insurance_cost,data:{year: params[:data],:label_id=>@attribute_insurance_cost.label_value}) %> </th></tr>
                 <%end%>
                 <%if @attribute_fuel_cost.nil?%>
-                  <tr style="height: 45px;"><th >  <%= best_in_place @attribute_fuel, :name,:path => update_label_home_path(@attribute_fuel,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_fuel, :name,:path => update_label_home_path(@attribute_fuel,data:{year: params[:data]}) %> </th></tr>
                 <%else%>
-                  <tr style="height: 45px;"><th >  <%= best_in_place @attribute_fuel_cost, :label_name,:path => update_label_home_path(@attribute_fuel_cost,data:{year: params[:data],:label_id=>@attribute_fuel_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_fuel_cost, :label_name,:path => update_label_home_path(@attribute_fuel_cost,data:{year: params[:data],:label_id=>@attribute_fuel_cost.label_value}) %> </th></tr>
                 <%end%>  
                 <%if @attribute_land_cost.nil?%>
-                  <tr style="height: 22px;"><th ><%= best_in_place  @attribute_cost, :name,:path=>update_label_home_path(@attribute_cost,data:{year: params[:data]})%> </th></tr>
+                  <tr style="height: 40px;"><th ><%= best_in_place  @attribute_cost, :name,:path=>update_label_home_path(@attribute_cost,data:{year: params[:data]})%> </th></tr>
                   <%else%>
-                  <tr style="height: 22px;"><th ><%= best_in_place  @attribute_land_cost, :label_name,:path=>update_label_home_path(@attribute_land_cost,data:{year: params[:data],:label_id=>@attribute_land_cost.label_value})%> </th></tr>
+                  <tr style="height: 40px;"><th ><%= best_in_place  @attribute_land_cost, :label_name,:path=>update_label_home_path(@attribute_land_cost,data:{year: params[:data],:label_id=>@attribute_land_cost.label_value})%> </th></tr>
                 <%end%>
                 <%if @attribute_head_cost.nil?%>
-                  <tr style="height: 46px;"><th ><%= best_in_place @attribute_head, :name,:path => update_label_home_path(@attribute_head,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th ><%= best_in_place @attribute_head, :name,:path => update_label_home_path(@attribute_head,data:{year: params[:data]}) %> </th></tr>
                 <%else%>
-                  <tr style="height: 46px;"><th ><%= best_in_place @attribute_head_cost, :label_name,:path => update_label_home_path(@attribute_head_cost,data:{year: params[:data],:label_id=>@attribute_head_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th ><%= best_in_place @attribute_head_cost, :label_name,:path => update_label_home_path(@attribute_head_cost,data:{year: params[:data],:label_id=>@attribute_head_cost.label_value}) %> </th></tr>
                 <%end%>  
                 <%if @attribute_family_cost.nil?%>
-                  <tr style="height: 22px;"><th >  <%= best_in_place @attribute_family, :name,:path => update_label_home_path(@attribute_family,data:{year: params[:data]}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_family, :name,:path => update_label_home_path(@attribute_family,data:{year: params[:data]}) %> </th></tr>
                 <%else%>  
-                  <tr style="height: 22px;"><th >  <%= best_in_place @attribute_family_cost, :label_name,:path => update_label_home_path(@attribute_family_cost,data:{year: params[:data],:label_id=>@attribute_family_cost.label_value}) %> </th></tr>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_family_cost, :label_name,:path => update_label_home_path(@attribute_family_cost,data:{year: params[:data],:label_id=>@attribute_family_cost.label_value}) %> </th></tr>
                 <%end%>
-                <tr style="height: 29px;"><th >  Total Expenses </th></tr>
+                <tr style="height: 40px;"><th >  Total Expenses </th></tr>
                 <tr><td></td></tr>
-                <tr style="height: 46px;"><th >  Profit/Loss </th></tr>
+                <tr style="height: 40px;"><th >  Profit/Loss </th></tr>
                 <tr><td></td></tr>
             
                 <tr style="height: 42px;"><th >  BreakEven Price</th></tr>
@@ -170,7 +170,176 @@
       <%= link_to "Add Expenses".html_safe,"#expense",:class=>"fancybox button"%>
     <%end%>
   <%else%>
-    <h3>Crop not found. </h3>
+  
+   <%@crop_info=CropInformation.find_all_by_user_id_and_year(current_user.id,@year.reverse.first.year)%>
+ <%= form_tag update_crop_information_home_index_path,:remote=>true do  %>
+    <%= submit_tag "Save Changes" ,:class=>"btn btn-primary",:style=>"float: right;"%>
+    <br>
+    <br>
+      <div style="width: 895px; height: 975px; overflow: auto;">   
+
+      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
+        <tr>
+          <td>
+            <table style="width: 139px;">
+              <tr style="height: 40px;"><th >Crop Name</th></tr>
+             
+                <tr style="height: 40px;"><th>  Acre </th></tr>
+                <tr style="height: 40px;"><th>  Yield </th></tr>
+
+                <tr style="height: 40px;"><th >  Production </th></tr>
+                <tr><td></td></tr>
+                <tr style="height: 40px;"><th >  Projected price </th></tr>
+                <tr><td></td></tr>
+                <tr style="height: 60px;"><th >  Per Acre Revenue  </th></tr>
+                <tr><th>  
+                <%=label_tag "Expenese"%>
+              </th>
+              </tr>
+                <%if @attribute_fert_cost.nil?%>
+                  <tr style="height: 40px;"><th > <%= best_in_place @attribute_fert,:name,:path=>update_label_home_path(@attribute_fert,data:{year: params[:data]}) %> </th></tr>
+                <%else%>
+                  <tr style="height: 40px;"><th > <%= best_in_place @attribute_fert_cost,:label_name,:path=>update_label_home_path(@attribute_fert_cost,data:{year: params[:data],:label_id=>@attribute_fert_cost.label_value}) %> </th></tr>
+                <%end%>  
+                <%if @attribute_seed_cost.nil?%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_seed, :name, :path=>update_label_home_path(@attribute_seed,data:{year: params[:data]}) %> </th></tr>
+                <%else%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_seed_cost, :label_name, :path=>update_label_home_path(@attribute_seed_cost,data:{year: params[:data],:label_id=>@attribute_seed_cost.label_value}) %> </th></tr>
+                <%end%>  
+                <%if @attribute_chem_cost.nil?%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_chem, :name,:path => update_label_home_path(@attribute_chem,data:{year: params[:data]}) %> </th></tr>
+                <%else%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_chem_cost, :label_name,:path => update_label_home_path(@attribute_chem_cost,data:{year: params[:data],:label_id=>@attribute_chem_cost.label_value}) %> </th></tr>
+                <%end%>  
+                 <%if @attribute_insurance_cost.nil?%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_insurance, :name,:path => update_label_home_path(@attribute_insurance,data:{year: params[:data]}) %> </th></tr>
+                <%else%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_insurance_cost, :label_name,:path => update_label_home_path(@attribute_insurance_cost,data:{year: params[:data],:label_id=>@attribute_insurance_cost.label_value}) %> </th></tr>
+                <%end%>
+                <%if @attribute_fuel_cost.nil?%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_fuel, :name,:path => update_label_home_path(@attribute_fuel,data:{year: params[:data]}) %> </th></tr>
+                <%else%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_fuel_cost, :label_name,:path => update_label_home_path(@attribute_fuel_cost,data:{year: params[:data],:label_id=>@attribute_fuel_cost.label_value}) %> </th></tr>
+                <%end%>  
+                <%if @attribute_land_cost.nil?%>
+                  <tr style="height: 40px;"><th ><%= best_in_place  @attribute_cost, :name,:path=>update_label_home_path(@attribute_cost,data:{year: params[:data]})%> </th></tr>
+                  <%else%>
+                  <tr style="height: 40px;"><th ><%= best_in_place  @attribute_land_cost, :label_name,:path=>update_label_home_path(@attribute_land_cost,data:{year: params[:data],:label_id=>@attribute_land_cost.label_value})%> </th></tr>
+                <%end%>
+                <%if @attribute_head_cost.nil?%>
+                  <tr style="height: 40px;"><th ><%= best_in_place @attribute_head, :name,:path => update_label_home_path(@attribute_head,data:{year: params[:data]}) %> </th></tr>
+                <%else%>
+                  <tr style="height: 40px;"><th ><%= best_in_place @attribute_head_cost, :label_name,:path => update_label_home_path(@attribute_head_cost,data:{year: params[:data],:label_id=>@attribute_head_cost.label_value}) %> </th></tr>
+                <%end%>  
+                <%if @attribute_family_cost.nil?%>
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_family, :name,:path => update_label_home_path(@attribute_family,data:{year: params[:data]}) %> </th></tr>
+                <%else%>  
+                  <tr style="height: 40px;"><th >  <%= best_in_place @attribute_family_cost, :label_name,:path => update_label_home_path(@attribute_family_cost,data:{year: params[:data],:label_id=>@attribute_family_cost.label_value}) %> </th></tr>
+                <%end%>
+                <tr style="height: 40px;"><th >  Total Expenses </th></tr>
+                <tr><td></td></tr>
+                <tr style="height: 40px;"><th >  Profit/Loss </th></tr>
+                <tr><td></td></tr>
+            
+                <tr style="height: 42px;"><th >  BreakEven Price</th></tr>
+                <tr style="height: 42px;"><th >  BreakEven Yield </th></tr>
+
+               <%current_user.crop_information_expenses.each do |expense|%>
+
+                  <%if expense.year==params[:data].to_i%>
+                    <tr style="height: 22px;"><th > <%= expense.expense %></th></tr>
+                  <%end%>
+                <%end%>
+              </table>
+             </td> 
+          <%@crop_info.each do |crop|%>   
+
+            <td>
+              <table>  
+              
+                <tr>  <%=text_field_tag 'crop[][crop_name]', crop.crop_name , :style=>"width:100px;" %>
+                </tr>                  
+               
+                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][acre]',!crop.acre.nil? ? crop.acre : " ", :style=>"width:100px;",:class=>"acre total_acre",:id=>"acre_#{crop.crop_name}"%></td></tr>
+                <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][yield]',!crop.yield.nil? ? crop.yield : " ", :style=>"width:100px;",:id=>"yield_#{crop.crop_name}",:class=>"yield"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][production]', !crop.production.nil? ? crop.production : " ", :style=>"width:100px;", :disabled =>true,:id=>"production_#{crop.crop_name}"%></td></tr>  
+                  <tr><td></td></tr>
+                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][projected_price]', !crop.projected_price.nil? ? crop.projected_price : " ", :style=>"width:100px;",:id=>"projected_#{crop.crop_name}",:class=>"projected"%></td></tr>
+                   <tr><td></td></tr> 
+                   <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][per_acre_avenue]', (crop.projected_price.to_i*crop.yield.to_i), :style=>"width:100px;", :disabled =>true,:id=>"per_acre_avenue_#{crop.crop_name}"%></td></tr>
+                   <tr><td></td></tr>
+                   <tr><td></td></tr>
+                   <tr><td></td></tr>
+                   <tr><td></td></tr>
+                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fertilizer]',!crop.fertilizer.nil? ? crop.fertilizer : " ", :style=>"width:100px;",:class=>"fertilizer total_fertilizer",:id=>"fertilizer_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][seed]',!crop.seed.nil? ? crop.seed : " ", :style=>"width:100px;",:class=>"seed count_seed",:id=>"seed_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][chemical]',!crop.chemical.nil? ? crop.chemical : " ", :style=>"width:100px;",:class=>"chemical count_chemical",:id=>"chemical_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][insurance]',!crop.insurance.nil? ? crop.insurance : " ", :style=>"width:100px;",:class=>"insurance count_insurance",:id=>"insurance_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][fuel]',!crop.fuel.nil? ? crop.fuel : "", :style=>"width:100px;",:class=>"fuel count_fuel",:id=>"fuel_#{crop.crop_name}"%></td></tr>
+                 
+                 <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][land_cost]',!crop.land_cost.nil? ? crop.land_cost : " ", :style=>"width:100px;",:class=>"land_cost count_land_cost",:id=>"land_cost_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][overhead]',!crop.overhead.nil? ? crop.overhead : " ", :style=>"width:100px; ",:class=>"overhead count_overhead",:id=>"overhead_#{crop.crop_name}"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][family_living]',!crop.family_living.nil? ? crop.family_living : " ", :style=>"width:100px;",:class=>"family_living count_family_living",:id=>"family_living_#{crop.crop_name}" %></td></tr>            
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_expenses]',!crop.total_expenses.nil? ? crop.total_expenses : " ", :style=>"width:100px; ", :disabled =>true,:id=>"total_expenses_#{crop.crop_name}"  %></td></tr>
+                  <tr><td></td></tr>
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][profit_loss]',!crop.projected_price.blank?&&!crop.yield.blank?&&!crop.total_expenses.blank? ? ((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses) : " ", :style=>"width:100px; ", :disabled =>true,:class=>"profit_loss count_profit_loss",:id=>"profit_loss_#{crop.crop_name}" %></td></tr>
+                   <tr><td></td></tr>
+                 
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_price]',(!crop.yield.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.yield.to_i) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_price_#{crop.crop_name}" %></td></tr>
+                   <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][breakeven_yield]',(!crop.projected_price.blank?&&!crop.total_expenses.blank?) ? (crop.total_expenses/crop.projected_price) : "", :style=>"width:100px; ", :disabled =>true,:id=>"breakeven_yield_#{crop.crop_name}"%><br>
+                      
+                    <%= link_to 'Remove',remove_crop_home_path(crop.id,:data=>params[:data],:user_id=>params[:user_id]), id: "#{crop.id}", class: 'removecrop', data: { confirm: 'Are you sure?' },:remote=> true %> 
+
+                                        
+                      </td></tr>
+                <%current_user.crop_information_expenses.each do |expense|%>
+                
+                  <%if expense.year==params[:data].to_i%>
+                    <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][expense_category]',!crop.expense_category.nil? ? crop.expense_category : "",:style=>"width:100px;" %></td></tr>
+
+                  <%end%>
+                <% end%>
+              </table>
+       
+            </td>
+            <%=hidden_field_tag 'crop[][id]',crop.id%>
+            <%=hidden_field_tag 'crop[][user_id]',current_user.id%>
+          <%end%> 
+          <td>
+               <table>  
+             
+                <tr><th style=" padding: 0;  height: 41px;" >TOTAL</th>
+                </tr>                  
+                
+                <tr><td style=" padding: 0;height:193px;">  <%=text_field_tag 'crop[][total_acre]', @total_acre,:style=>"width:100px; ", :disabled =>true,:id=>"total_acre"%></td></tr>
+                <tr><td style=" padding: 0;"> </td></tr>
+                  <tr><td style=" padding: 0;"> </td></tr>  
+                    <tr><td style=" padding: 0;;height:104px;">  <%=text_field_tag 'crop[][total_per_acre_avenue]', @total_per_acre_avenue,:style=>"width:100px;", :disabled =>true,:id=>"total_per_acre_avenue"%></td></tr>
+                   <tr><td style=" padding: 0;">  </td></tr>     
+                 <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fertilizer]', @total_fertilizer,:style=>"width:100px;", :disabled =>true,:id=>"total_fertilizer"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_seed]',@total_seed, :style=>"width:100px;", :disabled =>true,:id=>"total_seed"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_chemical]', @total_chemical,:style=>"width:100px;", :disabled =>true,:id=>"total_chemical"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_insurance]', @total_insurance, :style=>"width:100px;", :disabled =>true,:id=>"total_insurance"%></td></tr>
+                  <tr><td style=" padding: 0;">  <%=text_field_tag 'crop[][total_fuel]',@total_fuel,:style=>"width:100px;", :disabled =>true,:id=>"total_fuel"%></td></tr>
+                 
+                 <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_land_cost]', @total_land_cost, :style=>"width:100px;", :disabled =>true%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_overhead]',@total_overhead,:style=>"width:100px; ", :disabled =>true%></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_family_living]', @total_family_living, :style=>"width:100px;", :disabled =>true %></td></tr>            
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][totalExpenses]',@totalExpenses,:style=>"width:100px; ", :disabled =>true %></td></tr>
+                  <tr><td></td></tr>
+                  <tr><td style=" padding: 0;">  <%= text_field_tag 'crop[][total_weight]',@total_weight,:style=>"width:100px; ", :disabled =>true%></td></tr>
+                <tr><td></td></tr>
+              </table>
+
+
+       
+          </td>  
+       </tr>
+      </table>
+      </div>
+
+      <%= link_to "Add Expenses".html_safe,"#expense",:class=>"fancybox button"%>
+    <%end%>
   <%end%>
 
 

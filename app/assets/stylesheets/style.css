@@ -46,7 +46,10 @@
    top:-3px;
 }
 body{
-	background-color:#483500;
+	background: url(/assets/Corn_field.JPG) no-repeat scroll ;
+    background-size: cover;
+    background-repeat: no-repeat;
+	/*background-color:#483500;*/
 	padding:10px;
 }
 ul{
@@ -356,7 +359,10 @@ a .btn{
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 body{
-	background-color:#483500;
+    background: url(/assets/Corn_field.JPG) no-repeat scroll ;
+    background-size: cover;
+    background-repeat: no-repeat;
+	/*background-color:#483500;*/
 	padding:10px;
 }
 ul{

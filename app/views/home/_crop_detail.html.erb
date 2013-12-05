@@ -12,11 +12,22 @@
 
      
       </li>
-              <%if !@year.nil?%>
-         <% @year.reverse.each do |year| %> 
-          <%if !(@archive_year.include? year.year)%>
 
-            <li style="width:19%"><%= link_to"<p id=search_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>       
+       <% @years=[] %>
+      <% @year.each do |year| %>
+        <% @years << year.year %>  
+      <%end%>
+      <%@years=@years.sort%>
+
+
+              <%if !@years.nil?%>
+         <% @years.each do |year| %> 
+          <%if !(@archive_year.include? year)%>
+          <%if params[:note].blank?%>
+            <li style="width:19%"><%= link_to"<p id=search_#{year} class=list-select>#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>    
+          <%else%>
+            <li style="width:19%"><%= link_to"<p id=search_#{year}>#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>    
+          <%end%>   
             
           <% end %>
         <% end %>
@@ -25,12 +36,12 @@
     </ul>
     <ul class="two">
      
-      <%if !@year.nil?%>
-      <% @year.each do |year| %>
+      <%if !@years.nil?%>
+      <% @years.each do |year| %>
          
-          <% if (@archive_year.include? year.year)%>   
-         
-            <li style="display:none" class="archive_year_farmer_crop_show" ><%= link_to"<p id=search_#{year.year}>#{year.year}</p>".html_safe, { :action => "crop", :data=>year.year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>
+          <% if (@archive_year.include? year)%>   
+
+            <li style="display:none" class="archive_year_farmer_crop_show" ><%= link_to"<p id=search_#{year.year}>#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>
           <% end %>
         <% end %>
     

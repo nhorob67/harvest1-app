@@ -6,17 +6,18 @@
     <h4 style="padding-left: 187px;">Cash Sale</h4>
     <table>
       <tr>
+
         <td style="padding-left: 187px;">
           <div>
             <%= label_tag :year %>
-            <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+            <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
           </div>
           <div>
             </br><%= label_tag :crop %>
             <%if current_user.has_role? :consultant%>
               <%= select_tag 'crop_name',options_for_select([["Corn","Corn"],["Soyabean","Soyabean"],["Wheat","Wheat"]]) %>
             <%else%>
-              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
+              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]},:selected=>@crop_name) %>
             <%end%>
           </div>
           <div>
@@ -26,7 +27,7 @@
           
           <div>
             <%= label_tag :Bushels %>
-               <%=text_field_tag :bushels %>  
+               <%=text_field_tag :bushels , (!@bushels.blank?) ? @bushels : " ", :class=>"bushels"  %>  
           </div>
        
           <div>
@@ -55,7 +56,8 @@
 
           <div>
               <%= label_tag :percentage_Production %>
-              <%= text_field_tag :percentage_production ,nil,:readonly => true%>
+             
+              <%= text_field_tag :percentage_production ,(!@percetage_production.blank?) ? @percetage_production : " " ,:readonly => true%>
           </div>
         </td>
        </tr>
@@ -69,14 +71,14 @@
         <td style="padding-left: 187px;">
            <div>
            </br>  </br> <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
           </div>
           <div>
               </br><%= label_tag :crop %>
            <%if current_user.has_role? :consultant%>
               <%= select_tag 'crop_name',options_for_select([["Corn","Corn"],["Soyabean","Soyabean"],["Wheat","Wheat"]]) %>
             <%else%>
-              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
+              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]},:selected=>@crop_name) %>
             <%end%>
           </div>
           <div>
@@ -85,7 +87,7 @@
           </div>
           <div>
             </br><%= label_tag :Bushels %>
-               <%=text_field_tag :bushels %>  
+               <%=text_field_tag :bushels, (!@bushels.blank?) ? @bushels : " " %>  
           </div>
           <div>
           </br>  <%=label_tag :Delivery_Location %>
@@ -115,7 +117,8 @@
           </div>
           <div>
              </br> <%= label_tag :percentage_production %>
-             <%= text_field_tag :percentage_production,nil,:readonly => true%>
+             <%#debugger%>
+             <%= text_field_tag :percentage_production,(!@percetage_production.blank?) ? @percetage_production : " " ,:readonly => true%>
           </div>
         </td>
       </tr>
@@ -130,7 +133,7 @@
           </br>
           <div>
             <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
           </div>
 
           <div>
@@ -138,7 +141,7 @@
             <%if current_user.has_role? :consultant%>
               <%= select_tag 'crop_name',options_for_select([["Corn","Corn"],["Soyabean","Soyabean"],["Wheat","Wheat"]]) %>
             <%else%>
-              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
+              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]},:selected=>@crop_name) %>
             <%end%>
           </div>
           <div>
@@ -147,7 +150,7 @@
           </div>
           <div>
             <%= label_tag :Bushels %>
-               <%=text_field_tag :bushels %>  
+               <%=text_field_tag :bushels , (!@bushels.blank?) ? @bushels : " "%>  
           </div>
           <div>
             <%=label_tag :Delivery_Location %>
@@ -188,7 +191,7 @@
          
           <div>
               <%= label_tag :percentage_Of_Production %>
-             <%= text_field_tag :percentage_production,nil,:readonly => true%>
+             <%= text_field_tag :percentage_production,(!@percetage_production.blank?) ? @percetage_production : " " ,:readonly => true%>
           </div>
         </td>
       </tr>
@@ -203,14 +206,14 @@
         <td style="padding-left: 187px;">
             <div>
             <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
           </div>
            <div>
               <%= label_tag :crop %>
              <%if current_user.has_role? :consultant%>
               <%= select_tag 'crop_name',options_for_select([["Corn","Corn"],["Soyabean","Soyabean"],["Wheat","Wheat"]]) %>
             <%else%>
-              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]}) %>
+              <%= select_tag 'crop_name',options_for_select( @crop.each_with_index.map {|name| [name,name]},:selected=>@crop_name) %>
             <%end%>
           </div>
 
@@ -220,7 +223,7 @@
           </div>
           <div>
             <%= label_tag :Bushels %>
-              <%=text_field_tag :bushels %>   
+              <%=text_field_tag :bushels , (!@bushels.blank?) ? @bushels : " "%>   
           </div>
           <div>
             <%=label_tag :Delivery_Location %>
@@ -257,7 +260,7 @@
          
           <div>
               <%= label_tag :percentage_Of_Production %>
-             <%= text_field_tag :percentage_production,nil,:readonly => true%>
+             <%= text_field_tag :percentage_production,(!@percetage_production.blank?) ? @percetage_production : " " ,:readonly => true%>
           </div>
         </td>
       </tr>
@@ -497,5 +500,69 @@
         $('#cash_price').val(total)
       
     });
-  });   
-  </script>
+
+     $('#bushels').keyup(function() {
+
+
+          var val=$(this).val();
+
+         
+          var year= $("#year").val()
+          var crop_name= $("#crop_name").val()
+         
+            var hedge_sale= "<%= params[:hedge_sale] %>"
+            
+            
+            $.ajax({        
+
+            type: 'POST',
+            url: "<%=hedge_sale_home_index_path%>",
+            data: {year: year,crop_name: crop_name,hedge_sale: hedge_sale,val: val}
+            
+
+            });
+   
+    });
+
+    $('#year').change(function() {
+
+              var val=$('#bushels').val();
+              var year= $("#year").val()
+              var crop_name= $("#crop_name").val()
+             
+                var hedge_sale    = "<%= params[:hedge_sale] %>"
+                
+                $.ajax({        
+
+                type: 'POST',
+                url: "<%=hedge_sale_home_index_path%>",
+                data: {year: year,crop_name: crop_name,hedge_sale: hedge_sale,val: val}
+                
+
+                });
+       
+        });
+    $('#crop_name').change(function() {
+
+              var val=$('#bushels').val();
+              var year= $("#year").val()
+              var crop_name= $("#crop_name").val()
+             
+                var hedge_sale    = "<%= params[:hedge_sale] %>"
+                
+                $.ajax({        
+
+                type: 'POST',
+                url: "<%=hedge_sale_home_index_path%>",
+                data: {year: year,crop_name: crop_name,hedge_sale: hedge_sale,val: val}
+                
+
+                });
+       
+        });
+
+  
+
+    });   
+
+    </script>

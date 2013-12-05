@@ -14,11 +14,23 @@
           <p style="color:#0088CC">Archive</p>
         </li>
 
-        <%if !@year.nil?%>
-        <% @year.each do |year| %> 
-        <%if !(@archive_year.include? year.year)%>
+        <% @years=[] %>
+        <% @year.each do |year| %>
+          <% @years << year.year %>  
+        <%end%>
+        <%@years=@years.sort%>
 
-        <li style="width:19%"><%= link_to"<p id=year_#{year.year}>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>       
+
+        <%if !@years.nil?%>
+        <% @years.each do |year| %> 
+        <%if !(@archive_year.include? year)%>
+
+         
+            <%if year==Year.all.reverse.first.year && params[:data].blank?%>
+            <li style="width:19%"><%= link_to"<p id=year_#{year} class=list-select>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>   
+            <%else%>
+        <li style="width:19%"><%= link_to"<p id=year_#{year}>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>       
+        <%end%>
                 
         <% end %>
         <% end %>
@@ -27,17 +39,18 @@
         <% end %>      
     </ul>
     <ul class="two">
-        <%if !@year.nil?%>
-        <% @year.each do |year| %> 
-        <% if (@archive_year.include? year.year)%>       
-          <li style="display:none" class="archive_year_farmer_sales" ><%= link_to"<p id=year_#{year.year}>#{year.year}</p>".html_safe, { :action => "sale", :data=>year.year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>
+        <%if !@years.nil?%>
+        <% @years.each do |year| %> 
+        <% if (@archive_year.include? year)%>       
+          <li style="display:none" class="archive_year_farmer_sales" ><%= link_to"<p id=year_#{year}>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>
         <% end %>
         <% end %>
         <%else%>
         No Sales/Hedges this year.
         <% end %>      
     </ul>
-    <div class="clearfix"></div>
+   
+   <div class="clearfix"></div>
     <!--clearfix-->
     <div id="open_popup"  style="display: none;"> 
       
@@ -55,16 +68,20 @@
     </div>
     <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
        <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
-    <%if !@crop.blank?%>
-    <%#debugger%>
-     <%@crop.uniq.each do|name|  %>
+  
+  <%if !@crop.blank?%>
+    
+  <%@crop.uniq.each do|name|  %>
     <h3><%=name%></h3>
     <br/>
+    <%if params[:data].blank?%>
+    <%params[:data]=Year.all.reverse.first.year%>
+    <%end%>
     <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
 
-     
-        
-            <%=params[:data]%> Cash Sale information
+   
+      <% if !@cash_sale.blank? %>  
+        <%=params[:data]%> Cash Sale information
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
@@ -83,7 +100,11 @@
                     <tr>
               <td><%=cash_sale.year%></td>
               <td><%=cash_sale.crop_name%></td>
-              <td><%= cash_sale.open_order%></td>
+               <%if cash_sale.open_order==false%>
+                <td>No</td>
+              <%else%>
+                <td>Yes</td>
+              <%end%>
               <td><%= cash_sale.bushels%></td>
               <td><%= cash_sale.delivery_location%></td>
               <td><%= cash_sale.futures_price%></td>
@@ -93,15 +114,21 @@
               <td><%= cash_sale.percentage_production%></td>
              </tr> 
          <%end%>
-          <%else%>
-       <tr><th>No Information present</th></tr>
-      <%end%> 
+        <%else%>
+           <tr><th>No Information present</th></tr>
+        <%end%> 
         </table>
- 
+      
+       <%else%>
+           <i><b>No Information present..</b></i>
+        <%end%> 
+
+
    <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
-    
-    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
+    <% if !@forward_contracts.blank? %>
+
+      <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;" >
           <tr class="title-tab">
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
@@ -118,31 +145,36 @@
           </tr>
           
        
-           <%if !@forward_contract.blank?%>
+           <%if !@forward_contracts.blank?%>
             
-          <%@forward_contract.each do |forward_contract|%>
+          <%@forward_contracts.each do |forward_contract|%>
             <tr>
-              <td style="white-space:nowrap;"><%=forward_contract.year%></td>
-              <td style="white-space:nowrap;"><%=forward_contract.crop_name%></td>
-              <td style="white-space:nowrap;"><%= forward_contract.open_order%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.year%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.crop_name%></td>
+               <%if forward_contract.open_order==false%>
+                <td style="white-space:nowrap;">No</td>
+              <%else%>
+                <td style="white-space:nowrap;">Yes</td>
+              <%end%>
+              
               <td style="white-space:nowrap;"><%= forward_contract.bushels%></td>
               <td style="white-space:nowrap;"><%= forward_contract.delivery_location%></td>
               <td style="white-space:nowrap;"><%= forward_contract.delivery_period%></td>
               <td style="white-space:nowrap;"><%= forward_contract.futures_price%></td>
-              <td style="white-space:nowrap;"><%= cash_sale.basic%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.basic%></td>
               <td style="white-space:nowrap;"><%= forward_contract.cash_price%></td>
               <td style="white-space:nowrap;"><%= forward_contract.contact_number%></td>
               <td style="white-space:nowrap;"><%= forward_contract.percentage_production%></td>
             </tr> 
           <%end%>  
            <%else%>
-       <tr><th>No Information present</th></tr>
-      <%end%> 
+         <tr><th>No Information present</th></tr>
+          <%end%> 
         </table>
- 
+    <%end%>
    <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
-    
+    <% if !@hedge_to_arrive.blank? %>
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Hedge To Arrive</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -164,7 +196,11 @@
             <tr>
               <td style="white-space:nowrap;"><%=hedge_to_arrive.year%></td>
               <td style="white-space:nowrap;"><%=hedge_to_arrive.crop_name%></td>
-              <td style="white-space:nowrap;"><%= hedge_to_arrive.open_order%></td>
+               <%if hedge_to_arrive.open_order==false%>
+                <td style="white-space:nowrap;">No</td>
+              <%else%>
+                <td style="white-space:nowrap;">Yes</td>
+              <%end%>
               <td style="white-space:nowrap;"><%= hedge_to_arrive.bushels%></td>
               <td style="white-space:nowrap;"><%= hedge_to_arrive.delivery_location%></td>
               <td style="white-space:nowrap;"><%= hedge_to_arrive.future_month%></td>
@@ -180,11 +216,11 @@
       <%end%> 
      </table>
    
-  
+    <%end%>
    <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
-    
-    <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
-     <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
+    <% if !@future.blank? %>
+      <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
+       <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Year</th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Crop Name</th>
@@ -202,7 +238,11 @@
        <tr>
               <td><%=future.year%></td>
               <td><%=future.crop_name%></td>
-              <td><%= future.open_order%></td>
+              <%if future.open_order==false%>
+                <td>No</td>
+              <%else%>
+                <td >Yes</td>
+              <%end%>
               <td><%= future.long_short%></td>
               <td><%= future.contract%></td>
               <td><%= future.future_month%></td>
@@ -216,9 +256,9 @@
       <%end%>         
       </table> 
  
-  
+    <%end%>
   <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
-  
+  <% if !@option.blank? %>
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -231,13 +271,17 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Strike Price</th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> premium </th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
-           <%if !@option.blank?%>
+          <%if !@option.blank?%>
  
            <%@option.each do |option|%>
              <tr>
               <td><%=option.year%></td>
                <td><%=option.crop_name%></td>
-              <td><%= option.open_order%></td>
+               <%if option.open_order==false%>
+                <td>No</td>
+              <%else%>
+                <td >Yes</td>
+              <%end%>
               <td><%= option.long_short%></td>
               <td><%= option.contract%></td>
               <td><%= option.put_call%></td>
@@ -247,16 +291,16 @@
             
             </tr> 
           <%end%>  
-           <%else%>
-       <tr><th>No Information present</th></tr>
-      <%end%> 
+          <%else%>
+            <tr><th>No Information present</th></tr>
+          <%end%> 
            
       </table> 
   
- 
+ <%end%>
   <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
- 
+ <% if !@basic_contract.blank? %>
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Basis Contract</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -272,12 +316,16 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-         <%if !@basic_contract.blank?%>
-           <%@basic_contract.each do |basic_contract|%>
+        <%if !@basic_contract.blank?%>
+          <%@basic_contract.each do |basic_contract|%>
             <tr>
               <td style="white-space:nowrap;"><%=basic_contract.year%></td>
               <td style="white-space:nowrap;"><%=basic_contract.crop_name%></td>
-              <td style="white-space:nowrap;"><%= basic_contract.open_order%></td>
+              <%if basic_contract.open_order==false%>
+                <td style="white-space:nowrap;">No</td>
+              <%else%>
+                <td style="white-space:nowrap;" >Yes</td>
+              <%end%>
               <td style="white-space:nowrap;"><%= basic_contract.bushels%></td>
               <td style="white-space:nowrap;"><%= basic_contract.delivery_location%></td>
               <td style="white-space:nowrap;"><%= basic_contract.future_month%></td>
@@ -289,11 +337,11 @@
             </tr> 
           <%end%> 
             <%else%>
-       <tr><th>No Information present</th></tr>
-      <%end%>
+          <tr><th>No Information present</th></tr>
+        <%end%>
       </table> 
   
-  
+  <%end%>
      <%end%>
      <%else%>
      No Information found

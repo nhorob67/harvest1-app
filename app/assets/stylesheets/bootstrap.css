@@ -284,15 +284,32 @@ a:focus {
   min-height: 1px;
   margin-left: 20px;
 }
-
+.container-header{
+  overflow:hidden;
+    width: 940px;
+  
+  border-radius:10px;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  -o-border-radius:10px;
+  -khtml-border-radius:10px;
+  padding:10px;
+  display:block;
+   margin: 0 auto;
+  position:relative;
+}
 .container,
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
 	overflow:hidden;
     width: 940px;
-	background-color:#FFF;
+    background: url(/assets/fresh_snow.png) no-repeat scroll ;
+    background-size: cover;
+    background-repeat: no-repeat;
+	
 	border-radius:10px;
+
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
 	-o-border-radius:10px;
@@ -4386,7 +4403,9 @@ input[type="submit"].btn.btn-mini {
   min-height: 40px;
   padding-right: 10px;
   padding-left: 10px;
-  background-color: #3b5719;
+  
+  background: url(/assets/pool_table.png) no-repeat scroll ;
+  background-size: 939px;
   border:1px solid #000;
   border-radius:8px;
   -moz-border-radius:8px;
@@ -5970,7 +5989,9 @@ a.badge:focus {
   padding: 12px 15px;
   border:1px solid #000;
   text-align:center;
-  background-color:#3b5719;
+  background: url(/assets/pool_table.png) no-repeat scroll ;
+  background-size: 939px;
+  /*background-color:#3b5719;*/
   border-radius:7px;
   -moz-border-radius:7px;
   -o-border-radius:7px;

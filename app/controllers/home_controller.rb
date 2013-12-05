@@ -143,12 +143,135 @@ class HomeController < ApplicationController
     @counts=@recommends.count
     @crop_information=CropInformation.all
     if !current_user.nil?
+
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
        @crop_information=CropInformation.find(:all, :conditions => ["user_id=?", current_user.id] )
      
       @recommend=Recommend.find(:all, :conditions => ["recommended_id=? OR user_id=?",current_user.id,1 ] )
       @count=@recommend.count
-    end
+    
+    @attribute_fert_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"1")
+      if @attribute_fert_cost.nil?
+        @attribute_fert=ExpenseLabel.find(1)
+      end  
+      @attribute_seed_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"2")
+      if @attribute_seed_cost.nil?
+        @attribute_seed=ExpenseLabel.find(2)
+      end
+      @attribute_chem_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"3")
+      if @attribute_chem_cost.nil?
+        @attribute_chem=ExpenseLabel.find(3)
+      end   
+      @attribute_insurance_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"4")
+      if @attribute_insurance_cost.nil?
+        @attribute_insurance=ExpenseLabel.find(4)
+      end
+      @attribute_fuel_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"5")
+      if @attribute_fuel_cost.nil?
+        @attribute_fuel=ExpenseLabel.find(5)
+      end
+      @attribute_land_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"6")
+      if @attribute_land_cost.nil?
+        @attribute_cost=ExpenseLabel.find(6)
+      end 
+      @attribute_head_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"7")
+      if @attribute_head_cost.nil?
+        @attribute_head=ExpenseLabel.find(7)
+      end  
+      @attribute_family_cost=CropInformationLabel.find_by_user_id_and_label_value(current_user.id,"8")
+      if @attribute_family_cost.nil?
+        @attribute_family=ExpenseLabel.find(8)
+      end  
+
+        @crop_label=CropInformationExpense.new
+        #@archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
+        
+        if  current_user.has_role? :user
+       
+          @crop_info=CropInformation.find_all_by_user_id_and_year(current_user.id,@year.reverse.first.year)
+          @year=Year.all
+
+          #@archive_year=ArchiveYear.find_all_by_user_id(params[:selected_user_id]).collect(&:year)
+          @unarchive_year=[]
+          
+          @year.each do |year|
+            if !(@archive_year.include? year.year)
+              @unarchive_year=@unarchive_year+Array(year)
+            end
+          end
+        end
+          @total_acre=0
+          @crop_info.collect(&:acre).each do |acre|
+            @total_acre=@total_acre+acre.to_i
+          end
+          @total_per_acre_avenue=0
+          @avenvue=0
+          @crop_info.each do |crop|
+        
+            if !crop.yield.blank? && !crop.projected_price.blank?
+              @avenvue=crop.yield.to_i*crop.projected_price.to_i
+              @total_per_acre_avenue=@avenvue+@total_per_acre_avenue
+            end
+            
+          end
+           @total_fertilizer=0
+          @fertilizer=0
+           @total_seed=0
+          @seed=0
+           @total_chemical=0
+            @chemical=0
+            @total_insurance=0
+            @insurance=0
+             @total_fuel=0
+            @fuel=0
+            @land_cost=0
+            @total_land_cost=0
+             @overhead=0
+            @total_overhead=0
+            @family_living=0
+            @total_family_living=0
+            @expenses=0
+             @totalExpenses=0
+             @total_weight=0
+             @weight=0
+          @crop_info.each do |crop|  
+                if !crop.acre.blank?
+              @fertilizer=crop.acre.to_i*crop.fertilizer.to_i
+              @total_fertilizer=@fertilizer+@total_fertilizer 
+
+              @seed=crop.acre.to_i*crop.seed.to_i
+              @total_seed=@seed+@total_seed 
+              
+              @chemical=crop.acre.to_i*crop.chemical.to_i
+              @total_chemical=@chemical+@total_chemical 
+
+               @insurance=crop.acre.to_i*crop.insurance.to_i
+              @total_insurance=@total_insurance+@insurance
+
+               @fuel=crop.acre.to_i*crop.fuel.to_i
+              @total_fuel=@total_fuel+@fuel  
+
+               @land_cost=crop.acre.to_i*crop.land_cost.to_i
+              @total_land_cost=@total_land_cost+@land_cost  
+
+              @overhead=crop.acre.to_i*crop.overhead.to_i
+              @total_overhead=@total_overhead+@overhead  
+
+               @family_living=crop.acre.to_i*crop.family_living.to_i
+              @total_family_living=@total_family_living+@family_living 
+             
+              if !crop.total_expenses.blank?
+                @expenses =crop.acre.to_i*crop.total_expenses
+                @totalExpenses=@totalExpenses+@expenses
+              end 
+              if !crop.yield.blank? && !crop.total_expenses.blank?
+                @weight=((crop.projected_price.to_i*crop.yield.to_i)-crop.total_expenses)
+              end  
+              @total_weight=@total_weight+ @weight
+          end
+           @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
+           end  
+           end
   end
 
   def sign_in
@@ -376,21 +499,13 @@ end
 
   def sale
     
-    if (!params[:user_id].blank?) && (User.find(params[:user_id]).has_role? :consultant)
-      @crop=["corn","Soyabean","wheat"]
-    else
+    
       @crop=CropInformation.find(:all , :conditions => ["user_id=?", params[:user_id]] ).collect(&:crop_name).uniq
       
-    end    
+    
     #@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
     @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
     @year=Year.all
-    
-    @forward_contract
-    @hedge_to_arrive
-    @future
-    @option
-    @basic_contract
      respond_to do |format|
          format.js
       end
@@ -577,7 +692,19 @@ end
   end
 
   def hedge_sale
-@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
+ if !params[:crop_name].blank?
+      @year=params[:year]
+      @bushels=params[:val]
+      @crop_name=params[:crop_name]
+      @production=CropInformation.find(:all ,:conditions=> ['year = ? AND crop_name = ? AND user_id= ?', params[:year],params[:crop_name],current_user.id]).first.production
+
+      if @production.blank?
+        @percetage_production=(params[:val].to_f/0)
+      else
+        @percetage_production=(params[:val].to_f/@production.to_f)
+      end  
+    end  
+    @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
      # @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
 
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
@@ -639,6 +766,7 @@ end
 
   def recommend
    #@crop=["corn","Soyabean","wheat"]
+    
     @unarchive_years=[]
     @year=Year.all
     @year.each do |year|
@@ -737,7 +865,8 @@ end
       end
   end
   def recommend_search
-
+    @crop_info=CropInformation.find_all_by_user_id_and_year(params[:select_user_id],Year.all.reverse.first.year)
+   @crop=CropInformation.find(:all , :conditions => ["user_id=?", params[:select_user_id]] ).collect(&:crop_name).uniq 
     @archive_year=ArchiveYear.find_all_by_user_id(params[:select_user_id]).collect(&:year)
     @year=Year.all
     @unarchive_year=[]
