@@ -72,6 +72,7 @@
   <%if !@crop.blank?%>
     
   <%@crop.uniq.each do|name|  %>
+    <% @flag=0%>
     <h3><%=name%></h3>
     <br/>
     <%if params[:data].blank?%>
@@ -81,6 +82,7 @@
 
    
       <% if !@cash_sale.blank? %>  
+        <% @flag=1%>
         <%=params[:data]%> Cash Sale information
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -95,7 +97,7 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-        <%if !@cash_sale.blank? %>
+        
         <%@cash_sale.each do|cash_sale|%>
                     <tr>
               <td><%=cash_sale.year%></td>
@@ -114,20 +116,17 @@
               <td><%= cash_sale.percentage_production%></td>
              </tr> 
          <%end%>
-        <%else%>
-           <tr><th>No Information present</th></tr>
-        <%end%> 
+       
         </table>
-      
-       <%else%>
-           <i><b>No Information present..</b></i>
+
         <%end%> 
 
 
    <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
     <% if !@forward_contracts.blank? %>
-
+   
+    <% @flag=1%>
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;" >
           <tr class="title-tab">
@@ -145,7 +144,7 @@
           </tr>
           
        
-           <%if !@forward_contracts.blank?%>
+           
             
           <%@forward_contracts.each do |forward_contract|%>
             <tr>
@@ -167,14 +166,13 @@
               <td style="white-space:nowrap;"><%= forward_contract.percentage_production%></td>
             </tr> 
           <%end%>  
-           <%else%>
-         <tr><th>No Information present</th></tr>
-          <%end%> 
+        
         </table>
     <%end%>
    <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
     <% if !@hedge_to_arrive.blank? %>
+    <% @flag=1%>
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Hedge To Arrive</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -191,7 +189,7 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
          
-          <%if !@hedge_to_arrive.blank?%>
+          
             <%@hedge_to_arrive.each do |hedge_to_arrive|%>
             <tr>
               <td style="white-space:nowrap;"><%=hedge_to_arrive.year%></td>
@@ -211,14 +209,13 @@
               <td style="white-space:nowrap;"><%= hedge_to_arrive.percentage_production%></td>
             </tr> 
           <%end%>
-           <%else%>
-       <tr><th>No Information present</th></tr>
-      <%end%> 
+      
      </table>
    
     <%end%>
    <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
     <% if !@future.blank? %>
+    <% @flag=1%>
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -232,7 +229,7 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
           
           </tr>
-      <%if !@future.blank?%>
+     
   
       <%@future.each do |future|%>
        <tr>
@@ -251,14 +248,13 @@
             
             </tr> 
       <%end%>  
-      <%else%>
-       <tr><th>No Information present</th></tr>
-      <%end%>         
+         
       </table> 
  
     <%end%>
   <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   <% if !@option.blank? %>
+  <% @flag=1%>
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -271,7 +267,7 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Strike Price</th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> premium </th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Weight </th>
-          <%if !@option.blank?%>
+          
  
            <%@option.each do |option|%>
              <tr>
@@ -291,9 +287,7 @@
             
             </tr> 
           <%end%>  
-          <%else%>
-            <tr><th>No Information present</th></tr>
-          <%end%> 
+          
            
       </table> 
   
@@ -301,6 +295,7 @@
   <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
  <% if !@basic_contract.blank? %>
+ <% @flag=1%>
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Basis Contract</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -316,7 +311,7 @@
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> Contract Number </th>
             <th style="white-space:nowrap; padding: 0pt;"><i class="arr"></i> %</th>
           </tr>
-        <%if !@basic_contract.blank?%>
+      
           <%@basic_contract.each do |basic_contract|%>
             <tr>
               <td style="white-space:nowrap;"><%=basic_contract.year%></td>
@@ -336,24 +331,27 @@
               <td style="white-space:nowrap;"><%= basic_contract.percentage_production%></td>
             </tr> 
           <%end%> 
-            <%else%>
-          <tr><th>No Information present</th></tr>
-        <%end%>
+         
       </table> 
+ 
+      </table> 
+   <%end%>
+
+       
+   <% if @flag==0 %>
+        <b><i>No Information found..</b></i>
+      <%end%> 
   
-  <%end%>
-     <%end%>
-     <%else%>
-     No Information found
-     <%end%>
+ <%end%>
+
+<%end%>
 <!--news-->
   </div>
   <!--accordion-inner-->
 </div>
               <!--inner-->
 
-
-
+   
 <script type="text/javascript">
   $(document).ready(function(){
     $(".archive_farmer").click(function(){

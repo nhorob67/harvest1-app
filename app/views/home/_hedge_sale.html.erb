@@ -9,10 +9,20 @@
 
         <td style="padding-left: 187px;">
           <div>
+
+          <% @unarchive_sorted_years=[] %>
+        <% @unarchive_year.each do |year| %>
+          <% @unarchive_sorted_years << year.year %>  
+        <%end%>
+        <%@unarchive_sorted_years=@unarchive_sorted_years.sort%>
+
+
+
             <%= label_tag :year %>
-            <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
+
+            <%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] },:selected=>@year) %>
           </div>
-          <div>
+          <div >
             </br><%= label_tag :crop %>
             <%if current_user.has_role? :consultant%>
               <%= select_tag 'crop_name',options_for_select([["Corn","Corn"],["Soyabean","Soyabean"],["Wheat","Wheat"]]) %>
@@ -116,7 +126,8 @@
              <%= text_field_tag :contact_number%>
           </div>
           <div>
-             </br> <%= label_tag :percentage_production %>
+             </br> <%= l
+abel_tag :percentage_production %>
              <%#debugger%>
              <%= text_field_tag :percentage_production,(!@percetage_production.blank?) ? @percetage_production : " " ,:readonly => true%>
           </div>
@@ -156,6 +167,8 @@
             <%=label_tag :Delivery_Location %>
              <%= text_field_tag :delivery_location%>
           </div>
+
+
           <div>
             <%= label_tag :future_Month %>
              <%=select_month(Date.today, :start_year => Time.now.month) %>
@@ -163,6 +176,7 @@
          
           
         </td>
+
         <td style="padding-left: 187px;">  
           </br>
             <div>
@@ -278,7 +292,7 @@
             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
           </div>
 
-          <div>
+          <div >
               <%= label_tag :crop %>
             <%if current_user.has_role? :consultant%>
               <%= select_tag 'crop_name',options_for_select([["Corn","Corn"],["Soyabean","Soyabean"],["Wheat","Wheat"]]) %>
@@ -503,7 +517,7 @@
 
      $('#bushels').keyup(function() {
 
-
+      
           var val=$(this).val();
 
          
@@ -561,8 +575,10 @@
        
         });
 
-  
+             
+               
 
     });   
 
     </script>
+

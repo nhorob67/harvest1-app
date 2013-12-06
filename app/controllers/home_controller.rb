@@ -269,7 +269,8 @@ class HomeController < ApplicationController
               end  
               @total_weight=@total_weight+ @weight
           end
-           @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
+
+           @crop=CropInformation.find(:all , :conditions => ["user_id=? AND year=?", current_user.id,Year.all.reverse.first.year] ).collect(&:crop_name).uniq
            end  
            end
   end
@@ -278,7 +279,7 @@ class HomeController < ApplicationController
   end
 
   def add_consultant
-  	@user=User.new
+    @user=User.new
   end
 
   def user_destroy
@@ -342,7 +343,7 @@ class HomeController < ApplicationController
     end  
   end
   def add_user
-  	@user=User.new
+    @user=User.new
   end
 
   def create_crop_information
@@ -498,11 +499,12 @@ end
   end
 
   def sale
-    
-    
-      @crop=CropInformation.find(:all , :conditions => ["user_id=?", params[:user_id]] ).collect(&:crop_name).uniq
-      
-    
+   if params[:user_id].blank?
+      @crop=CropInformation.find(:all , :conditions => ["year = ? AND user_id=?", params[:data], current_user.id] ).collect(&:crop_name).uniq
+   else
+      @crop=CropInformation.find(:all , :conditions => ["year = ? AND user_id=?", params[:data], params[:user_id]] ).collect(&:crop_name).uniq
+   end   
+         
     #@crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
     @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
     @year=Year.all
@@ -558,7 +560,7 @@ end
 
     @crop_label=CropInformationExpense.new
 
-      @crop_info = CropInformation.find(:all, :conditions=> ["year = ?", "#{CropInformation.find(params[:crop][0][:id]).year}"] )
+      @crop_info = CropInformation.find_all_by_user_id_and_year(params[:crop][0][:user_id],CropInformation.find(params[:crop][0][:id]).year)
 
       @years=Year.all
       @archive_year=ArchiveYear.find_all_by_user_id(params[:selected_user_id]).collect(&:year)
@@ -696,17 +698,15 @@ end
       @year=params[:year]
       @bushels=params[:val]
       @crop_name=params[:crop_name]
-      @production=CropInformation.find(:all ,:conditions=> ['year = ? AND crop_name = ? AND user_id= ?', params[:year],params[:crop_name],current_user.id]).first.production
-
-      if @production.blank?
-        @percetage_production=(params[:val].to_f/0)
+      if !CropInformation.find(:all ,:conditions=> ['year = ? AND crop_name = ? AND user_id= ?', params[:year],params[:crop_name],current_user.id]).first.blank?
+        @production=CropInformation.find(:all ,:conditions=> ['year = ? AND crop_name = ? AND user_id= ?', params[:year],params[:crop_name],current_user.id]).first.production
       else
-        @percetage_production=(params[:val].to_f/@production.to_f)
-      end  
-    end  
-    @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] ).collect(&:crop_name).uniq
-     # @crop=CropInformation.find(:all , :conditions => ["user_id=?", current_user.id] )
+        @production=0
+       end 
+        @percetage_production=(params[:val].to_f/@production.to_f).round(2)
 
+    end  
+  
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
       @years=Year.all
       @unarchive_year=[]
@@ -715,6 +715,18 @@ end
           @unarchive_year=@unarchive_year+Array(year)
         end
       end
+
+     @years_first=[] 
+        @years.each do |year| 
+            @years_first << year.year  
+        end
+         @years_first= @years_first.sort.first
+    
+    if @year.blank?
+      @crop=CropInformation.find(:all , :conditions => ["year = ? AND user_id=?",  @years_first, current_user.id] ).collect(&:crop_name).uniq
+  else
+      @crop=CropInformation.find(:all , :conditions => ["year = ? AND user_id=?", params[:year], current_user.id] ).collect(&:crop_name).uniq
+  end
     @date = Date.today
     @months = []
     @years=[]
@@ -755,18 +767,19 @@ end
   end
 
   def user_create
-  	
-   	@user=User.create(params[:user])
-  	@user.add_role "user"
+    
+    @user=User.create(params[:user])
+    @user.add_role "user"
     @user.consultant_id = current_user.id
-  	if @user.save
+    if @user.save
       redirect_to root_path  
     end
   end
 
   def recommend
-   #@crop=["corn","Soyabean","wheat"]
-    
+   #@crop=["corn","Soyabean","wheat
+
+
     @unarchive_years=[]
     @year=Year.all
     @year.each do |year|
@@ -866,7 +879,7 @@ end
   end
   def recommend_search
     @crop_info=CropInformation.find_all_by_user_id_and_year(params[:select_user_id],Year.all.reverse.first.year)
-   @crop=CropInformation.find(:all , :conditions => ["user_id=?", params[:select_user_id]] ).collect(&:crop_name).uniq 
+   @crop=CropInformation.find(:all , :conditions => ["user_id=? AND year=?", params[:select_user_id],Year.all.reverse.first.year] ).collect(&:crop_name).uniq
     @archive_year=ArchiveYear.find_all_by_user_id(params[:select_user_id]).collect(&:year)
     @year=Year.all
     @unarchive_year=[]
