@@ -6,7 +6,8 @@
      </div>
      <div>
       <%= label_tag :year %>
-      <%=select_tag 'crop[year]', options_for_select(Year.all.collect(&:year))%>
+     <%=select_tag 'crop[year]', options_for_select(@sorted_years)%>
+    </div>
     </div>
     <div>
       <%= label_tag :how_many_acres %>

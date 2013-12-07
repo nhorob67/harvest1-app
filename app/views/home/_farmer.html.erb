@@ -1,10 +1,12 @@
  <thead>
     <tr class="title-tab">
-      <th><i class="arr"></i> Name</th>
+      <th><i class="arr"></i> Client</th>
       <th><i class="arr"></i> Email </th>
       
        <th><i class="arr"></i>Password </th>
-      
+       <%if !current_user.has_role? :admin %>
+          <th><i class="arr"></i> Cell Phone </th>
+        <%end%>
       
     </tr>
   </thead>
@@ -17,10 +19,13 @@
           <td><%= user.email %></td>
         
          <td><%= user.orignal_password %></td> 
-        
+         <%if !current_user.has_role? :admin %>
+          <td><%= user.cell_number %></td> 
+          <%end%>
       
         </tr>
     <%end%>
     <tr>
     <tr>
   </tbody>
+  

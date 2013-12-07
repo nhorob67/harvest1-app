@@ -138,14 +138,17 @@ class HomeController < ApplicationController
   end 
   def index
     
+
     @year=Year.all
     @recommends=Recommend.find(:all , :conditions => ["user_id!=?",1] )
     @counts=@recommends.count
     @crop_information=CropInformation.all
     if !current_user.nil?
-
+           
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
-       @crop_information=CropInformation.find(:all, :conditions => ["user_id=?", current_user.id] )
+     
+
+      @crop_information=CropInformation.find(:all, :conditions => ["user_id=?", current_user.id] )
      
       @recommend=Recommend.find(:all, :conditions => ["recommended_id=? OR user_id=?",current_user.id,1 ] )
       @count=@recommend.count
@@ -348,6 +351,11 @@ class HomeController < ApplicationController
 
   def create_crop_information
     @crop=CropInformation.new
+    @sorted_years=Year.all.collect(&:year)   
+    @sorted_years=@sorted_years.sort
+
+
+
   end
 def update_label
   if !params[:data][:label_id].nil?
@@ -647,12 +655,13 @@ end
     end
   end
   def crop_information
+   
     params[:crop][:user_id]=current_user.id
 
-    if (current_user.crop_informations.collect{ |p| p.crop_name}.include? params[:crop][:crop_name])
-
-      if (current_user.crop_informations.collect{ |p| p.year}.include? params[:crop][:year])
-          flash[:notice] = 'Crop Information Already Stored.'
+    if (current_user.crop_informations.collect{ |p| p.crop_name}.include? params[:crop][:crop_name]) || (current_user.crop_informations.collect{ |p| p.crop_name.downcase}.include? params[:crop][:crop_name].downcase)
+   
+      if (current_user.crop_informations.collect{ |p| p.year}.include? params[:crop][:year].to_i)
+          flash[:alert] = 'Crop Information Already Stored.'
 
       else  
       params[:crop][:total_expenses]=(params[:crop][:fertilizer].to_i)+(params[:crop][:seed].to_i)+(params[:crop][:chemical].to_i)+(params[:crop][:insurance].to_i)+(params[:crop][:fuel].to_i)+(params[:crop][:land_cost].to_i)+( params[:crop][:overhead].to_i)+(params[:crop][:family_living].to_i)
@@ -694,17 +703,20 @@ end
   end
 
   def hedge_sale
+
  if !params[:crop_name].blank?
       @year=params[:year]
       @bushels=params[:val]
       @crop_name=params[:crop_name]
       if !CropInformation.find(:all ,:conditions=> ['year = ? AND crop_name = ? AND user_id= ?', params[:year],params[:crop_name],current_user.id]).first.blank?
         @production=CropInformation.find(:all ,:conditions=> ['year = ? AND crop_name = ? AND user_id= ?', params[:year],params[:crop_name],current_user.id]).first.production
-      else
-        @production=0
+      
        end 
+       if !@production.nil?
         @percetage_production=(params[:val].to_f/@production.to_f).round(2)
-
+        else
+          @percetage_production=0.0
+        end  
     end  
   
       @archive_year=ArchiveYear.find_all_by_user_id(current_user.id).collect(&:year)
@@ -715,6 +727,8 @@ end
           @unarchive_year=@unarchive_year+Array(year)
         end
       end
+        @unarchive_sorted_years= @unarchive_year.collect(&:year)     
+        @unarchive_sorted_years=@unarchive_sorted_years.sort
 
      @years_first=[] 
         @years.each do |year| 
@@ -777,16 +791,18 @@ end
   end
 
   def recommend
-   #@crop=["corn","Soyabean","wheat
-
-
+ 
     @unarchive_years=[]
     @year=Year.all
+    @sorted_year=@year.collect(&:year)
+    @sorted_year= @sorted_year.sort
     @year.each do |year|
      if year.archive !=true
       @unarchive_years << year
      end
     end  
+     @unarchive_sorted_years=@unarchive_years.collect(&:year)
+      @unarchive_sorted_years=@unarchive_sorted_years.sort 
     @user=[]
     @farmer=[]
     @recommend=Recommend.new

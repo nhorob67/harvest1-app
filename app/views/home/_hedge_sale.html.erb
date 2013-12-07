@@ -10,11 +10,7 @@
         <td style="padding-left: 187px;">
           <div>
 
-          <% @unarchive_sorted_years=[] %>
-        <% @unarchive_year.each do |year| %>
-          <% @unarchive_sorted_years << year.year %>  
-        <%end%>
-        <%@unarchive_sorted_years=@unarchive_sorted_years.sort%>
+      
 
 
 
@@ -76,12 +72,13 @@
 
 <%if id=="forward"%>
     <h4 style="padding-left: 187px;">Forward Contract</h4>
+    
     <table>
       <tr>
         <td style="padding-left: 187px;">
            <div>
            </br>  </br> <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
+             <%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] },:selected=>@year) %>
           </div>
           <div>
               </br><%= label_tag :crop %>
@@ -126,8 +123,7 @@
              <%= text_field_tag :contact_number%>
           </div>
           <div>
-             </br> <%= l
-abel_tag :percentage_production %>
+             </br> <%= label_tag :percentage_production %>
              <%#debugger%>
              <%= text_field_tag :percentage_production,(!@percetage_production.blank?) ? @percetage_production : " " ,:readonly => true%>
           </div>
@@ -144,7 +140,7 @@ abel_tag :percentage_production %>
           </br>
           <div>
             <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
+            <%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] },:selected=>@year) %>
           </div>
 
           <div>
@@ -220,7 +216,7 @@ abel_tag :percentage_production %>
         <td style="padding-left: 187px;">
             <div>
             <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year",:selected=>@year)%>
+             <%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] },:selected=>@year) %>
           </div>
            <div>
               <%= label_tag :crop %>
@@ -289,7 +285,7 @@ abel_tag :percentage_production %>
           <br>
           <div>
             <%= label_tag :year %>
-            <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+            <%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] },:selected=>@year) %>
           </div>
 
           <div >
@@ -353,7 +349,7 @@ abel_tag :percentage_production %>
           </div>
           <div>
             <%= label_tag :year %>
-             <%=select_tag "year", options_from_collection_for_select(@unarchive_year, "year", "year")%>
+             <%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] },:selected=>@year) %>
           </div>
           <div>
            <%= label_tag :Open_Order %>
@@ -533,7 +529,7 @@ abel_tag :percentage_production %>
             url: "<%=hedge_sale_home_index_path%>",
             data: {year: year,crop_name: crop_name,hedge_sale: hedge_sale,val: val}
             
-
+        
             });
    
     });

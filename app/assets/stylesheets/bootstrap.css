@@ -284,19 +284,28 @@ a:focus {
   min-height: 1px;
   margin-left: 20px;
 }
-.container-header{
-  overflow:hidden;
-    width: 940px;
+div#header .container-header{
+ width: 940px;
   
   border-radius:10px;
   -moz-border-radius:10px;
   -webkit-border-radius:10px;
   -o-border-radius:10px;
   -khtml-border-radius:10px;
-  padding:10px;
+  padding:auto;
   display:block;
-   margin: 0 auto;
-  position:relative;
+   top:0;
+
+    left: 0;
+    right: 0;
+    height:59px;
+
+    margin: auto;
+    text-align: center;
+  overflow: hidden;
+  position: fixed;
+  
+  z-index: 100;
 }
 .container,
 .navbar-static-top .container,
@@ -4404,8 +4413,8 @@ input[type="submit"].btn.btn-mini {
   padding-right: 10px;
   padding-left: 10px;
   
-  background: url(/assets/pool_table.png) no-repeat scroll ;
-  background-size: 939px;
+  background: url(/assets/pool_table.png);
+  /*background-size: 939px;*/
   border:1px solid #000;
   border-radius:8px;
   -moz-border-radius:8px;
@@ -5989,8 +5998,8 @@ a.badge:focus {
   padding: 12px 15px;
   border:1px solid #000;
   text-align:center;
-  background: url(/assets/pool_table.png) no-repeat scroll ;
-  background-size: 939px;
+  background: url(/assets/pool_table.png);
+
   /*background-color:#3b5719;*/
   border-radius:7px;
   -moz-border-radius:7px;

@@ -284,14 +284,15 @@ $(document).ready(function(){
                  
                    
                    <li><%= link_to 'Add Year',new_year_home_index_path,:class=>"btn" %><li>
-                     <%=render "archive_select_year"%>
+
+                     <%=render "archive_select_year" , :locals => { :@unarchive_sorted_years => @unarchive_sorted_years }%>
                     <%if !Year.all.blank?%>
                      <h3>Year list</h3>
                      <table>
-                      <%Year.all.each do|year|%>
+                      <%@sorted_year.each do|year|%>
                         <tr> 
                           <td>
-                            <%=year.year%>
+                            <%=year%>
                           </td>  
                         </tr>
                       <%end%>

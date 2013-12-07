@@ -1,24 +1,11 @@
 
-	
-	
-
-
-
-
-
-
- 
-
-
 <%= form_tag archive_select_home_index_path do %>
 
 	<div class="clearfix"></div>
 	<div class="text-select" style="margin: auto; width: 60%;">
-		<%if !@unarchive_years.blank?%>
-
-	      <div style="padding-left: 175px;">Please select Year To Archive 
-	        <%#=hidden_field_tag :user_id,params[:select_user_id]%>
-	      	<%= select_tag :year,  options_for_select(@unarchive_years.map{|c| [c.year, c.year]}) %>
+		<%if !@unarchive_sorted_years.blank?%>
+		     <div style="padding-left: 175px;">Please select Year To Archive 
+	      	<%=select_tag 'year', options_for_select(@unarchive_sorted_years.collect{ |u| [u, u] }) %>
 	      </div>
 	      <%else%>
 	      No Any Year To Archive.
