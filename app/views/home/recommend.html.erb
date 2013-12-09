@@ -53,10 +53,9 @@ $(document).ready(function(){
         <div class="accordion" id="accordion2">
            <!--accordion-group-->
         <%if current_user.has_role? :consultant%>
-          <div class="accordion-group">
-            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">Farmer<i class="normal"></i></a> </div>
+         
             <!--accordion-heading-->
-            <div id="collapseEight" class="accordion-body collapse">
+            <div id="collapseEight" class="accordion-body in collapse" style="height: auto;">
               <div class="inner">
                 <div class="accordion-inner"> 
                 
@@ -86,7 +85,7 @@ $(document).ready(function(){
           <!--accordion-group-->
         <%end%>
           <div class="accordion-group">
-            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"><%if !current_user.has_role? :admin%>New Recomemendation<%else%>Add News<%end%> <i class="actives"></i></a> </div>
+            <div class="accordion-heading"> <a class="accordion-toggle ac-combination-1" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"><%if !current_user.has_role? :admin%>New Recomendation<%else%>Add News<%end%> <i class="normal"></i></a> </div>
             <!--accordion-heading-->
             <%=render "add_recommend"%>
             <!--accordion-body-->
