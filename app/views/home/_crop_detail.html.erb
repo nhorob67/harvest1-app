@@ -1,6 +1,6 @@
 <%#debugger%>
 <style>
- .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#f1f1f1; }
+ .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#D8D8D8; }
 </style>
   <%if !@select_user_id.nil? %>
     <%params[:select_user_id]=@select_user_id%>
@@ -8,7 +8,8 @@
   <div class="accordion-inner">
     <ul class="one">
       <li id="archive_farmer_search" id="crop" style="width:16%">
-        <p class="consultantArchive" style="color:#0088CC">Archive</p>
+        <%= link_to"<p class=consultantArchive>Archive</p>".html_safe,"#", :remote => true %>
+        
 
      
       </li>
@@ -21,9 +22,10 @@
 
 
               <%if !@years.nil?%>
-         <% @years.each do |year| %> 
+         <% @years.each_with_index do |year,index| %> 
+         <%if index<=4%>
           <%if !(@archive_year.include? year)%>
-          <%if params[:note].blank?%>
+          <%if year==Year.all.reverse.first.year &&  params[:note].blank?%>
             <li style="width:19%"><%= link_to"<p id=search_#{year} class=list-select>#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>    
           <%else%>
             <li style="width:19%"><%= link_to"<p id=search_#{year}>#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id,:note=>"farmer",:selected_user_id=>params[:select_user_id]}, :remote => true %></li>    
@@ -31,6 +33,7 @@
             
           <% end %>
         <% end %>
+        <%end%>
       
       <% end %>   
     </ul>
@@ -56,45 +59,44 @@
   <%if !@crop_info.blank?%>
     <br>
     <br>
-    <div style="width: 895px; height: 975px; overflow: auto;"> 
       <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: -10px;">
         <tr>
-          <td style="width: 16%;">
+          <td style="width: 13%;">
             <table>
-              <tr style="height: 64px;"><th >Crop Name</th></tr>
-              <tr style="height: 56px;"><th >  Year </th></tr>
-               <tr style="height: 56px;"><th>  Expenses </th></tr>
-                <tr style="height: 56px;"><th>  Acre </th></tr>
-                <tr style="height: 56px;"><th>  Yield </th></tr>
+              <tr style="height: 59px;"><th >Crop Name</th></tr>
+              <tr style="height: 62px;"><th >  Year </th></tr>
+               <tr style="height: 58px;"><th>  Expenses </th></tr>
+                <tr style="height: 48px;"><th>  Acre </th></tr>
+                <tr style="height: 59px;"><th>  Yield </th></tr>
 
-                <tr style="height: 56px;"><th >  Production </th></tr>
+                <tr style="height: 51px;"><th >  Production </th></tr>
 
                
-                  <tr style="height: 56px;"><th > Fertilizer</th></tr>
+                  <tr style="height: 66px;"><th > Fertilizer</th></tr>
                  
                
-                  <tr style="height: 56px;"><th >  Seed</th></tr>
+                  <tr style="height: 48px;"><th >  Seed</th></tr>
                
               
-                  <tr style="height: 56px;"><th > Chemical </th></tr>
+                  <tr style="height: 61px;"><th > Chemical </th></tr>
               
                 
-                  <tr style="height: 56px;"><th > Insurance </th></tr>
+                  <tr style="height: 62px;"><th > Insurance </th></tr>
                
                 
-                  <tr style="height: 56px;"><th >fuel </th></tr>
+                  <tr style="height: 45px;"><th >fuel </th></tr>
                  
                
-                  <tr style="height:56px;"><th >Land cost</th></tr>
+                  <tr style="height:63px;"><th >Land cost</th></tr>
                  
                 
-                  <tr style="height: 56px;"><th >Over Head </th></tr>
+                  <tr style="height: 46px;"><th >Over Head </th></tr>
                
                
-                  <tr style="height: 56px;"><th > Family Living </th></tr>
+                  <tr style="height: 22px;"><th > Family Living </th></tr>
                 
-                <tr style="height: 56px;"><th >  Total Expenses </th></tr>
-               <tr style="height: 56px;"><th >  BreakEven </th></tr>
+                <tr style="height: 46px;"><th >  Total Expenses </th></tr>
+               <tr style="height: 61px;"><th >  BreakEven </th></tr>
                <%User.find(params[:select_user_id]).crop_information_expenses.each do |expense|%>
 
                   <%if expense.year==params[:data].to_i%>
@@ -201,8 +203,7 @@
             </td>
           <%end%>   
        </tr>
-      </table>  
-      </div> 
+      </table>   
   <%else%>
     <h3>Crop not found. </h3>
   <%end%>

@@ -1,6 +1,6 @@
 
 <style>
- .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#f1f1f1; }
+ .list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#D8D8D8; }
 </style>
  
 
@@ -11,7 +11,8 @@
   
     <ul class="one">
         <li class="archive_farmer" id="sales" style="width:16%">
-          <p style="color:#0088CC">Archive</p>
+          
+          <%= link_to"<p >Archive</p>".html_safe,"#", :remote => true %>
         </li>
 
         <% @years=[] %>
@@ -22,20 +23,21 @@
 
 
         <%if !@years.nil?%>
-        <% @years.each do |year| %> 
-        <%if !(@archive_year.include? year)%>
-
-         
-            <%if year==Year.all.reverse.first.year && params[:data].blank?%>
-            <li style="width:19%"><%= link_to"<p id=year_#{year} class=list-select>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>   
-            <%else%>
-        <li style="width:19%"><%= link_to"<p id=year_#{year}>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>       
-        <%end%>
+        <% @years.each_with_index do |year,index| %> 
+        <%if index<=4%>
+          <%if !(@archive_year.include? year)%>
+          
+              <%if year==Year.all.reverse.first.year && params[:data].blank?%>
+              <li style="width:19%"><%= link_to"<p id=year_#{year} class=list-select>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>   
+              <%else%>
+              <li style="width:19%"><%= link_to"<p id=year_#{year}>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>current_user.id,:note=>"farmer"}, :remote => true %></li>       
+              <%end%>
                 
         <% end %>
+        <%end%>
         <% end %>
         <%else%>
-        No Sales/Hedges this year.
+       
         <% end %>      
     </ul>
     <ul class="two">
@@ -72,7 +74,7 @@
   <%if !@crop.blank?%>
     
   <%@crop.uniq.each do|name|  %>
-    <% @flag=0%>
+    
     <h3><%=name%></h3>
     <br/>
     <%if params[:data].blank?%>
@@ -82,7 +84,7 @@
 
    
       <% if !@cash_sale.blank? %>  
-        <% @flag=1%>
+        
         <%=params[:data]%> Cash Sale information
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -126,7 +128,7 @@
   
     <% if !@forward_contracts.blank? %>
    
-    <% @flag=1%>
+  
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;" >
           <tr class="title-tab">
@@ -172,7 +174,7 @@
    <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
     <% if !@hedge_to_arrive.blank? %>
-    <% @flag=1%>
+    
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Hedge To Arrive</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -215,7 +217,7 @@
     <%end%>
    <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
     <% if !@future.blank? %>
-    <% @flag=1%>
+    
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -254,7 +256,7 @@
     <%end%>
   <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   <% if !@option.blank? %>
-  <% @flag=1%>
+  
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -295,7 +297,7 @@
   <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
  <% if !@basic_contract.blank? %>
- <% @flag=1%>
+
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Basis Contract</a>
      <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
           <tr class="title-tab">
@@ -338,11 +340,10 @@
    <%end%>
 
        
-   <% if @flag==0 %>
-        <b><i>No Information found..</b></i>
-      <%end%> 
+    
   
  <%end%>
+
 
 <%end%>
 <!--news-->

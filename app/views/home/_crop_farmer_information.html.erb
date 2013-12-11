@@ -3,7 +3,7 @@
   <div class="accordion-inner">
      <ul class="one">
       <li id="archive_farmer_individual" id ="crop" style="width:16%" >
-        <p class="farmerArchive" style="color:#0088CC">Archive</p>
+        <%= link_to"<p class=farmerArchive>Archive</p>".html_safe,"#", :remote => true %>
       </li>
 
       <% @years=[] %>
@@ -12,10 +12,9 @@
       <%end%>
       <%@years=@years.sort%>
 
-       <%if !@years.nil?%>
-        <%@years.each do |year| %> 
-       
-         
+      <%if !@years.nil?%>
+        <% @years.each_with_index do |year,index| %> 
+          <%if index<=4%>
           <%if !(@archive_year.include? year)%>
          
             <%if year==Year.all.reverse.first.year && params[:data].blank?%>
@@ -24,6 +23,10 @@
               <li style="width:19%"><%= link_to"<p id=crop_#{year} >#{year}</p>".html_safe, { :action => "crop", :data=>year, :user_id=>current_user.id}, :remote => true %></li>       
             <%end%>
           <% end %>
+             
+          <%end%>   
+         
+          
         <% end %>
       
       <% end %>    
@@ -33,9 +36,10 @@
 
     <ul class="two">
        <%if !@years.nil?%>
+       
         <% @years.each do |year| %> 
 
-        
+               
          <% if (@archive_year.include? year)%>       
             <li style="display:none" class="archive_year_farmer_crop" ><%= link_to"<p id=crop_#{year}>#{year}</p>".html_safe, { :action => "crop", :data=>year,:user_id=>current_user.id}, :remote => true %></li>
           <% end %>

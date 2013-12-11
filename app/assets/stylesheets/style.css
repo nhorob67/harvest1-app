@@ -708,7 +708,7 @@ a, .btn{
 div.table-bordered{ border-radius:0; margin-top: 5px; }
 table.nor-margin{ margin-bottom:0; margin-top: 0; }
 
-li.list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color:#f1f1f1; }
+li.list-select{ border-left:1px solid #EBEBEB; border-right:1px solid #EBEBEB; background-color: #D8D8D8; }
 
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
