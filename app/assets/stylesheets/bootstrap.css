@@ -4409,18 +4409,19 @@ input[type="submit"].btn.btn-mini {
 }
 
 .navbar-inner {
+   background: url(/assets/pool_table.png) ;
+   
+    color: #FFFFFF;
+    height: 60px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 50;
   min-height: 40px;
   padding-right: 10px;
   padding-left: 10px;
-  
-  background: url(/assets/pool_table.png);
-  /*background-size: 939px;*/
-  border:1px solid #000;
-  border-radius:8px;
-  -moz-border-radius:8px;
-  -o-border-radius:8px;
-  -webkit-border-radius:8px;
-  -khtml-border-radius:8px;
+ 
 }
 
 .navbar-inner:before,

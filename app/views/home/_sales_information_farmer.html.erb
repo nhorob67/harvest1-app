@@ -10,21 +10,21 @@
   <div class="accordion-inner">
   
     <ul class="one">
-        <li class="archive_farmer" id="sales" style="width:16%">
+        <li class="archive_farmer" id="sales" style="width:19%">
           
           <%= link_to"<p >Archive</p>".html_safe,"#", :remote => true %>
         </li>
-
+ 
         <% @years=[] %>
         <% @year.each do |year| %>
           <% @years << year.year %>  
         <%end%>
         <%@years=@years.sort%>
-
+ 
 
         <%if !@years.nil?%>
         <% @years.each_with_index do |year,index| %> 
-        <%if index<=4%>
+        
           <%if !(@archive_year.include? year)%>
           
               <%if year==Year.all.reverse.first.year && params[:data].blank?%>
@@ -34,7 +34,7 @@
               <%end%>
                 
         <% end %>
-        <%end%>
+        
         <% end %>
         <%else%>
        
@@ -71,16 +71,27 @@
     <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
        <%= link_to "Add New" ,"#open_popup",:class=>"addnew_fancybox btn pull-right mar"%>
   
-  <%if !@crop.blank?%>
     
   <%@crop.uniq.each do|name|  %>
-    
-    <h3><%=name%></h3>
-    <br/>
-    <%if params[:data].blank?%>
+   <%if params[:data].blank?%>
     <%params[:data]=Year.all.reverse.first.year%>
     <%end%>
-    <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
+    
+    <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+    <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+       <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+ <%@future=Future.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+   
+<%@option=Option.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+  
+  <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(current_user.id,params[:data],name)%>
+  
+  <%if !@cash_sale.blank? || !@hedge_to_arrive.blank? || !@forward_contracts.blank? || !@future.blank? || !@option.blank?   || !@basic_contract.blank?%>
+    <h3><%=name%></h3>
+
+    <%end%>  
+      
+   <br/>
 
    
       <% if !@cash_sale.blank? %>  
@@ -124,7 +135,7 @@
         <%end%> 
 
 
-   <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
+   
   
     <% if !@forward_contracts.blank? %>
    
@@ -171,7 +182,6 @@
         
         </table>
     <%end%>
-   <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
     <% if !@hedge_to_arrive.blank? %>
     
@@ -215,8 +225,7 @@
      </table>
    
     <%end%>
-   <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
-    <% if !@future.blank? %>
+   <% if !@future.blank? %>
     
       <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
        <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;">
@@ -254,7 +263,6 @@
       </table> 
  
     <%end%>
-  <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   <% if !@option.blank? %>
   
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
@@ -294,7 +302,6 @@
       </table> 
   
  <%end%>
-  <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:user_id],params[:data],name)%>
   
  <% if !@basic_contract.blank? %>
 
@@ -345,7 +352,7 @@
  <%end%>
 
 
-<%end%>
+
 <!--news-->
   </div>
   <!--accordion-inner-->

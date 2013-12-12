@@ -2,7 +2,7 @@
 <div class="inner">
   <div class="accordion-inner">
      <ul class="one">
-      <li id="archive_farmer_individual" id ="crop" style="width:16%" >
+      <li id="archive_farmer_individual" id ="crop" style="width:19%" >
         <%= link_to"<p class=farmerArchive>Archive</p>".html_safe,"#", :remote => true %>
       </li>
 
@@ -14,7 +14,7 @@
 
       <%if !@years.nil?%>
         <% @years.each_with_index do |year,index| %> 
-          <%if index<=4%>
+          
           <%if !(@archive_year.include? year)%>
          
             <%if year==Year.all.reverse.first.year && params[:data].blank?%>
@@ -24,7 +24,7 @@
             <%end%>
           <% end %>
              
-          <%end%>   
+             
          
           
         <% end %>

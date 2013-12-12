@@ -14,6 +14,7 @@
 
         $('#sale').html("<%= escape_javascript(render :partial =>'home/sales_information',:locals=>{:@user_id=>params[:user_id]}) %>");
         <%if Year.find_by_year(params[:data]).archive==true%>
+         $("#consultantarchive_"+id).addClass('list-select');
         	$(".archive_year").show();
         <%end%>
          var id = <%= params[:data]%>

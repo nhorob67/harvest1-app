@@ -1,7 +1,7 @@
  <div class="inner">
   <div class="accordion-inner">
               <ul class="one">
-        <li id="archive" style="width:16%">
+        <li id="archive" style="width:19%">
        
        <%= link_to"<p >Archive</p>".html_safe,"#", :remote => true %>
         </li>
@@ -15,16 +15,16 @@
 
         <%if !@years.nil?%>
          <% @years.each_with_index do |year,index| %> 
-        <%if index<=4%>
+        
         <%if !(@archive_year.include? year)%>
         <%if year==Year.all.reverse.first.year && params[:data].blank?%>
         <li  style="width:19%"><%= link_to"<p class=list-select>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
         <%else%>
-        <li  style="width:19%"><%= link_to"<p>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
+        <li  style="width:19%"><%= link_to"<p id=consultant_#{year}>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
         <%end%>
         <% end %>
         <% end %>
-        <%end%>
+        
 
         <% end %>
         </ul>
@@ -32,7 +32,7 @@
         <%if !@years.nil?%>
         <% @years.each do |year| %>
        <%if (@archive_year.include? year)%>
-        <li style="display:none; width:19%" class="archive_year"><%= link_to"<p>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
+        <li style="display:none; width:19%" class="archive_year"><%= link_to"<p id=consultantarchive_#{year}>#{year}</p>".html_safe, { :action => "sale", :data=>year,:user_id=>@user_id}, :remote => true %></li>
         <% end %>
         <% end %>
 
@@ -46,15 +46,26 @@
      <div class="news" style="margin-top:15px;"> <a href="javascript:void(0);" class="pull-left corn">
        <%= link_to "" ,"#open_popup",:class=>"addnew_fancybox  pull-right mar"%>
 
-    <%if !@crop.blank?%>
+   
      <%@crop.each do|name|  %>
+     <%if params[:data].blank?%>
+    <%params[:data]=Year.all.reverse.first.year%>
+    <%end%>
     
-     
+     <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+ <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+   <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+    <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+      <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+       <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+       <%#debugger%>
+   <%if !@cash_sale.blank? || !@hedge_to_arrive.blank? || !@forward_contracts.blank? || !@future.blank? || !@option.blank?   || !@basic_contract.blank?%>
     <h3><%=name%></h3>
-    <br/>
 
-    <%@cash_sale=CashSale.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
-
+    <%end%>  
+      
+   <br/>
+   
      <% if !@cash_sale.blank? %> 
        
             <%=params[:data]%> Cash Sale information
@@ -75,6 +86,7 @@
         <%@cash_sale.each do|cash_sale|%>
                     <tr>
               <td><%=cash_sale.year%></td>
+              
               <td><%=cash_sale.crop_name%></td>
                <%if cash_sale.open_order==false%>
                 <td>No</td>
@@ -98,9 +110,8 @@
        
         <%end%> 
  
-   <%@forward_contracts=ForwardContract.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
-  
-    <%if !@forward_contract.blank?%>
+   
+    <%if !@forward_contracts.blank?%>
    
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Forward Contract</a>
         <table id="sortclass1" class="table table-bordered new-tab tablesorter" style="margin-left: auto;" >
@@ -121,7 +132,7 @@
        
        
             
-          <%@forward_contract.each do |forward_contract|%>
+          <%@forward_contracts.each do |forward_contract|%>
             <tr>
               <td style="white-space:nowrap;"><%=forward_contract.year%></td>
               <td style="white-space:nowrap;"><%=forward_contract.crop_name%></td>
@@ -135,7 +146,7 @@
               <td style="white-space:nowrap;"><%= forward_contract.delivery_location%></td>
               <td style="white-space:nowrap;"><%= forward_contract.delivery_period%></td>
               <td style="white-space:nowrap;"><%= forward_contract.futures_price%></td>
-              <td style="white-space:nowrap;"><%= cash_sale.basic%></td>
+              <td style="white-space:nowrap;"><%= forward_contract.basic%></td>
               <td style="white-space:nowrap;"><%= forward_contract.cash_price%></td>
               <td style="white-space:nowrap;"><%= forward_contract.contact_number%></td>
               <td style="white-space:nowrap;"><%= forward_contract.percentage_production%></td>
@@ -145,7 +156,7 @@
       
         </table>
   <%end%>
-   <%@hedge_to_arrive=HedgeToArrive.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+  
   
     <%if !@hedge_to_arrive.blank?%>
     
@@ -191,7 +202,7 @@
      </table>
    <%end%> 
   
-   <%@future=Future.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+ 
     <%if !@future.blank?%>
    
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> Future</a>
@@ -232,7 +243,7 @@
       </table> 
   <%end%> 
   
-  <%@option=Option.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+ 
   <%if !@option.blank?%>
   
     <a href="javascript:void(0);" class="pull-left corn"><%=params[:data]%> option</a>
@@ -275,7 +286,7 @@
       </table> 
    <%end%> 
  
-  <%@basic_contract=BasicContract.find_all_by_user_id_and_year_and_crop_name(params[:select_user_id],params[:data],name)%>
+ 
   
  <%if !@basic_contract.blank?%>
 
@@ -325,7 +336,7 @@
      <%end%>
   
     
-     <%end%>
+  
 <!--news-->
   </div>
   <!--accordion-inner-->
