@@ -277,7 +277,12 @@ class HomeController < ApplicationController
            end  
            end
   end
+def about
+end
 
+def contact
+  end
+  
   def sign_in
   end
 

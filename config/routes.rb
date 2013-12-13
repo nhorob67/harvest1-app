@@ -39,6 +39,8 @@ devise_for :users, controllers: {sessions: "sessions",registrations: "registrati
       post 'update_crop_information'
       get 'crop_expense'
       post 'hedge_sale_crop'
+      get 'about'
+      get 'contact'
     end
     member do 
     put 'update_label'

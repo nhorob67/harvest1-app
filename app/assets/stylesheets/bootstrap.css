@@ -4448,7 +4448,7 @@ input[type="submit"].btn.btn-mini {
   display: block;
   float: left;
   padding: 10px 20px 10px;
-  margin-left: -20px;
+  margin-left: 170px;
   font-size: 20px;
   font-weight: 200;
   color: #777777;
@@ -4636,7 +4636,7 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav.pull-right {
   float: right;
-  margin-right: 0;
+  margin-right: 90px;
 }
 
 .navbar .nav > li {
