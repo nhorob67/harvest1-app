@@ -101,7 +101,7 @@ sub {
 img {
   width: auto\9;
   height: auto;
-  max-width: 100%;
+  max-width: 73%;
   vertical-align: middle;
   border: 0;
   -ms-interpolation-mode: bicubic;
@@ -4448,7 +4448,7 @@ input[type="submit"].btn.btn-mini {
   display: block;
   float: left;
   padding: 10px 20px 10px;
-  margin-left: 165px;
+  margin-left: 103px;
   font-size: 20px;
   width: 478px;
   font-weight: 200;
