@@ -4448,8 +4448,9 @@ input[type="submit"].btn.btn-mini {
   display: block;
   float: left;
   padding: 10px 20px 10px;
-  margin-left: 170px;
+  margin-left: 165px;
   font-size: 20px;
+  width: 478px;
   font-weight: 200;
   color: #777777;
   text-shadow: 0 1px 0 #ffffff;
